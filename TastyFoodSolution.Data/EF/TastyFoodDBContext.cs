@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.Data.Configurations;
 using TastyFoodSolution.Data.Entities;
+using TastyFoodSolution.Data.Extensions;
+
 namespace TastyFoodSolution.Data.EF
 {
     class TastyFoodDBContext : DbContext
@@ -17,6 +19,7 @@ namespace TastyFoodSolution.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configuration using Fluent API
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
@@ -30,6 +33,9 @@ namespace TastyFoodSolution.Data.EF
             modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+
+            //Data Seeding
+            modelBuilder.Seed();
         }
 
         public DbSet<Product> Products { get; set; }
