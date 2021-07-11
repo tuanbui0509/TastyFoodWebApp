@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyFoodSolution.Data.EF;
 
 namespace TastyFoodSolution.Data.Migrations
 {
     [DbContext(typeof(TastyFoodDBContext))]
-    partial class TastyFoodDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210711134249_AspNetCoreIdentityDatabase")]
+    partial class AspNetCoreIdentityDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,23 +128,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasKey("Key");
 
                     b.ToTable("AppConfigs");
-
-                    b.HasData(
-                        new
-                        {
-                            Key = "HomeTitle",
-                            Value = "This is home page"
-                        },
-                        new
-                        {
-                            Key = "HomeSearch",
-                            Value = "This is Search page"
-                        },
-                        new
-                        {
-                            Key = "HomeDesc",
-                            Value = "This is Desc page"
-                        });
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.AppRole", b =>
@@ -296,22 +281,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsShowOnHome = true,
-                            SortOrder = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsShowOnHome = true,
-                            SortOrder = 1,
-                            Status = 1
-                        });
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.CategoryTranslation", b =>
@@ -357,48 +326,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasIndex("LanguageId");
 
                     b.ToTable("CategoryTranslations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            LanguageId = "vi-VN",
-                            Name = "Bánh mì",
-                            SeoAlias = "banh-mi",
-                            SeoDescription = "Sản phẩm bánh mì Việt Nam",
-                            SeoTitle = "Sản phẩm bánh mì Việt Nam"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            LanguageId = "en-US",
-                            Name = "Bread",
-                            SeoAlias = "bread",
-                            SeoDescription = "Bread in Viet Nam",
-                            SeoTitle = "Bread in Viet Nam"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 2,
-                            LanguageId = "vi-VN",
-                            Name = "Đồ ăn nhanh",
-                            SeoAlias = "do-an-nhanh",
-                            SeoDescription = "Đồ ăn nhanh Việt Nam",
-                            SeoTitle = "Đồ Ăn nhanh Việt Nam"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 2,
-                            LanguageId = "en-US",
-                            Name = "Fast Fodd",
-                            SeoAlias = "fast-food",
-                            SeoDescription = "Fast Fodd in Viet Nam",
-                            SeoTitle = "Fast Fodd in Viet Nam"
-                        });
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.Contact", b =>
@@ -455,20 +382,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Languages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "vi-VN",
-                            IsDefault = true,
-                            Name = "Tiếng Việt"
-                        },
-                        new
-                        {
-                            Id = "en-US",
-                            IsDefault = false,
-                            Name = "English"
-                        });
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.Order", b =>
@@ -483,11 +396,7 @@ namespace TastyFoodSolution.Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-<<<<<<< Updated upstream
-                        .HasDefaultValue(new DateTime(2021, 7, 11, 18, 1, 46, 329, DateTimeKind.Local).AddTicks(3118));
-=======
                         .HasDefaultValue(new DateTime(2021, 7, 11, 20, 42, 48, 570, DateTimeKind.Local).AddTicks(8789));
->>>>>>> Stashed changes
 
                     b.Property<string>("ShipAddress")
                         .IsRequired()
@@ -576,26 +485,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(2021, 7, 11, 18, 1, 46, 345, DateTimeKind.Local).AddTicks(4143),
-                            OriginalPrice = 100000m,
-                            Price = 200000m,
-                            Stock = 0,
-                            ViewCount = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(2021, 7, 11, 18, 1, 46, 345, DateTimeKind.Local).AddTicks(6180),
-                            OriginalPrice = 150000m,
-                            Price = 500000m,
-                            Stock = 0,
-                            ViewCount = 0
-                        });
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.ProductImage", b =>
@@ -646,18 +535,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductInCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            ProductId = 1
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            ProductId = 2
-                        });
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.ProductTranslation", b =>
@@ -708,56 +585,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductTranslations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Bánh mì ăn sáng Việt Nam",
-                            Details = "Bánh mì ăn sáng Việt Nam",
-                            LanguageId = "vi-VN",
-                            Name = "Bánh mì ăn sáng",
-                            ProductId = 1,
-                            SeoAlias = "banh-mi-an-sang",
-                            SeoDescription = "Bánh mì ăn sáng Việt Nam",
-                            SeoTitle = "Bánh mì ăn sáng Việt Nam"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Bread Breadfast Viet Nam",
-                            Details = "Bread Breadfast Viet Nam",
-                            LanguageId = "en-US",
-                            Name = "Bread Breadfast",
-                            ProductId = 1,
-                            SeoAlias = "bread-breadfast",
-                            SeoDescription = "Bread Breadfast Viet Nam",
-                            SeoTitle = "Bread Breadfast Viet Nam"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Gà rán Việt Nam",
-                            Details = "Gà rán Việt Nam",
-                            LanguageId = "vi-VN",
-                            Name = "Gà rán",
-                            ProductId = 2,
-                            SeoAlias = "ga-ran",
-                            SeoDescription = "Gà rán Việt Nam",
-                            SeoTitle = "Gà rán Việt Nam"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Chicken Fried Viet Nam",
-                            Details = "Chicken Fried Viet Nam",
-                            LanguageId = "en-US",
-                            Name = "Chicken Fried",
-                            ProductId = 2,
-                            SeoAlias = "chicken-fried",
-                            SeoDescription = "Chicken Fried Viet Nam",
-                            SeoTitle = "Chicken Fried Viet Nam"
-                        });
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.Promotion", b =>
