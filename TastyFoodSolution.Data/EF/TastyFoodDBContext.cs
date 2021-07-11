@@ -21,11 +21,8 @@ namespace TastyFoodSolution.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-<<<<<<< Updated upstream
             // Configuration using Fluent API
-=======
             //Configure using Fluent API
->>>>>>> Stashed changes
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
 
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
@@ -41,10 +38,8 @@ namespace TastyFoodSolution.Data.EF
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
-<<<<<<< Updated upstream
             //Data Seeding
             modelBuilder.Seed();
-=======
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
 
@@ -53,7 +48,6 @@ namespace TastyFoodSolution.Data.EF
             modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x=>x.UserId); 
             modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims"); 
             modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
->>>>>>> Stashed changes
         }
 
         public DbSet<Product> Products { get; set; }
