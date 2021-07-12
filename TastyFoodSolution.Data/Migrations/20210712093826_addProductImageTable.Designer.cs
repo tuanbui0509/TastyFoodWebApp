@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyFoodSolution.Data.EF;
 
 namespace TastyFoodSolution.Data.Migrations
 {
     [DbContext(typeof(TastyFoodDBContext))]
-    partial class TastyFoodDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210712093826_addProductImageTable")]
+    partial class addProductImageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,7 +182,7 @@ namespace TastyFoodSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "0a7f8b39-3137-4393-9eed-62821241b967",
+                            ConcurrencyStamp = "af025dd8-875d-4044-b063-38aef94036a5",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -257,7 +259,7 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0f7232df-ca15-40be-bb72-93b49af40860",
+                            ConcurrencyStamp = "3c3ec33e-84bb-43f8-bd68-06c727302ada",
                             Dob = new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "tuanbui0509@gmail.com",
                             EmailConfirmed = true,
@@ -266,7 +268,7 @@ namespace TastyFoodSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "tuanbui0509@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAELsbqu6r0emAdm94Zw++l2kRpRtFJoFlFlao6wsOVSNAd0atBEYIBBKK3VfV7Nen8A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENBFA64gSH3Hr+TM/MnZoxT//c4nSoo4S2f+rAasidDDR7cVbe3VCLT3E1+vRL7bHQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -613,7 +615,7 @@ namespace TastyFoodSolution.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2021, 7, 12, 20, 27, 48, 134, DateTimeKind.Local).AddTicks(9926),
+                            DateCreated = new DateTime(2021, 7, 12, 16, 38, 25, 456, DateTimeKind.Local).AddTicks(381),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -622,7 +624,7 @@ namespace TastyFoodSolution.Data.Migrations
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2021, 7, 12, 20, 27, 48, 135, DateTimeKind.Local).AddTicks(7044),
+                            DateCreated = new DateTime(2021, 7, 12, 16, 38, 25, 456, DateTimeKind.Local).AddTicks(8012),
                             OriginalPrice = 150000m,
                             Price = 500000m,
                             Stock = 0,

@@ -12,7 +12,7 @@ using TastyFoodSolution.Data.Extensions;
 
 namespace TastyFoodSolution.Data.EF
 {
-    class TastyFoodDBContext : IdentityDbContext<AppUser,AppRole,Guid>
+    public class TastyFoodDBContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
         public TastyFoodDBContext( DbContextOptions options) : base(options)
         {
@@ -37,6 +37,7 @@ namespace TastyFoodSolution.Data.EF
             modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
 
             //Data Seeding
             modelBuilder.Seed();
@@ -71,5 +72,7 @@ namespace TastyFoodSolution.Data.EF
         public DbSet<Promotion> Promotions { get; set; }
 
         public DbSet<Transaction> Transactions { get; set; }
+
+        public DbSet<ProductImage> ProductImages { get; set; }
     }
 }

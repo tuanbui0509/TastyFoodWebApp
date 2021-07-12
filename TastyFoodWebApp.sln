@@ -5,14 +5,18 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodWebApp", "TastyFoodWebApp\TastyFoodWebApp.csproj", "{6E16ACDA-FC1D-4B8A-B95D-2C25540D5182}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyFoodSolution.Data", "TastyFoodSolution.Data\TastyFoodSolution.Data.csproj", "{617C519B-E4A5-4055-939A-6E34B067831B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.Data", "TastyFoodSolution.Data\TastyFoodSolution.Data.csproj", "{617C519B-E4A5-4055-939A-6E34B067831B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E5EDAC45-17D4-4906-BB10-198ECB860877}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyFoodSolution.Application", "TastyFoodSolution.Application\TastyFoodSolution.Application.csproj", "{F99167BC-0C35-44DA-ADA7-C618D2A19505}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.Application", "TastyFoodSolution.Application\TastyFoodSolution.Application.csproj", "{F99167BC-0C35-44DA-ADA7-C618D2A19505}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.Utilities", "TastyFoodSolution.Utilities\TastyFoodSolution.Utilities.csproj", "{2F2BC39F-ED7D-4937-9DC4-2EA3C52E3987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyFoodSolution.ViewModels", "TastyFoodSolution.ViewModels\TastyFoodSolution.ViewModels.csproj", "{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +36,14 @@ Global
 		{F99167BC-0C35-44DA-ADA7-C618D2A19505}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F99167BC-0C35-44DA-ADA7-C618D2A19505}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F99167BC-0C35-44DA-ADA7-C618D2A19505}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F2BC39F-ED7D-4937-9DC4-2EA3C52E3987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F2BC39F-ED7D-4937-9DC4-2EA3C52E3987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F2BC39F-ED7D-4937-9DC4-2EA3C52E3987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F2BC39F-ED7D-4937-9DC4-2EA3C52E3987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
