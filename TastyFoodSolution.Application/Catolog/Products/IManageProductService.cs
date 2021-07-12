@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TastyFoodSolution.Application.Catolog.Products.Dto;
-using TastyFoodSolution.Application.Catolog.Products.Dto.Manage;
-using TastyFoodSolution.Application.Dtos;
+using TastyFoodSolution.ViewModels.Catalog.Products;
+using TastyFoodSolution.ViewModels.Catolog.Products;
+using TastyFoodSolution.ViewModels.Common;
 
 namespace TastyFoodSolution.Application.Catolog.Products
 {
@@ -23,14 +24,14 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
         Task AddViewcount(int productId);
 
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
 
-        //Task<int> AddImages(int productId, List<IFormFile> files);
+        Task<int> AddImages(int productId, List<IFormFile> files);
 
         Task<int> RemoveImages(int imageId);
 
         Task<int> UpdateImage(int imageId, string caption, bool isDefault);
 
-        //Task<List<ProductImageViewModel>> GetListImage(int productId);
+        Task<List<ProductImageViewModel>> GetListImage(int productId);
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TastyFoodSolution.Application.Catolog.Products.Dto
+namespace TastyFoodSolution.ViewModels.Catolog.Products
 {
     public class ProductViewModel
     {

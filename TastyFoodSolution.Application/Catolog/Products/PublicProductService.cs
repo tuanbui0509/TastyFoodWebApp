@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TastyFoodSolution.Application.Catolog.Products.Dto;
-using TastyFoodSolution.Application.Catolog.Products.Dto.Public;
-using TastyFoodSolution.Application.Dtos;
+using TastyFoodSolution.ViewModels.Catolog.Products;
+using TastyFoodSolution.ViewModels.Common;
 using TastyFoodSolution.Data.EF;
 
 namespace TastyFoodSolution.Application.Catolog.Products
@@ -19,7 +18,8 @@ namespace TastyFoodSolution.Application.Catolog.Products
             _context = context;
         }
        
-        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetProductPagingRequest request)
+
+        public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request)
         {
             //1. Select join
             var query = from p in _context.Products
