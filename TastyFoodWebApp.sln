@@ -16,7 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.Applicati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.Utilities", "TastyFoodSolution.Utilities\TastyFoodSolution.Utilities.csproj", "{2F2BC39F-ED7D-4937-9DC4-2EA3C52E3987}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyFoodSolution.ViewModels", "TastyFoodSolution.ViewModels\TastyFoodSolution.ViewModels.csproj", "{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.ViewModels", "TastyFoodSolution.ViewModels\TastyFoodSolution.ViewModels.csproj", "{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyFoodSolution.BackendApi", "TastyFoodSolution.BackendApi\TastyFoodSolution.BackendApi.csproj", "{54231F71-E55A-495E-A3E3-DB990D953EB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54231F71-E55A-495E-A3E3-DB990D953EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54231F71-E55A-495E-A3E3-DB990D953EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54231F71-E55A-495E-A3E3-DB990D953EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54231F71-E55A-495E-A3E3-DB990D953EB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
