@@ -12,7 +12,7 @@ using TastyFoodSolution.Data.Extensions;
 
 namespace TastyFoodSolution.Data.EF
 {
-    class TastyFoodDBContext : IdentityDbContext<AppUser,AppRole,Guid>
+    public class TastyFoodDBContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
         public TastyFoodDBContext( DbContextOptions options) : base(options)
         {
