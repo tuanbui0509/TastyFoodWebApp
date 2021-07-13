@@ -5,10 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TastyFoodSolution.Application.Catolog.Common;
 using TastyFoodSolution.Application.Catolog.Products;
 using TastyFoodSolution.Data.EF;
 using TastyFoodSolution.Utilities.Constants;
@@ -27,13 +29,21 @@ namespace TastyFoodSolution.BackendApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TastyFoodDBContext>(options => options.UseSqlServer
-            (Configuration.GetConnectionString(SystemConstants.MainConectionString)));
+            services.AddDbContext<TastyFoodDBContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConectionString)));
 
-            // Declare DI
+            //Declare DI
+            services.AddTransient<IStorageService, FileStorageService>();
+
             services.AddTransient<IPublicProductService, PublicProductService>();
-            services.AddSwaggerGen();
+            services.AddTransient<IManageProductService, ManageProductService>();
+
             services.AddControllersWithViews();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger Tasty Food", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
