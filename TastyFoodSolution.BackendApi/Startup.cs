@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +21,7 @@ using TastyFoodSolution.Application.System.Users;
 using TastyFoodSolution.Data.EF;
 using TastyFoodSolution.Data.Entities;
 using TastyFoodSolution.Utilities.Constants;
+using TastyFoodSolution.ViewModels.System.Users;
 
 namespace TastyFoodSolution.BackendApi
 {
@@ -48,7 +51,11 @@ namespace TastyFoodSolution.BackendApi
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IUserService, UserService>();
 
-            services.AddControllers();
+            //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
+            //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
+
+            // register all same url login to validator
+            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
             services.AddSwaggerGen(c =>
             {
