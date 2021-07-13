@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodWebApp", "TastyFoo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.Data", "TastyFoodSolution.Data\TastyFoodSolution.Data.csproj", "{617C519B-E4A5-4055-939A-6E34B067831B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E5EDAC45-17D4-4906-BB10-198ECB860877}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Solution Items", "0.Solution Items", "{E5EDAC45-17D4-4906-BB10-198ECB860877}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
@@ -18,7 +18,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.Utilities
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.ViewModels", "TastyFoodSolution.ViewModels\TastyFoodSolution.ViewModels.csproj", "{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyFoodSolution.BackendApi", "TastyFoodSolution.BackendApi\TastyFoodSolution.BackendApi.csproj", "{54231F71-E55A-495E-A3E3-DB990D953EB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TastyFoodSolution.BackendApi", "TastyFoodSolution.BackendApi\TastyFoodSolution.BackendApi.csproj", "{54231F71-E55A-495E-A3E3-DB990D953EB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Infrastructure", "1.Infrastructure", "{0E5BD8D4-43EB-4D2B-9E30-368278F30519}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{EF0C9545-8B50-48B7-9EBE-C34B1A96076F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Hosts", "3.Hosts", "{E9B4D3A2-B586-4EEF-BC13-62ED72719543}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +59,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6E16ACDA-FC1D-4B8A-B95D-2C25540D5182} = {E9B4D3A2-B586-4EEF-BC13-62ED72719543}
+		{617C519B-E4A5-4055-939A-6E34B067831B} = {EF0C9545-8B50-48B7-9EBE-C34B1A96076F}
+		{F99167BC-0C35-44DA-ADA7-C618D2A19505} = {EF0C9545-8B50-48B7-9EBE-C34B1A96076F}
+		{2F2BC39F-ED7D-4937-9DC4-2EA3C52E3987} = {0E5BD8D4-43EB-4D2B-9E30-368278F30519}
+		{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD} = {0E5BD8D4-43EB-4D2B-9E30-368278F30519}
+		{54231F71-E55A-495E-A3E3-DB990D953EB0} = {E9B4D3A2-B586-4EEF-BC13-62ED72719543}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {829F1E75-F185-419C-AE44-8E61B7E2EE68}

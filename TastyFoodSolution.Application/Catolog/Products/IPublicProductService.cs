@@ -10,7 +10,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
 {
     public interface IPublicProductService
     {
-        public Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request);
-        public Task<List<ProductViewModel>> GetAll();
+        public Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
     }
 }
