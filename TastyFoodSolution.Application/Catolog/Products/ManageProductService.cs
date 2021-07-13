@@ -11,24 +11,42 @@ using TastyFoodSolution.Application.Catolog.Common;
 using TastyFoodSolution.Data.EF;
 using TastyFoodSolution.Data.Entities;
 using TastyFoodSolution.Utilities.Exceptions;
-using TastyFoodSolution.ViewModels.Catalog.Products;
+using TastyFoodSolution.ViewModels.Catalog.ProductImage;
 using TastyFoodSolution.ViewModels.Catolog.Products;
 using TastyFoodSolution.ViewModels.Common;
+
 namespace TastyFoodSolution.Application.Catolog.Products
 {
     public class ManageProductService : IManageProductService
     {
         private readonly TastyFoodDBContext _context;
         private readonly IStorageService _storageService;
-        public ManageProductService(TastyFoodDBContext dBContext , IStorageService storageService)
+
+        public ManageProductService(TastyFoodDBContext dBContext, IStorageService storageService)
         {
             _context = dBContext;
             _storageService = storageService;
         }
 
-        public Task<int> AddImages(int productId, List<IFormFile> files)
+        public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
         {
-            throw new NotImplementedException();
+            var productImage = new ProductImage()
+            {
+                Caption = request.Caption,
+                DateCreated = DateTime.Now,
+                IsDefault = request.IsDefault,
+                ProductId = productId,
+                SortOrder = request.SortOrder
+            };
+
+            if (request.ImageFile != null)
+            {
+                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+                productImage.FileSize = request.ImageFile.Length;
+            }
+            _context.ProductImages.Add(productImage);
+            await _context.SaveChangesAsync();
+            return productImage.Id;
         }
 
         public async Task AddViewcount(int productId)
@@ -78,15 +96,14 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 };
             }
             _context.Products.Add(product);
-             await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return product.Id;
         }
-
 
         public async Task<int> Delete(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
-            if (product==null)
+            if (product == null)
             {
                 throw new TastyFoodException($"Cannot find a product:{productId}");
             }
@@ -98,8 +115,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
             _context.Products.Remove(product);
             return await _context.SaveChangesAsync();
         }
-
-       
 
         public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
@@ -173,14 +188,49 @@ namespace TastyFoodSolution.Application.Catolog.Products
             return productViewModel;
         }
 
-        public Task<List<ProductImageViewModel>> GetListImage(int productId)
+        public async Task<ProductImageViewModel> GetImageById(int imageId)
         {
-            throw new NotImplementedException();
+            var image = await _context.ProductImages.FindAsync(imageId);
+            if (image == null)
+                throw new TastyFoodException($"Cannot find an image with id {imageId}");
+
+            var viewModel = new ProductImageViewModel()
+            {
+                Caption = image.Caption,
+                DateCreated = image.DateCreated,
+                FileSize = image.FileSize,
+                Id = image.Id,
+                ImagePath = image.ImagePath,
+                IsDefault = image.IsDefault,
+                ProductId = image.ProductId,
+                SortOrder = image.SortOrder
+            };
+            return viewModel;
         }
 
-        public async Task<int> RemoveImages(int imageId)
+        public async Task<List<ProductImageViewModel>> GetListImages(int productId)
         {
-            throw new NotImplementedException();
+            return await _context.ProductImages.Where(x => x.ProductId == productId)
+                .Select(i => new ProductImageViewModel()
+                {
+                    Caption = i.Caption,
+                    DateCreated = i.DateCreated,
+                    FileSize = i.FileSize,
+                    Id = i.Id,
+                    ImagePath = i.ImagePath,
+                    IsDefault = i.IsDefault,
+                    ProductId = i.ProductId,
+                    SortOrder = i.SortOrder
+                }).ToListAsync();
+        }
+
+        public async Task<int> RemoveImage(int imageId)
+        {
+            var productImage = await _context.ProductImages.FindAsync(imageId);
+            if (productImage == null)
+                throw new TastyFoodException($"Cannot find an image with id {imageId}");
+            _context.ProductImages.Remove(productImage);
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<int> Update(ProductUpdateRequest request)
@@ -211,10 +261,19 @@ namespace TastyFoodSolution.Application.Catolog.Products
             return await _context.SaveChangesAsync();
         }
 
-
-        public async Task<int> UpdateImage(int imageId, string caption, bool isDefault)
+        public async Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var productImage = await _context.ProductImages.FindAsync(imageId);
+            if (productImage == null)
+                throw new TastyFoodException($"Cannot find an image with id {imageId}");
+
+            if (request.ImageFile != null)
+            {
+                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+                productImage.FileSize = request.ImageFile.Length;
+            }
+            _context.ProductImages.Update(productImage);
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<bool> UpdatePrice(int productId, decimal newPrice)
