@@ -13,6 +13,7 @@ namespace TastyFoodSolution.BackendApi.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IPublicProductService _publicProductService;
