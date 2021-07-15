@@ -1,48 +1,390 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TastyFoodWebApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="./assets/icon/meal.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--========== BOX ICONS ==========-->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!--========== CSS ==========-->
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/reset.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/home/home.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <!-- CAROUSEL SLIDER -->
+    <link rel="stylesheet" href="/assets/owlcarousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/owlcarousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/owlcarousel/owl.theme.default.min.css">
+    <title>Tasty food Website</title>
+
+    <!-- Link document scroll -->
+    <!-- https://scrollrevealjs.org/guide/hello-world.html -->
+    <!-- Link icon -->
+    <!-- https://boxicons.com/ -->
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TastyFoodWebApp</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+<body onscroll="scrollHeader()">
+    <!--========== SCROLL TOP ==========-->
+    <a href="#" class="scrolltop" id="scroll-top">
+        <i class='bx bxs-chevron-up scrolltop__icon'></i>
+    </a>
+    <nav class="nav-mobile">
+
+        <ul class="nav-mobile__list">
+            <li class="nav-mobile__item">
+                <a href="" class="nav-mobile__link">
+                    <i class='bx bxs-home nav-mobile__icon'></i> Shop
+                </a>
+            </li>
+            <li class="nav-mobile__item">
+                <a href="" class="nav-mobile__link">
+                    <i class='nav-mobile__icon bx bxs-heart'></i> Wishlist
+                </a>
+            </li>
+            <li class="nav-mobile__item">
+                <a href="" class="nav-mobile__link">
+                    <i class='nav-mobile__icon bx bxs-cart'></i> Cart
+                </a>
+            </li>
+            <li class="nav-mobile__item">
+                <a href="" class="nav-mobile__link">
+                    <i class='nav-mobile__icon bx bxs-user-circle'></i> Account
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!--========== HEADER ==========-->
+    <header id="header" class="header">
+        <nav class="container">
+            <div class="row">
+                <div class="col col-l-12 col-md-12 col-xs-12">
+                    <nav class="nav">
+                        <a href="#" class="logo">
+                            <img src="./assets/images/common/vegetarian.png" alt=""
+                                 class="img-responsive"> &nbsp; <span class="color-green">Tasty </span> &nbsp; <span class="color-gold">Food</span>
+                        </a>
+                        <div class="nav__menu row" id="nav-menu">
+                            <div class="col col-md-12 col-xs-12">
+                                <ul class="nav__list">
+                                    <li class="nav__item nav__item--active">
+                                        <a href="#" class="nav__link ">Home</a>
+                                    </li>
+                                    <li class="nav__item">
+                                        <a href="#" class="nav__link">
+                                            Page
+                                            <label title="toggle menu" for="page">
+                                                <i class='nav__item-icon bx bx-chevron-down'></i>
+                                            </label>
+                                        </a>
+                                        <input type="checkbox" id="page">
+                                        <ul class="nav__sub">
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    About
+                                                    Us
+                                                </a>
+                                            </li>
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    Our Team
+                                                </a>
+                                            </li>
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    Contact Us
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav__item">
+                                        <a href="#" class="nav__link">
+                                            Shop
+                                            <label for="shop"><i class='nav__item-icon bx bx-chevron-down'></i></label>
+                                        </a>
+                                        <input type="checkbox" id="shop">
+                                        <ul class="nav__sub">
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    Category
+                                                    list
+                                                </a>
+                                            </li>
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    Product List
+                                                </a>
+                                            </li>
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    Product Filter
+                                                    <label for="filter-shop">
+                                                        <i class='nav__item-icon bx bx-chevron-down'></i>
+                                                    </label>
+                                                </a>
+                                                <input type="checkbox" id="filter-shop">
+
+                                                <ul class="nav__sub">
+                                                    <li class="nav__sub-item">
+                                                        <a href="#" class="nav__sub-link">
+                                                            New
+                                                            Product
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav__sub-item">
+                                                        <a href="#" class="nav__sub-link">
+                                                            On
+                                                            Sale Product
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav__sub-item">
+                                                        <a href="#" class="nav__sub-link">
+                                                            Out
+                                                            Of Stock Product
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav__sub-item">
+                                                        <a href="#" class="nav__sub-link">
+                                                            Group
+                                                            Product
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav__item">
+
+                                        <a href="#" class="nav__link">
+                                            Product
+                                            <label title="toggle menu" for="product">
+                                                <i class='nav__item-icon bx bx-chevron-down'></i>
+                                            </label>
+                                        </a>
+                                        <input type="checkbox" id="product">
+                                        <ul class="nav__sub">
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    New
+                                                    Product
+                                                </a>
+                                            </li>
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    On Sale
+                                                    Product
+                                                </a>
+                                            </li>
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    Out Of
+                                                    Stock Product
+                                                </a>
+                                            </li>
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    Group
+                                                    Product
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav__item">
+                                        <a href="#" class="nav__link">
+                                            Blog
+                                            <label title="toggle menu" for="blog">
+                                                <i class='nav__item-icon bx bx-chevron-down'></i>
+                                            </label>
+                                        </a>
+                                        <input type="checkbox" id="blog">
+                                        <ul class="nav__sub">
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    New
+                                                    Blog
+                                                </a>
+                                            </li>
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    Most Read
+                                                    Blog
+                                                </a>
+                                            </li>
+                                            <li class="nav__sub-item">
+                                                <a href="#" class="nav__sub-link">
+                                                    Popular Blog
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav__item"><a href="#" class="nav__link">Account</a></li>
+
+                                    <li class="nav__item nav__item--icon">
+                                        <a href="./cart.html" class="nav__link">
+                                            <i class='nav__icon bx bx-cart-alt'>
+                                                <span class="nav__icon-count">1</span>
+                                            </i>
+                                        </a>
+                                    </li>
+                                    <li class="nav__item nav__item--icon">
+                                        <a href="./wishlist.html" class="nav__link">
+                                            <i class='nav__icon bx bxs-heart'>
+                                                <span class="nav__icon-count">1</span>
+                                            </i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="nav__utils">
+                            <!-- <div class="nav__search">
+                                <i class=' nav__icon bx bx-search'></i>
+                            </div> -->
+                            <div class="nav__theme">
+                                <i class='nav__icon bx bx-moon' id="theme-button"></i>
+                            </div>
+                        </div>
+
+                        <div class="nav__toggle" id="nav-toggle">
+                            <i class='bx bx-menu'></i>
+                        </div>
+                        <!-- ===== input search ===== -->
+                        <!-- <input type="text" class="nav__search-input" placeholder="Search item ...">  -->
+                    </nav>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <!--========== MAIN ==========-->
+    @RenderBody()
+    <!--========== FOOTER ==========-->
+    <footer class="footer section">
         <div class="container">
-            &copy; 2021 - TastyFoodWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row footer__container">
+                <div class="col col-l-3 col-md-6 col-xs-12">
+                    <div class="footer__content">
+                        <a href="#" class="logo">
+                            <img src="./assets/images/common/vegetarian.png" alt=""
+                                 class="img-responsive"> &nbsp; <span class="color-green">Tasty </span> &nbsp; <span class="color-gold">Food</span>
+                        </a>
+                        <span class="footer__description">
+                            Subscribe to our newsletter and get 10% off your
+                            first purchase
+                        </span>
+                        <div class="footer__social">
+                            <ul class="footer__social-list">
+                                <li class="footer__social-item">
+                                    <a href="" class="footer__social-link">
+                                        <i class="bx bxl-facebook-circle"></i>
+                                    </a>
+                                </li>
+                                <li class="footer__social-item">
+                                    <a href="" class="footer__social-link">
+                                        <i class="bx bxl-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="footer__social-item">
+                                    <a href="" class="footer__social-link">
+                                        <i class="bx bxl-google-plus-circle"></i>
+                                    </a>
+                                </li>
+                                <li class="footer__social-item">
+                                    <a href="" class="footer__social-link">
+                                        <i class="bx bxl-instagram"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-l-3 col-md-6 col-xs-12">
+                    <div class="footer__content">
+                        <h3 class="footer__title">Services</h3>
+                        <ul>
+                            <li><a href="#" class="footer__link">Delivery</a></li>
+                            <li><a href="#" class="footer__link">Pricing</a></li>
+                            <li><a href="#" class="footer__link">Fast food</a></li>
+                            <li><a href="#" class="footer__link">Reserve your spot</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col col-l-3 col-md-6 col-xs-12">
+                    <div class="footer__content">
+                        <h3 class="footer__title">Information</h3>
+                        <ul>
+                            <li><a href="#" class="footer__link">Event</a></li>
+                            <li><a href="#" class="footer__link">Contact us</a></li>
+                            <li><a href="#" class="footer__link">Privacy policy</a></li>
+                            <li><a href="#" class="footer__link">Terms of services</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col col-l-3 col-md-6 col-xs-12">
+                    <div class="footer__content">
+                        <h3 class="footer__title">Adress</h3>
+                        <ul>
+                            <li><i class='bx bxs-home-heart'></i> 123 Cong Hoa P.4, Tan Binh, HCM</li>
+                            <li><i class='bx bxs-phone'></i>(+84) 936 557 991</li>
+                            <li><i class='bx bx-mail-send'></i> tastyfood@email.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
+        <p class="footer__copy">&#169; 2020 Bedimcode. All right reserved</p>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    @RenderSection("modal", required: false)
+
+    <!--========== SCROLL REVEAL ==========-->
+    <script src="/assets/owlcarousel/assets/jquery-3.6.0.js"></script>
+    <script src="/assets/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="/assets/js/common.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script>
+        $('.owl-carousel.testimonial__list').owlCarousel({
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true,
+                    dots: false
+                },
+                740: {
+                    items: 2,
+                    nav: false
+                },
+                1024: {
+                    items: 3,
+                    nav: false
+                }
+            }
+        })
+
+        $('.owl-carousel.blog__list').owlCarousel({
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                740: {
+                    items: 2,
+                    nav: false
+                },
+                1024: {
+                    items: 3,
+                    nav: false,
+                    dots: false
+                }
+            }
+        })
+    </script>
 </body>
 </html>

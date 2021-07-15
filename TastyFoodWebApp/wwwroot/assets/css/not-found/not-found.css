@@ -1,0 +1,19 @@
+.not-found-wrapper{ background-color: var(--body-color);}
+.not-found-page {
+    text-align: center;
+    margin: 0 auto;
+}
+.not-found-title{
+    margin: 1rem;
+    font-size:var(--biggest-font-size);
+    color: var(--title-color-primary);
+}
+
+.not-found-text{
+    margin: 1rem 0;
+}
+.btn-not-found{
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
