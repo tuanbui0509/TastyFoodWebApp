@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TastyFoodSolution.Application.Catolog.Common
+namespace TastyFoodSolution.Application.Common
 {
     public class FileStorageService : IStorageService
     {
@@ -17,6 +17,7 @@ namespace TastyFoodSolution.Application.Catolog.Common
         {
             _userContentFolder = Path.Combine(webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME);
         }
+
         public async Task DeleteFileAsync(string fileName)
         {
             var filePath = Path.Combine(_userContentFolder, fileName);

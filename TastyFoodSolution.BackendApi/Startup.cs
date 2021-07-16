@@ -15,8 +15,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TastyFoodSolution.Application.Catolog.Common;
+using TastyFoodSolution.Application.Catalog.Categories;
 using TastyFoodSolution.Application.Catolog.Products;
+using TastyFoodSolution.Application.Common;
+using TastyFoodSolution.Application.System.Roles;
 using TastyFoodSolution.Application.System.Users;
 using TastyFoodSolution.Data.EF;
 using TastyFoodSolution.Data.Entities;
@@ -43,14 +45,15 @@ namespace TastyFoodSolution.BackendApi
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<TastyFoodDBContext>().AddDefaultTokenProviders();
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IProductService, ProductService>();
 
-            services.AddTransient<IPublicProductService, PublicProductService>();
-            services.AddTransient<IManageProductService, ManageProductService>();
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
-            services.AddTransient<IUserService, UserService>();
 
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 

@@ -13,4 +13,8 @@
     <Folder Include="wwwroot\assets\font\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TastyFoodSolution.ApiIntergration\TastyFoodSolution.ApiIntergration.csproj" />
+  </ItemGroup>
+
 </Project>

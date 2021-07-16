@@ -9,9 +9,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.7" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="System\Languages\" />
-    <Folder Include="System\Roles\" />
-  </ItemGroup>
-
 </Project>

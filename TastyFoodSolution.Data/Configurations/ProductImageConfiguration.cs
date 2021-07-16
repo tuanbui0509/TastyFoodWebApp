@@ -19,7 +19,6 @@ namespace TastyFoodSolution.Data.Configurations
             builder.Property(x => x.Id).UseIdentityColumn();
 
             builder.Property(x => x.ImagePath).HasMaxLength(200).IsRequired(true);
-            builder.Property(x => x.Caption).HasMaxLength(200);
 
             builder.HasOne(x => x.Product).WithMany(x => x.ProductImages).HasForeignKey(x => x.ProductId);
         }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TastyFoodSolution.Application.Catolog.Common
+namespace TastyFoodSolution.Application.Common
 {
     public interface IStorageService
     {

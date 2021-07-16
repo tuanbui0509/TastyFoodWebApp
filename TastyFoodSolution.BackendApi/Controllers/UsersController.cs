@@ -21,9 +21,9 @@ namespace TastyFoodSolution.BackendApi.Controllers
             _userService = userService;
         }
 
-        [HttpPost("authenticate")]
+        [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromForm] LoginRequest request)
+        public async Task<IActionResult> Login([FromForm] LoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -36,7 +36,7 @@ namespace TastyFoodSolution.BackendApi.Controllers
             return Ok(resultToken);
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromForm] RegisterRequest request)
         {

@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.ViewModels.Catalog.ProductImage;
+using TastyFoodSolution.ViewModels.Catalog.Products;
 using TastyFoodSolution.ViewModels.Catolog.Products;
 using TastyFoodSolution.ViewModels.Common;
 
 namespace TastyFoodSolution.Application.Catolog.Products
 {
-    public interface IManageProductService
+    public interface IProductService
     {
         Task<int> Create(ProductCreateRequest request);
 
@@ -18,7 +19,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
         Task<int> Delete(int productId);
 
-        Task<ProductViewModel> GetById(int productId, string languageId);
+        Task<ProductViewModel> GetById(int productId);
 
         Task<bool> UpdatePrice(int productId, decimal newPrice);
 
@@ -26,7 +27,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
         Task AddViewcount(int productId);
 
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> GetAllProduct(GetManageProductPagingRequest request);
 
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
 
@@ -37,5 +38,11 @@ namespace TastyFoodSolution.Application.Catolog.Products
         Task<ProductImageViewModel> GetImageById(int imageId);
 
         Task<List<ProductImageViewModel>> GetListImages(int productId);
+
+        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request);
+
+        Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
+
+        Task<List<ProductViewModel>> GetFeaturedProducts(int take);
     }
 }
