@@ -66,7 +66,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 DateCreated = DateTime.Now,
                 Name = request.Name,
                 Description = request.Description,
-                Details = request.Details
             };
             //Save image
             if (request.ThumbnailImage != null)
@@ -124,20 +123,32 @@ namespace TastyFoodSolution.Application.Catolog.Products
             //3. Paging
             int totalRow = await query.CountAsync();
 
-            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-                .Take(request.PageSize)
-                .Select(x => new ProductViewModel()
-                {
-                    Id = x.p.Id,
-                    Name = x.p.Name,
-                    DateCreated = x.p.DateCreated,
-                    Description = x.p.Description,
-                    Details = x.p.Details,
-                    OriginalPrice = x.p.OriginalPrice,
-                    Price = x.p.Price,
-                    Stock = x.p.Stock,
-                    ViewCount = x.p.ViewCount
-                }).ToListAsync();
+            //var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
+            //    .Take(request.PageSize)
+            //    .Select(x => new ProductViewModel()
+            //    {
+            //        Id = x.p.Id,
+            //        Name = x.p.Name,
+            //        DateCreated = x.p.DateCreated,
+            //        Description = x.p.Description,
+            //        Details = x.p.Details,
+            //        OriginalPrice = x.p.OriginalPrice,
+            //        Price = x.p.Price,
+            //        Stock = x.p.Stock,
+            //        ViewCount = x.p.ViewCount
+            //    }).ToListAsync();
+
+            var data = await query.Select(x => new ProductViewModel()
+            {
+                Id = x.p.Id,
+                Name = x.p.Name,
+                DateCreated = x.p.DateCreated,
+                Description = x.p.Description,
+                OriginalPrice = x.p.OriginalPrice,
+                Price = x.p.Price,
+                Stock = x.p.Stock,
+                ViewCount = x.p.ViewCount
+            }).ToListAsync();
 
             //4. Select and projection
             var pagedResult = new PagedResult<ProductViewModel>()
@@ -154,13 +165,15 @@ namespace TastyFoodSolution.Application.Catolog.Products
                                     join pic in _context.ProductInCategories on c.Id equals pic.CategoryId
                                     where pic.ProductId == productId
                                     select c.Name).ToListAsync();
-
+            if (product == null)
+            {
+                return null;
+            }
             var productViewModel = new ProductViewModel()
             {
                 Id = product.Id,
                 DateCreated = product.DateCreated,
                 Description = product != null ? product.Description : null,
-                Details = product != null ? product.Details : null,
                 Name = product != null ? product.Name : null,
                 OriginalPrice = product.OriginalPrice,
                 Price = product.Price,
@@ -220,7 +233,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
             product.Name = request.Name;
             product.Description = request.Description;
-            product.Details = request.Details;
 
             //Save image
             if (request.ThumbnailImage != null)
@@ -291,20 +303,32 @@ namespace TastyFoodSolution.Application.Catolog.Products
             //3. Paging
             int totalRow = await query.CountAsync();
 
-            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-                .Take(request.PageSize)
-                .Select(x => new ProductViewModel()
-                {
-                    Id = x.p.Id,
-                    Name = x.p.Name,
-                    DateCreated = x.p.DateCreated,
-                    Description = x.p.Description,
-                    Details = x.p.Details,
-                    OriginalPrice = x.p.OriginalPrice,
-                    Price = x.p.Price,
-                    Stock = x.p.Stock,
-                    ViewCount = x.p.ViewCount
-                }).ToListAsync();
+            //var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
+            //    .Take(request.PageSize)
+            //    .Select(x => new ProductViewModel()
+            //    {
+            //        Id = x.p.Id,
+            //        Name = x.p.Name,
+            //        DateCreated = x.p.DateCreated,
+            //        Description = x.p.Description,
+            //        Details = x.p.Details,
+            //        OriginalPrice = x.p.OriginalPrice,
+            //        Price = x.p.Price,
+            //        Stock = x.p.Stock,
+            //        ViewCount = x.p.ViewCount
+            //    }).ToListAsync();
+
+            var data = await query.Select(x => new ProductViewModel()
+            {
+                Id = x.p.Id,
+                Name = x.p.Name,
+                DateCreated = x.p.DateCreated,
+                Description = x.p.Description,
+                OriginalPrice = x.p.OriginalPrice,
+                Price = x.p.Price,
+                Stock = x.p.Stock,
+                ViewCount = x.p.ViewCount
+            }).ToListAsync();
 
             //4. Select and projection
             var pagedResult = new PagedResult<ProductViewModel>()
@@ -312,35 +336,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 Items = data
             };
             return pagedResult;
-        }
-
-        public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
-        {
-            var user = await _context.Products.FindAsync(id);
-            if (user == null)
-            {
-                return new ApiErrorResult<bool>($"Sản phẩm với id {id} không tồn tại");
-            }
-            foreach (var category in request.Categories)
-            {
-                var productInCategory = await _context.ProductInCategories
-                    .FirstOrDefaultAsync(x => x.CategoryId == int.Parse(category.Id)
-                    && x.ProductId == id);
-                if (productInCategory != null && category.Selected == false)
-                {
-                    _context.ProductInCategories.Remove(productInCategory);
-                }
-                else if (productInCategory == null && category.Selected)
-                {
-                    await _context.ProductInCategories.AddAsync(new ProductInCategory()
-                    {
-                        CategoryId = int.Parse(category.Id),
-                        ProductId = id
-                    });
-                }
-            }
-            await _context.SaveChangesAsync();
-            return new ApiSuccessResult<bool>();
         }
 
         public async Task<List<ProductViewModel>> GetFeaturedProducts(int take)
@@ -361,7 +356,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     Name = x.p.Name,
                     DateCreated = x.p.DateCreated,
                     Description = x.p.Description,
-                    Details = x.p.Details,
                     OriginalPrice = x.p.OriginalPrice,
                     Price = x.p.Price,
                     Stock = x.p.Stock,

@@ -51,7 +51,6 @@ namespace TastyFoodSolution.Data.Extensions
                    Stock = 0,
                    ViewCount = 0,
                    Name = "Bánh mì ăn sáng",
-                   Details = "Bánh mì ăn sáng Việt Nam",
                    Description = "Bánh mì ăn sáng Việt Nam"
                },
                 new Product()
@@ -63,7 +62,6 @@ namespace TastyFoodSolution.Data.Extensions
                     Stock = 0,
                     ViewCount = 0,
                     Name = "Gà rán",
-                    Details = "Gà rán Việt Nam",
                     Description = "Gà rán Việt Nam"
                 }
                );

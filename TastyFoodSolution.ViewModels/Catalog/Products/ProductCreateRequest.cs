@@ -18,7 +18,6 @@ namespace TastyFoodSolution.ViewModels.Catolog.Products
 
         public bool? IsFeatured { get; set; }
 
-        public string SeoAlias { get; set; }
         public IFormFile ThumbnailImage { get; set; }
     }
 }

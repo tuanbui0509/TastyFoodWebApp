@@ -16,7 +16,6 @@ namespace TastyFoodSolution.Data.Entities
         public bool? IsFeatured { get; set; }
         public string Name { set; get; }
         public string Description { set; get; }
-        public string Details { set; get; }
         public List<ProductInCategory> ProductInCategories { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }

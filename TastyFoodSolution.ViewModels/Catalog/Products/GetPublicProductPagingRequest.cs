@@ -7,7 +7,7 @@ using TastyFoodSolution.ViewModels.Common;
 
 namespace TastyFoodSolution.ViewModels.Catolog.Products
 {
-    public class GetPublicProductPagingRequest:PagingRequestBase
+    public class GetPublicProductPagingRequest
     {
         public int? CategoryId { get; set; }
     }

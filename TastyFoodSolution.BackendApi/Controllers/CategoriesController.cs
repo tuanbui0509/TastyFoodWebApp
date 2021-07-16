@@ -21,9 +21,9 @@ namespace TastyFoodSolution.BackendApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string languageId)
+        public async Task<IActionResult> GetAll()
         {
-            var products = await _categoryService.GetAll(languageId);
+            var products = await _categoryService.GetAll();
             return Ok(products);
         }
     }

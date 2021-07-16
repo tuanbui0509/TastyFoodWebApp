@@ -41,8 +41,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
         Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request);
 
-        Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
-
         Task<List<ProductViewModel>> GetFeaturedProducts(int take);
     }
 }

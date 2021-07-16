@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using TastyFoodSolution.Application.Catolog.Products;
 using TastyFoodSolution.ViewModels.Catalog.ProductImage;
-using TastyFoodSolution.ViewModels.Catalog.Products;
 using TastyFoodSolution.ViewModels.Catolog.Products;
 
 namespace TastyFoodSolution.BackendApi.Controllers
@@ -24,17 +23,17 @@ namespace TastyFoodSolution.BackendApi.Controllers
             _productService = productService;
         }
 
-        //http://localhost:port/products?pageIndex=1&pageSize=10&categoryId=
-        [HttpGet("{languageId}")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetPublicProductPagingRequest request)
+        //http://localhost:port/products?categoryId=
+        [HttpGet]
+        public async Task<IActionResult> GetAllByCategoryId([FromQuery] GetPublicProductPagingRequest request)
         {
             var products = await _productService.GetAllByCategoryId(request);
             return Ok(products);
         }
 
         //http://localhost:port/product/1
-        [HttpGet("{productId}/{languageId}")]
-        public async Task<ActionResult> GetById(int productId, string languageId)
+        [HttpGet("{productId}")]
+        public async Task<ActionResult> GetById(int productId)
         {
             var product = await _productService.GetById(productId);
             if (product == null)
@@ -140,21 +139,6 @@ namespace TastyFoodSolution.BackendApi.Controllers
             if (image == null)
                 return BadRequest("Cannot find product");
             return Ok(image);
-        }
-
-        [HttpPut("{id}/categories")]
-        [Authorize]
-        public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var result = await _productService.CategoryAssign(id, request);
-            if (!result.IsSuccessed)
-            {
-                return BadRequest(result);
-            }
-            return Ok(result);
         }
     }
 }
