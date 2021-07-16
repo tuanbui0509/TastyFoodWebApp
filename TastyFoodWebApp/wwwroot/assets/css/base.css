@@ -1,0 +1,150 @@
+/*===== GOOGLE FONTS ====*/
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+/*===== VARIABLES CSS =====*/
+
+:root {
+    --header-height: 4rem;
+    /*========== Colors ==========*/
+    --first-color: #069C54;
+    --first-color-light: #3bb77e;
+    --first-color-alt: #048654;
+    --title-color: #393939;
+    --text-color: #707070;
+    --title-color-primary: #1c2137;
+    --title-color-fixed: #1c2137;
+    --border-color: #c0c0c0;
+    --text-color-light: #A6A6A6;
+    --body-color: #FBFEFD;
+    --red-color: #f33a58;
+    --green-color: #069C54;
+    --gold-color: #ffba43;
+    --white-color: #fff;
+    --container-color: #ffffff;
+    --light-green-color: #e2f9ee !important;
+    /* ========== Background Colors ========== */
+    --background-green-light: #E2F9EE;
+    /*========== Font and typography ==========*/
+    --body-font: 'Poppins', sans-serif;
+    --h1-font-size: 1.5rem;
+    --h2-font-size: 1.25rem;
+    --h3-font-size: 1rem;
+    --normal-font-size: 1rem;
+    --biggest-font-size: 2.25rem;
+    --big-font-size: 2rem;
+    /*========== Font weight ==========*/
+    --font-medium: 500;
+    --font-semi-bold: 600;
+    /*========== Margents ==========*/
+    --mb-1: .5rem;
+    --mb-2: 1rem;
+    --mb-3: 1.5rem;
+    --mb-4: 2rem;
+    --mb-5: 2.5rem;
+    --mb-6: 3rem;
+    /*========== z index ==========*/
+    --z-tooltip: 10;
+    --z-fixed: 100;
+    /*========== z index ==========*/
+    --padding-box: 2rem;
+}
+
+@media screen and (max-width: 767px) {
+    :root {
+        --padding-box: 0.5rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    :root {
+        --big-font-size: 2rem;
+        --biggest-font-size: 2.5rem;
+        --h1-font-size: 2.25rem;
+        --h2-font-size: 1.5rem;
+        --h3-font-size: 1.25rem;
+        --normal-font-size: 1.1rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    :root {
+        --big-font-size: 3.1875rem;
+        --biggest-font-size: 4rem;
+        --h1-font-size: 2.25rem;
+        --h2-font-size: 1.5rem;
+        --h3-font-size: 1.25rem;
+        --normal-font-size: 1.1rem;
+    }
+}
+
+/*===== BASE =====*/
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    background-color: var(--body-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    /* margin: var(--header-height)+1.5rem 0 0 0; */
+    position: relative;
+}
+
+/*========== Variables Dark theme ==========*/
+
+body.dark-theme {
+    --title-color: #F1F3F2;
+    --text-color: #C7D1CC;
+    --body-color: #1D2521;
+    --container-color: #27302C;
+    --background-green-light: #27302C;
+    --title-color-primary: #F1F3F2;
+    --first-color-light: #20573c;
+    --light-green-color: #27302C;
+    --green-color: #fff;
+    --border-color: #073f24;
+}
+
+/*========== Text ==========*/
+
+.text-right {
+    text-align: right!important;
+}
+
+.text-left {
+    text-align: left!important;
+}
+
+.text-center {
+    text-align: center!important;
+}
+
+.heading--primary {
+    color: var(--title-color-primary);
+    font-weight: var(--font-semi-bold);
+}
+
+.section-heading {
+    color: var(--first-color);
+}
+
+.primary-color {
+    color: var(--title-color-primary)!important;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.m-b-1{
+    margin-bottom: 1rem;
+}

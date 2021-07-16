@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{EF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Hosts", "3.Hosts", "{E9B4D3A2-B586-4EEF-BC13-62ED72719543}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TastyFoodSolution.ApiIntergration", "TastyFoodSolution.ApiIntergration\TastyFoodSolution.ApiIntergration.csproj", "{B73E6CEB-8050-4694-A4F0-E2444DFB19D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{54231F71-E55A-495E-A3E3-DB990D953EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54231F71-E55A-495E-A3E3-DB990D953EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54231F71-E55A-495E-A3E3-DB990D953EB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B73E6CEB-8050-4694-A4F0-E2444DFB19D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B73E6CEB-8050-4694-A4F0-E2444DFB19D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B73E6CEB-8050-4694-A4F0-E2444DFB19D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B73E6CEB-8050-4694-A4F0-E2444DFB19D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{2F2BC39F-ED7D-4937-9DC4-2EA3C52E3987} = {0E5BD8D4-43EB-4D2B-9E30-368278F30519}
 		{F0CC06F9-2EBA-45D0-A0C2-B994330C46AD} = {0E5BD8D4-43EB-4D2B-9E30-368278F30519}
 		{54231F71-E55A-495E-A3E3-DB990D953EB0} = {E9B4D3A2-B586-4EEF-BC13-62ED72719543}
+		{B73E6CEB-8050-4694-A4F0-E2444DFB19D5} = {E9B4D3A2-B586-4EEF-BC13-62ED72719543}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {829F1E75-F185-419C-AE44-8E61B7E2EE68}
