@@ -51,7 +51,8 @@ namespace TastyFoodSolution.Data.Extensions
                    Stock = 0,
                    ViewCount = 0,
                    Name = "Bánh mì ăn sáng",
-                   Description = "Bánh mì ăn sáng Việt Nam"
+                   Description = "Bánh mì ăn sáng Việt Nam",
+                   CategoryId = 1
                },
                 new Product()
                 {
@@ -62,14 +63,10 @@ namespace TastyFoodSolution.Data.Extensions
                     Stock = 0,
                     ViewCount = 0,
                     Name = "Gà rán",
-                    Description = "Gà rán Việt Nam"
+                    Description = "Gà rán Việt Nam",
+                    CategoryId = 2
                 }
                );
-
-            modelBuilder.Entity<ProductInCategory>().HasData(
-                new ProductInCategory() { ProductId = 1, CategoryId = 1 },
-                new ProductInCategory() { ProductId = 2, CategoryId = 2 }
-                );
 
             // any guid
             var roleId = new Guid("8D04DCE2-969A-435D-BBA4-DF3F325983DC");

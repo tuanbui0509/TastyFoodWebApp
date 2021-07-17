@@ -12,7 +12,6 @@ namespace TastyFoodSolution.ViewModels.Catolog.Products
         public int Id { set; get; }
         public string Name { set; get; }
         public string Description { set; get; }
-        public string Details { set; get; }
         public bool? IsFeatured { get; set; }
 
         public IFormFile ThumbnailImage { get; set; }

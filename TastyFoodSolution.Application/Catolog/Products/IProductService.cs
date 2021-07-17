@@ -13,6 +13,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
 {
     public interface IProductService
     {
+        // product
         Task<int> Create(ProductCreateRequest request);
 
         Task<int> Update(ProductUpdateRequest request);
@@ -29,6 +30,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
         Task<PagedResult<ProductViewModel>> GetAllProduct(GetManageProductPagingRequest request);
 
+        // Image
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
 
         Task<int> RemoveImage(int imageId);
@@ -41,6 +43,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
         Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request);
 
+        //product feature
         Task<List<ProductViewModel>> GetFeaturedProducts(int take);
     }
 }

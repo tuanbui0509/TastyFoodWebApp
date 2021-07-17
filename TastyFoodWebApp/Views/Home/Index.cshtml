@@ -1,4 +1,8 @@
-﻿@{
+﻿@model HomeViewModel
+
+@using TastyFoodSolution.ViewModels.Catolog.Products;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@{
     ViewData["Title"] = "Home";
 }
 
@@ -163,98 +167,61 @@
                 <li class="tabs-item tabs-item--active" onclick="changeTab(event,'feature-product')">
                     <a class="tabs-link">Feature Product</a>
                 </li>
-                <li class="tabs-item " onclick="changeTab(event,'new-product')">
+                <li class="tabs-item " onclick="changeTab(event,'latest-product')">
                     <a class="tabs-link">Latest Product</a>
                 </li>
                 <li class="tabs-item" onclick="changeTab(event,'best-sale')"><a class="tabs-link">Best sale</a></li>
-                </li>
             </ul>
 
             <div class="organically__conent">
                 <div class="organically__pills" id="feature-product">
                     <div class="row">
-                        <div class="col col-xs-12 col-md-6 col-l-3">
-                            <div class="product-item organically__conent-item">
-                                <a href="#" class="product-thumb">
-                                    <img src="./assets/images/product/product3.jpg" alt=""
-                                         class="product-img img-responsive">
-                                </a>
-                                <p class="product-category">Bakery, Snacks</p>
-                                <a href="#" class="product-name">Sour</a>
-                                <div class="product-box">
-                                    <div class="product-prices">
-                                        <strong class="product-price-old">$4.50</strong>
-                                        <strong class="product-price-new">$4.00</strong>
-                                    </div>
-                                    <div class="product__reviews">
-
-                                        <div class="product-rating">
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star-half'></i>
-                                        </div>
-                                        <span class="product__comment">
-                                            (0)
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="product-box">
-                                    <a class="product__to-cart btn-primary" onclick="addToCart(event)">
-                                        ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                        @for (int index = 0; index < Model.FeatureProducts.Count; index++)
+                        {
+                            var item = Model.FeatureProducts[index];
+                            //var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
+                            <div class="col col-xs-12 col-md-6 col-l-3">
+                                <div class="product-item organically__conent-item">
+                                    <a href="#" class="product-thumb">
+                                        <img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt=""
+                                             class="product-img img-responsive">
                                     </a>
-                                    <div class="product__right">
-                                        <a class="product__to-wishlist" onclick="addToWishList(event)">
-                                            <i class='bx bx-heart'></i>
-                                        </a>
-                                        <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
-                                    </div>
-                                </div>
-                                <span class="product__label-sale">Sale</span>
-                            </div>
-                        </div>
-                        <div class="col col-xs-12 col-md-6 col-l-3">
-                            <div class="product-item organically__conent-item">
-                                <a href="#" class="product-thumb">
-                                    <img src="./assets/images/product/product1.jpg" alt=""
-                                         class="product-img img-responsive">
-                                </a>
-                                <p class="product-category">Bakery, Snacks</p>
-                                <a href="#" class="product-name">Snack</a>
-                                <div class="product-box">
-                                    <div class="product-prices">
-                                        <strong class="product-price-old">$4.50</strong>
-                                        <strong class="product-price-new">$4.00</strong>
-                                    </div>
-                                    <div class="product__reviews">
-
-                                        <div class="product-rating">
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star-half'></i>
+                                    <p class="product-category">@item.Categorie</p>
+                                    <a href="#" class="product-name">@item.Name</a>
+                                    <div class="product-box">
+                                        <div class="product-prices">
+                                            <strong class="product-price-old">@item.OriginalPrice</strong>
+                                            <strong class="product-price-new">@item.Price</strong>
                                         </div>
-                                        <span class="product__comment">
-                                            (0)
-                                        </span>
+                                        <div class="product__reviews">
+
+                                            <div class="product-rating">
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star-half'></i>
+                                            </div>
+                                            <span class="product__comment">
+                                                (0)
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="product-box">
-                                    <a class="product__to-cart btn-primary" onclick="addToCart(event)">
-                                        ADD TO CART<i class="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                    <div class="product__right">
-                                        <a class="product__to-wishlist" onclick="addToWishList(event)">
-                                            <i class='bx bx-heart'></i>
+                                    <div class="product-box">
+                                        <a class="product__to-cart btn-primary" onclick="addToCart(event)">
+                                            ADD TO CART<i class="bx bx-right-arrow-alt"></i>
                                         </a>
-                                        <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
+                                        <div class="product__right">
+                                            <a class="product__to-wishlist" onclick="addToWishList(event)">
+                                                <i class='bx bx-heart'></i>
+                                            </a>
+                                            <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
+                                        </div>
                                     </div>
+                                    <span class="product__label-sale">Sale</span>
                                 </div>
-                                <span class="product__label-sale">Sale</span>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
 
@@ -304,7 +271,7 @@
                     </div>
                 </div>
 
-                <div class="organically__pills" id="new-product">
+                <div class="organically__pills" id="latest-product">
                     <div class="row">
                         <div class="col col-xs-12 col-md-6 col-l-3">
                             <div class="product-item organically__conent-item">
@@ -650,7 +617,6 @@
                 </div>
             </div>
         </div>
-        </div>
     </section>
 
     <!--========== APP ==========-->
@@ -676,7 +642,6 @@
                     <img src="assets/images/home/movil-app.png" alt="" class="app__img">
                 </div>
             </div>
-        </div>
         </div>
     </section>
 
@@ -887,7 +852,7 @@
                         </div>
                         <div class="testimonial__item-thumb">
                             <img src="./assets/images/home/testimonial1.png" alt=""
-                                 class="testimonial__item-avatar img-responsive"></img>
+                                 class="testimonial__item-avatar img-responsive" />
                         </div>
                     </div>
                 </div>
@@ -907,7 +872,7 @@
                         </div>
                         <div class="testimonial__item-thumb">
                             <img src="./assets/images/home/testimonial2.png" alt=""
-                                 class="testimonial__item-avatar img-responsive"></img>
+                                 class="testimonial__item-avatar img-responsive" />
                         </div>
                     </div>
                 </div>
@@ -928,7 +893,7 @@
                         </div>
                         <div class="testimonial__item-thumb">
                             <img src="./assets/images/home/testimonial3.png" alt=""
-                                 class="testimonial__item-avatar img-responsive"></img>
+                                 class="testimonial__item-avatar img-responsive" />
                         </div>
                     </div>
                 </div>
@@ -948,7 +913,7 @@
                         </div>
                         <div class="testimonial__item-thumb">
                             <img src="./assets/images/home/testimonial4.png" alt=""
-                                 class="testimonial__item-avatar img-responsive"></img>
+                                 class="testimonial__item-avatar img-responsive" />
                         </div>
                     </div>
                 </div>
@@ -968,7 +933,7 @@
                         </div>
                         <div class="testimonial__item-thumb">
                             <img src="./assets/images/home/testimonial5.png" alt=""
-                                 class="testimonial__item-avatar img-responsive"></img>
+                                 class="testimonial__item-avatar img-responsive" />
                         </div>
                     </div>
                 </div>
@@ -989,7 +954,7 @@
                         </div>
                         <div class="testimonial__item-thumb">
                             <img src="./assets/images/home/testimonial6.png" alt=""
-                                 class="testimonial__item-avatar img-responsive"></img>
+                                 class="testimonial__item-avatar img-responsive" />
                         </div>
                     </div>
                 </div>
@@ -1010,7 +975,7 @@
                         </div>
                         <div class="testimonial__item-thumb">
                             <img src="./assets/images/home/testimonial7.png" alt=""
-                                 class="testimonial__item-avatar img-responsive"></img>
+                                 class="testimonial__item-avatar img-responsive" />
                         </div>
                     </div>
                 </div>

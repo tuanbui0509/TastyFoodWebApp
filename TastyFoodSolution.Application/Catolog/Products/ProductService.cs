@@ -22,6 +22,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
     {
         private readonly TastyFoodDBContext _context;
         private readonly IStorageService _storageService;
+        private const string USER_CONTENT_FOLDER_NAME = "images";
 
         public ProductService(TastyFoodDBContext dBContext, IStorageService storageService)
         {
@@ -106,18 +107,16 @@ namespace TastyFoodSolution.Application.Catolog.Products
         {
             //1. Select join
             var query = from p in _context.Products
-                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
-                        from pic in ppic.DefaultIfEmpty()
-                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        join c in _context.Categories on p.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                        select new { p, pic };
+                        select new { p, c };
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
                 query = query.Where(x => x.p.Name.Contains(request.Keyword));
 
             if (request.CategoryId != null && request.CategoryId != 0)
             {
-                query = query.Where(p => p.pic.CategoryId == request.CategoryId);
+                query = query.Where(p => p.p.CategoryId == request.CategoryId);
             }
 
             //3. Paging
@@ -162,8 +161,8 @@ namespace TastyFoodSolution.Application.Catolog.Products
         {
             var product = await _context.Products.FindAsync(productId);
             var categories = await (from c in _context.Categories
-                                    join pic in _context.ProductInCategories on c.Id equals pic.CategoryId
-                                    where pic.ProductId == productId
+                                    join p in _context.Products on c.Id equals p.CategoryId
+                                    where p.Id == productId
                                     select c.Name).ToListAsync();
             if (product == null)
             {
@@ -179,7 +178,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 Price = product.Price,
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
-                Categories = categories
             };
             return productViewModel;
         }
@@ -285,20 +283,19 @@ namespace TastyFoodSolution.Application.Catolog.Products
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
-            return fileName;
+            return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
         }
 
         public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request)
         {
             //1. Select join
             var query = from p in _context.Products
-                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId
-                        join c in _context.Categories on pic.CategoryId equals c.Id
-                        select new { p, pic };
+                        join c in _context.Categories on p.CategoryId equals c.Id
+                        select new { p, c };
             //2. filter
             if (request.CategoryId.HasValue && request.CategoryId.Value > 0)
             {
-                query = query.Where(p => p.pic.CategoryId == request.CategoryId);
+                query = query.Where(p => p.p.CategoryId == request.CategoryId);
             }
             //3. Paging
             int totalRow = await query.CountAsync();
@@ -342,12 +339,12 @@ namespace TastyFoodSolution.Application.Catolog.Products
         {
             //1. Select join
             var query = from p in _context.Products
-                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
-                        //join pi in _context.ProductImages.Where(x => x.IsDefault == true) on p.Id equals pi.ProductId
-                        from pic in ppic.DefaultIfEmpty()
-                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
-                        from c in picc.DefaultIfEmpty()
-                        select new { p, pic };
+                        join c in _context.Categories on p.CategoryId equals c.Id into pc
+                        from c in pc.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        where (pi.IsDefault == true || pi == null) && p.IsFeatured == true
+                        select new { p, c, pi };
 
             var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
                 .Select(x => new ProductViewModel()
@@ -360,7 +357,8 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     Price = x.p.Price,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
-                    //ThumbnailImage = x.pi.ImagePath
+                    ThumbnailImage = x.pi.ImagePath,
+                    Categorie = x.c.Name,
                 }).ToListAsync();
 
             return data;

@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TastyFoodSolution.Application\TastyFoodSolution.Application.csproj" />
+    <ProjectReference Include="..\TastyFoodSolution.BackendApi\TastyFoodSolution.BackendApi.csproj" />
     <ProjectReference Include="..\TastyFoodSolution.Data\TastyFoodSolution.Data.csproj" />
     <ProjectReference Include="..\TastyFoodSolution.Utilities\TastyFoodSolution.Utilities.csproj" />
     <ProjectReference Include="..\TastyFoodSolution.ViewModels\TastyFoodSolution.ViewModels.csproj" />

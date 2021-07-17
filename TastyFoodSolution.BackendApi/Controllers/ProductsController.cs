@@ -25,6 +25,7 @@ namespace TastyFoodSolution.BackendApi.Controllers
 
         //http://localhost:port/products?categoryId=
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllByCategoryId([FromQuery] GetPublicProductPagingRequest request)
         {
             var products = await _productService.GetAllByCategoryId(request);
@@ -33,6 +34,7 @@ namespace TastyFoodSolution.BackendApi.Controllers
 
         //http://localhost:port/product/1
         [HttpGet("{productId}")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetById(int productId)
         {
             var product = await _productService.GetById(productId);
@@ -87,6 +89,7 @@ namespace TastyFoodSolution.BackendApi.Controllers
 
         //========================== Images ============================
         [HttpPost("{productId}/images")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -133,12 +136,21 @@ namespace TastyFoodSolution.BackendApi.Controllers
         }
 
         [HttpGet("{productId}/images/{imageId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetImageById(int productId, int imageId)
         {
             var image = await _productService.GetImageById(imageId);
             if (image == null)
                 return BadRequest("Cannot find product");
             return Ok(image);
+        }
+
+        [HttpGet("featured/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeaturedProducts(int take)
+        {
+            var products = await _productService.GetFeaturedProducts(take);
+            return Ok(products);
         }
     }
 }

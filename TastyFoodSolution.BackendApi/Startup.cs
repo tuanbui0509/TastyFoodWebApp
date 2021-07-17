@@ -54,8 +54,6 @@ namespace TastyFoodSolution.BackendApi
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
-            //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
-            //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 
             // register all same url login to validator
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
@@ -94,8 +92,8 @@ namespace TastyFoodSolution.BackendApi
                     });
             });
 
-            string issuer = Configuration.GetValue<string>("Tokens:Issuer");
-            string signingKey = Configuration.GetValue<string>("Tokens:Key");
+            string issuer = Configuration.GetValue<string>("Token:Issuer");
+            string signingKey = Configuration.GetValue<string>("Token:Key");
             byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
 
             services.AddAuthentication(opt =>

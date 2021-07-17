@@ -26,7 +26,6 @@ namespace TastyFoodSolution.Data.EF
 
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductInCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new ReviewConfiguration());
 
@@ -51,8 +50,6 @@ namespace TastyFoodSolution.Data.EF
         public DbSet<AppConfig> AppConfigs { get; set; }
 
         public DbSet<Cart> Carts { get; set; }
-
-        public DbSet<ProductInCategory> ProductInCategories { get; set; }
 
         public DbSet<Contact> Contacts { get; set; }
 

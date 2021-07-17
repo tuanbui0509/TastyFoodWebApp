@@ -13,6 +13,8 @@ namespace TastyFoodSolution.Data.Entities
         public Guid UserId { set; get; }
         public string Comment { set; get; }
         public int Rate { set; get; }
+        public int ProductId { set; get; }
+        public Product Proudct { set; get; }
         public AppUser AppUser { get; set; }
     }
 }

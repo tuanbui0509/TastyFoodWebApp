@@ -26,6 +26,8 @@ namespace TastyFoodSolution.Data.Configurations
             builder.Property(x => x.Rate);
 
             builder.HasOne(x => x.AppUser).WithMany(x => x.Reviews).HasForeignKey(x => x.UserId);
+
+            builder.HasOne(x => x.Proudct).WithMany(x => x.Reviews).HasForeignKey(x => x.ProductId);
         }
     }
 }
