@@ -152,5 +152,21 @@ namespace TastyFoodSolution.BackendApi.Controllers
             var products = await _productService.GetFeaturedProducts(take);
             return Ok(products);
         }
+
+        [HttpGet("latest/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLatestProducts(int take)
+        {
+            var products = await _productService.GetLatestProducts(take);
+            return Ok(products);
+        }
+
+        [HttpGet("best-seller/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetBestSellerProducts(int take)
+        {
+            var products = await _productService.GetBestSellerProducts(take);
+            return Ok(products);
+        }
     }
 }

@@ -49,5 +49,16 @@ namespace TastyFoodSolution.ApiIntegration
             var data = await GetListAsync<ProductViewModel>($"/api/products/latest/{take}");
             return data;
         }
+
+        public async Task<List<ProductViewModel>> GetBestSellerProducts(int take)
+        {
+            var data = await GetListAsync<ProductViewModel>($"/api/products/best-seller/{take}");
+            return data;
+        }
+
+        public async Task<bool> DeleteProduct(int id)
+        {
+            return await Delete($"/api/products/" + id);
+        }
     }
 }

@@ -33,7 +33,8 @@ namespace TastyFoodWebApp.Controllers
             var viewModel = new HomeViewModel
             {
                 FeatureProducts = await _productApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
-                //LatestProducts = await _productApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts),
+                LatestProducts = await _productApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts),
+                BestSellerProducts = await _productApiClient.GetBestSellerProducts(SystemConstants.ProductSettings.NumberOfBestSellerProducts),
             };
             return View(viewModel);
         }

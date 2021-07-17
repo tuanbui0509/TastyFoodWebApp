@@ -14,8 +14,8 @@ namespace TastyFoodSolution.ViewModels.Catolog.Products
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
         public string Description { set; get; }
-
         public bool? IsFeatured { get; set; }
+        public int CategoryId { get; set; }
 
         public IFormFile ThumbnailImage { get; set; }
     }
