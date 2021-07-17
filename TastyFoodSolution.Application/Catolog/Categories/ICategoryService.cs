@@ -8,6 +8,6 @@ namespace TastyFoodSolution.Application.Catalog.Categories
 {
     public interface ICategoryService
     {
-        Task<List<CategoryVm>> GetAll(string languageId);
+        Task<List<CategoryViewModel>> GetAll();
     }
 }

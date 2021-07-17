@@ -10,8 +10,8 @@ using TastyFoodSolution.Data.EF;
 namespace TastyFoodSolution.Data.Migrations
 {
     [DbContext(typeof(TastyFoodDBContext))]
-    [Migration("20210711142048_seedIdentityUser")]
-    partial class seedIdentityUser
+    [Migration("20210716161914_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -182,7 +182,7 @@ namespace TastyFoodSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "8a466d4b-74ff-47bb-8608-b1fd18f45871",
+                            ConcurrencyStamp = "b7ab091e-0019-4b43-a1f9-e6badecfef43",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -259,7 +259,7 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bb1a6ff5-09da-4bd8-8cce-b9df20bc2047",
+                            ConcurrencyStamp = "7ee34c07-e5d6-44e1-b646-e134d5b2c0d5",
                             Dob = new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "tuanbui0509@gmail.com",
                             EmailConfirmed = true,
@@ -268,7 +268,7 @@ namespace TastyFoodSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "tuanbui0509@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFGbkS+SrTfSY7fqPIacn8wQD+yROAEqe0Fnaq1ql09Ht2R1PX6VfMsK1mearZ8hhg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJKpI7vp2wxh/UgkEcDftjCt53DT79QiiSPEm6LPDsFHUP6/z8d7OrQ8AOsaj75IXw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -322,6 +322,9 @@ namespace TastyFoodSolution.Data.Migrations
                     b.Property<bool>("IsShowOnHome")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
@@ -342,6 +345,7 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = 1,
                             IsShowOnHome = true,
+                            Name = "Bánh mì",
                             SortOrder = 1,
                             Status = 1
                         },
@@ -349,95 +353,9 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = 2,
                             IsShowOnHome = true,
+                            Name = "Đồ ăn nhanh",
                             SortOrder = 1,
                             Status = 1
-                        });
-                });
-
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.CategoryTranslation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LanguageId")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(5)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("SeoAlias")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("SeoDescription")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("SeoTitle")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("LanguageId");
-
-                    b.ToTable("CategoryTranslations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            LanguageId = "vi-VN",
-                            Name = "Bánh mì",
-                            SeoAlias = "banh-mi",
-                            SeoDescription = "Sản phẩm bánh mì Việt Nam",
-                            SeoTitle = "Sản phẩm bánh mì Việt Nam"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            LanguageId = "en-US",
-                            Name = "Bread",
-                            SeoAlias = "bread",
-                            SeoDescription = "Bread in Viet Nam",
-                            SeoTitle = "Bread in Viet Nam"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 2,
-                            LanguageId = "vi-VN",
-                            Name = "Đồ ăn nhanh",
-                            SeoAlias = "do-an-nhanh",
-                            SeoDescription = "Đồ ăn nhanh Việt Nam",
-                            SeoTitle = "Đồ Ăn nhanh Việt Nam"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 2,
-                            LanguageId = "en-US",
-                            Name = "Fast Fodd",
-                            SeoAlias = "fast-food",
-                            SeoDescription = "Fast Fodd in Viet Nam",
-                            SeoTitle = "Fast Fodd in Viet Nam"
                         });
                 });
 
@@ -477,40 +395,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.Language", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(5)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(5)");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Languages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "vi-VN",
-                            IsDefault = true,
-                            Name = "Tiếng Việt"
-                        },
-                        new
-                        {
-                            Id = "en-US",
-                            IsDefault = false,
-                            Name = "English"
-                        });
-                });
-
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -521,9 +405,7 @@ namespace TastyFoodSolution.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("OrderDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 7, 11, 21, 20, 47, 394, DateTimeKind.Local).AddTicks(5865));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ShipAddress")
                         .IsRequired()
@@ -587,11 +469,20 @@ namespace TastyFoodSolution.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("IsFeatured")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
@@ -611,13 +502,18 @@ namespace TastyFoodSolution.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2021, 7, 11, 21, 20, 47, 413, DateTimeKind.Local).AddTicks(2212),
+                            CategoryId = 1,
+                            DateCreated = new DateTime(2021, 7, 16, 23, 19, 13, 229, DateTimeKind.Local).AddTicks(2419),
+                            Description = "Bánh mì ăn sáng Việt Nam",
+                            Name = "Bánh mì ăn sáng",
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -626,7 +522,10 @@ namespace TastyFoodSolution.Data.Migrations
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2021, 7, 11, 21, 20, 47, 413, DateTimeKind.Local).AddTicks(4530),
+                            CategoryId = 2,
+                            DateCreated = new DateTime(2021, 7, 16, 23, 19, 13, 230, DateTimeKind.Local).AddTicks(980),
+                            Description = "Gà rán Việt Nam",
+                            Name = "Gà rán",
                             OriginalPrice = 150000m,
                             Price = 500000m,
                             Stock = 0,
@@ -639,10 +538,9 @@ namespace TastyFoodSolution.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Caption")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -651,7 +549,9 @@ namespace TastyFoodSolution.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
@@ -659,44 +559,14 @@ namespace TastyFoodSolution.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImage");
+                    b.ToTable("ProductImages");
                 });
 
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.ProductInCategory", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductInCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            ProductId = 1
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            ProductId = 2
-                        });
-                });
-
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.ProductTranslation", b =>
+            modelBuilder.Entity("TastyFoodSolution.Data.Entities.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -705,20 +575,7 @@ namespace TastyFoodSolution.Data.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Details")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("LanguageId")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(5)");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Comment")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -726,149 +583,10 @@ namespace TastyFoodSolution.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SeoAlias")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("SeoDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SeoTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LanguageId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductTranslations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Bánh mì ăn sáng Việt Nam",
-                            Details = "Bánh mì ăn sáng Việt Nam",
-                            LanguageId = "vi-VN",
-                            Name = "Bánh mì ăn sáng",
-                            ProductId = 1,
-                            SeoAlias = "banh-mi-an-sang",
-                            SeoDescription = "Bánh mì ăn sáng Việt Nam",
-                            SeoTitle = "Bánh mì ăn sáng Việt Nam"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Bread Breadfast Viet Nam",
-                            Details = "Bread Breadfast Viet Nam",
-                            LanguageId = "en-US",
-                            Name = "Bread Breadfast",
-                            ProductId = 1,
-                            SeoAlias = "bread-breadfast",
-                            SeoDescription = "Bread Breadfast Viet Nam",
-                            SeoTitle = "Bread Breadfast Viet Nam"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Gà rán Việt Nam",
-                            Details = "Gà rán Việt Nam",
-                            LanguageId = "vi-VN",
-                            Name = "Gà rán",
-                            ProductId = 2,
-                            SeoAlias = "ga-ran",
-                            SeoDescription = "Gà rán Việt Nam",
-                            SeoTitle = "Gà rán Việt Nam"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Chicken Fried Viet Nam",
-                            Details = "Chicken Fried Viet Nam",
-                            LanguageId = "en-US",
-                            Name = "Chicken Fried",
-                            ProductId = 2,
-                            SeoAlias = "chicken-fried",
-                            SeoDescription = "Chicken Fried Viet Nam",
-                            SeoTitle = "Chicken Fried Viet Nam"
-                        });
-                });
-
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.Promotion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("ApplyForAll")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal?>("DiscountAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("DiscountPercent")
+                    b.Property<int>("Rate")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FromDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductCategoryIds")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductIds")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ToDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Promotions");
-                });
-
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.Transaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ExternalTransactionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Fee")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Provider")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Result")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TransactionDate")
+                    b.Property<DateTime>("ReviewDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
@@ -876,9 +594,11 @@ namespace TastyFoodSolution.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.Cart", b =>
@@ -896,25 +616,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.CategoryTranslation", b =>
-                {
-                    b.HasOne("TastyFoodSolution.Data.Entities.Category", "Category")
-                        .WithMany("CategoryTranslations")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TastyFoodSolution.Data.Entities.Language", "Language")
-                        .WithMany("CategoryTranslations")
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.Order", b =>
@@ -947,6 +648,17 @@ namespace TastyFoodSolution.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("TastyFoodSolution.Data.Entities.Product", b =>
+                {
+                    b.HasOne("TastyFoodSolution.Data.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.ProductImage", b =>
                 {
                     b.HasOne("TastyFoodSolution.Data.Entities.Product", "Product")
@@ -958,53 +670,23 @@ namespace TastyFoodSolution.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.ProductInCategory", b =>
+            modelBuilder.Entity("TastyFoodSolution.Data.Entities.Review", b =>
                 {
-                    b.HasOne("TastyFoodSolution.Data.Entities.Category", "Category")
-                        .WithMany("ProductInCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TastyFoodSolution.Data.Entities.Product", "Product")
-                        .WithMany("ProductInCategories")
+                    b.HasOne("TastyFoodSolution.Data.Entities.Product", "Proudct")
+                        .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.ProductTranslation", b =>
-                {
-                    b.HasOne("TastyFoodSolution.Data.Entities.Language", "Language")
-                        .WithMany("ProductTranslations")
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TastyFoodSolution.Data.Entities.Product", "Product")
-                        .WithMany("ProductTranslations")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Language");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.Transaction", b =>
-                {
                     b.HasOne("TastyFoodSolution.Data.Entities.AppUser", "AppUser")
-                        .WithMany("Transactions")
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("Proudct");
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.AppUser", b =>
@@ -1013,21 +695,12 @@ namespace TastyFoodSolution.Data.Migrations
 
                     b.Navigation("Orders");
 
-                    b.Navigation("Transactions");
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.Category", b =>
                 {
-                    b.Navigation("CategoryTranslations");
-
-                    b.Navigation("ProductInCategories");
-                });
-
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.Language", b =>
-                {
-                    b.Navigation("CategoryTranslations");
-
-                    b.Navigation("ProductTranslations");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.Order", b =>
@@ -1043,9 +716,7 @@ namespace TastyFoodSolution.Data.Migrations
 
                     b.Navigation("ProductImages");
 
-                    b.Navigation("ProductInCategories");
-
-                    b.Navigation("ProductTranslations");
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

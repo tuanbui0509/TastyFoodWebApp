@@ -18,11 +18,11 @@ namespace TastyFoodSolution.Application.Catalog.Categories
             _context = context;
         }
 
-        public async Task<List<CategoryVm>> GetAll(string languageId)
+        public async Task<List<CategoryViewModel>> GetAll()
         {
             var query = from c in _context.Categories
                         select new { c };
-            return await query.Select(x => new CategoryVm()
+            return await query.Select(x => new CategoryViewModel()
             {
                 Id = x.c.Id,
                 Name = x.c.Name

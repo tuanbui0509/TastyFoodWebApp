@@ -7,7 +7,7 @@ using TastyFoodSolution.ViewModels.Common;
 
 namespace TastyFoodSolution.ViewModels.Catolog.Products
 {
-    public class GetManageProductPagingRequest : PagingRequestBase
+    public class GetManageProductPagingRequest
     {
         public string Keyword { get; set; }
 

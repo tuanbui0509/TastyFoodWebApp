@@ -16,12 +16,13 @@ namespace TastyFoodSolution.Data.Entities
         public bool? IsFeatured { get; set; }
         public string Name { set; get; }
         public string Description { set; get; }
-        public string Details { set; get; }
-        public List<ProductInCategory> ProductInCategories { get; set; }
+        public int CategoryId { set; get; }
+        public Category Category { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
 
         public List<Cart> Carts { get; set; }
+        public List<Review> Reviews { get; set; }
 
         public List<ProductImage> ProductImages { get; set; }
     }

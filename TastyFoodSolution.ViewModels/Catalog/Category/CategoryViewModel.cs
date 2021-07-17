@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TastyFoodSolution.ViewModels.Catalog.Categories
 {
-    public class CategoryVm
+    public class CategoryViewModel
     {
         public int Id { get; set; }
 
