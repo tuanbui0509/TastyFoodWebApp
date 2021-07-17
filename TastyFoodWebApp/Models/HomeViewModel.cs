@@ -10,5 +10,6 @@ namespace TastyFoodWebApp.Models
     {
         public List<ProductViewModel> FeatureProducts { get; set; }
         public List<ProductViewModel> LatestProducts { get; set; }
+        public List<ProductViewModel> BestSellerProducts { get; set; }
     }
 }

@@ -67,6 +67,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 DateCreated = DateTime.Now,
                 Name = request.Name,
                 Description = request.Description,
+                CategoryId = request.CategoryId
             };
             //Save image
             if (request.ThumbnailImage != null)
@@ -160,14 +161,11 @@ namespace TastyFoodSolution.Application.Catolog.Products
         public async Task<ProductViewModel> GetById(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
-            var categories = await (from c in _context.Categories
-                                    join p in _context.Products on c.Id equals p.CategoryId
-                                    where p.Id == productId
-                                    select c.Name).ToListAsync();
             if (product == null)
             {
                 return null;
             }
+            var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.IsDefault == true).FirstOrDefaultAsync();
             var productViewModel = new ProductViewModel()
             {
                 Id = product.Id,
@@ -178,6 +176,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 Price = product.Price,
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
+                CategoryId = product.CategoryId,
             };
             return productViewModel;
         }
@@ -231,7 +230,8 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
             product.Name = request.Name;
             product.Description = request.Description;
-
+            product.IsFeatured = request.IsFeatured;
+            product.CategoryId = request.CategoryId;
             //Save image
             if (request.ThumbnailImage != null)
             {
@@ -324,7 +324,9 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 OriginalPrice = x.p.OriginalPrice,
                 Price = x.p.Price,
                 Stock = x.p.Stock,
-                ViewCount = x.p.ViewCount
+                ViewCount = x.p.ViewCount,
+                CategoryId = x.p.CategoryId,
+                Categorie = x.c.Name
             }).ToListAsync();
 
             //4. Select and projection
@@ -346,6 +348,36 @@ namespace TastyFoodSolution.Application.Catolog.Products
                         where (pi.IsDefault == true || pi == null) && p.IsFeatured == true
                         select new { p, c, pi };
 
+            var data = await query.Take(take)
+                .Select(x => new ProductViewModel()
+                {
+                    Id = x.p.Id,
+                    Name = x.p.Name,
+                    DateCreated = x.p.DateCreated,
+                    Description = x.p.Description,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Price = x.p.Price,
+                    Stock = x.p.Stock,
+                    ViewCount = x.p.ViewCount,
+                    ThumbnailImage = x.pi.ImagePath,
+                    Categorie = x.c.Name,
+                    CategoryId = x.p.CategoryId,
+                }).ToListAsync();
+
+            return data;
+        }
+
+        public async Task<List<ProductViewModel>> GetLatestProducts(int take)
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        join c in _context.Categories on p.CategoryId equals c.Id into pc
+                        from c in pc.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        where (pi.IsDefault == true || pi == null)
+                        select new { p, c, pi };
+
             var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
                 .Select(x => new ProductViewModel()
                 {
@@ -359,6 +391,38 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     ViewCount = x.p.ViewCount,
                     ThumbnailImage = x.pi.ImagePath,
                     Categorie = x.c.Name,
+                    CategoryId = x.p.CategoryId,
+                }).ToListAsync();
+
+            return data;
+        }
+
+        public async Task<List<ProductViewModel>> GetBestSellerProducts(int take)
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        join c in _context.Categories on p.CategoryId equals c.Id into pc
+                        from c in pc.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        where (pi.IsDefault == true || pi == null)
+                        select new { p, c, pi };
+
+            var data = await query.OrderByDescending(x => x.p.QuantityOrder).Take(take)
+                .Select(x => new ProductViewModel()
+                {
+                    Id = x.p.Id,
+                    Name = x.p.Name,
+                    DateCreated = x.p.DateCreated,
+                    Description = x.p.Description,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Price = x.p.Price,
+                    Stock = x.p.Stock,
+                    ViewCount = x.p.ViewCount,
+                    ThumbnailImage = x.pi.ImagePath,
+                    Categorie = x.c.Name,
+                    QuantityOrder = x.p.QuantityOrder,
+                    CategoryId = x.p.CategoryId,
                 }).ToListAsync();
 
             return data;

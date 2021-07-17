@@ -1,0 +1,401 @@
+﻿@model ProductDetailViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+    <!--========== MAIN ==========-->
+<link rel="stylesheet" href="/assets/css/detail/detail.css">
+<main>
+    <!--========== BREADCRUMB ==========-->
+    <section class="breadcrumb">
+        <div class="container breadcrumb__container">
+            <h2 class="breadcrumb__title">@Model.Product.Name</h2>
+            <ul class="breadcrumb__list">
+                <li class="breadcrumb__item">
+                    <a href="/" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="/" class="breadcrumb__link">Product</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+                </li>
+                <li class="breadcrumb__item">@Model.Product.Name</li>
+            </ul>
+        </div>
+    </section>
+    <!--========== DETAIL PRODUCT ==========-->
+    <section class="detail-product section">
+        <div class="container">
+            <div class="row">
+                <div class="col col-l-6 col-xs-12">
+                    <div class="detail__image">
+                        <img src="/assets/images/detail-product/thumb1.jpg" alt=""
+                             class="detail__image-main img-responsive">
+                    </div>
+                    <div class="detail__other-thumb">
+                        <ul class="detail__other-thumb-list">
+                            <li class="detail__other-thumb-item" onclick="changePicture(event)">
+                                <img src="/assets/images/detail-product/thumb1.jpg" alt=""
+                                     class="detail__other-thumb-img img-responsive">
+                            </li>
+                            <li class="detail__other-thumb-item detail__other-thumb-item--overlay"
+                                onclick="changePicture(event)">
+                                <img src="/assets/images/detail-product/thumb2.jpg"
+                                     alt="" class="detail__other-thumb-img img-responsive">
+                            </li>
+                            <li class="detail__other-thumb-item detail__other-thumb-item--overlay"
+                                onclick="changePicture(event)">
+                                <img src="/assets/images/detail-product/thumb3.jpg"
+                                     alt="" class="detail__other-thumb-img img-responsive">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col col-l-6 col-xs-12">
+                    <div class="detail-info">
+                        <h3 class="detail-info__title"> @Model.Product.Name </h3>
+                        <p class="detail-info__desc">
+                            @Html.Raw(@Model.Product.Description)
+                        </p>
+                        <span class="detail-info__category">
+                            Category: <a href=""
+                                         class="detail-info__category-link">@Model.Product.Categorie</a>
+                                    </span>
+                                    <div class="detail-info__rate">
+                                        <div class="detail-info__rate-list">
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star-half'></i>
+                                        </div>
+                                        <a href="" class="detail-info__rate-reviews">(2 customer reviews)</a>
+                                    </div>
+                                    <span class="detail-info__price">@Model.Product.Price</span>
+                                    <div class="detail-info__form">
+                                        <div class="section__quantity">
+                                            <button class="section__quantity-btn section__minus" onclick="onMinus()">
+                                                <i class='bx bx-minus'></i>
+                                            </button>
+                                            <input type="number" class="section__input-text" step="1" min="1" name="quantity"
+                                                   value="1" title="Qty" placeholder="" id="quantity">
+                                            <button class="section__quantity-btn section__plus" onclick="onAdd()">
+                                                <i class='bx bx-plus'></i>
+                                            </button>
+                                        </div>
+                                        <form action="">
+                                            <button class="detail-info__submit btn-animation btn-primary">
+                                                ADD TO CART <i class='bx bx-right-arrow-alt'></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="detail-info__social">
+                                        <ul class="detail-info__social-list">
+                                            <li class="detail-info__social-item">
+                                                <a href="" class="detail-info__social-link">
+                                                    <i class='bx bxl-facebook-circle'></i>
+                                                </a>
+                                            </li>
+                                            <li class="detail-info__social-item">
+                                                <a href="" class="detail-info__social-link">
+                                                    <i class='bx bxl-twitter'></i>
+                                                </a>
+                                            </li>
+                                            <li class="detail-info__social-item">
+                                                <a href="" class="detail-info__social-link">
+                                                    <i class='bx bxl-google-plus-circle'></i>
+                                                </a>
+                                            </li>
+                                            <li class="detail-info__social-item">
+                                                <a href="" class="detail-info__social-link">
+                                                    <i class='bx bxl-instagram'></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="detail-info__policy">
+                                        <ul class="detail-info__policy-list">
+                                            <li class="detail-info__policy-item">
+                                                <a href="" class="detail-info__policy-link">
+                                                    <img src="/assets/icon/ek.png" alt="Security policy"> Security policy
+                                                </a>
+                                            </li>
+                                            <li class="detail-info__policy-item">
+                                                <a href=""
+                                                   class="detail-info__policy-link">
+                                                    <img src="/assets/icon/doh.png"
+                                                         alt="Delivery policy"> Delivery policy
+                                                </a>
+                                            </li>
+                                            <li class="detail-info__policy-item">
+                                                <a href="" class="detail-info__policy-link">
+                                                    <img src="/assets/icon/teen.png" alt="Return policy"> Return policy
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--========== TABS PRODUCT ==========-->
+                <section class="section">
+                    <div class="container tabs-wrapper">
+                        <ul class="tabs-list">
+                            <li class="tabs-item tabs-item--active" onclick="openTab(event,'tab-description')">
+                                <a class="tabs-link">Description</a>
+                            </li>
+                            <li class="tabs-item" onclick="openTab(event,'tab-information')">
+                                <a class="tabs-link">
+                                    Additional
+                                    information
+                                </a>
+                            </li>
+                            <li class="tabs-item" onclick="openTab(event,'tab-reviews')">
+                                <a class="tabs-link">Reviews (2)</a>
+                            </li>
+                        </ul>
+                        <div class="tabs-list-info">
+                            <!-- ====== Description ====== -->
+                            <div id="tab-description" class="tabs-pill">
+                                <p class="tab-description__introduce">
+                                    Nutrition bananas, salad Sed ante ipsum eu fears that television, the bamboo peanut ugly
+                                    needs and wants are. And a long time ago. Fusce ultricies mass level. Fusce aliquam, purus
+                                    eget
+                                    sagittis
+                                    consectetuer, sapien libero hendrerit est, but it is not the only, nor commodo augue. Lorem
+                                    ipsum
+                                    carrots
+                                    carrots, enhanced undergraduate experience. But time, lorem sit manufacturing, fear not set
+                                    airports, layer in a developer who hate me. To-morrow, nor the fear of, photography and
+                                    blandit
+                                    et.
+                                </p>
+                                <div class="tab-description__img">
+                                    <div class="row">
+                                        <div class="col col-l-3 col-md-6 col-xs-6">
+                                            <img src="/assets/images/detail-product/product-1.png" alt=""
+                                                 class="img-responsive">
+                                        </div>
+                                        <div class="col col-l-3 col-md-6 col-xs-6">
+                                            <img src="/assets/images/detail-product/product-2.png" alt=""
+                                                 class="img-responsive">
+                                        </div>
+                                        <div class="col col-l-3 col-md-6 col-xs-6">
+                                            <img src="/assets/images/detail-product/product-3.png" alt=""
+                                                 class="img-responsive">
+                                        </div>
+                                        <div class="col col-l-3 col-md-6 col-xs-6">
+                                            <img src="/assets/images/detail-product/product-4.png" alt=""
+                                                 class="img-responsive">
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="tab-description__advice">
+                                    <li>Heart health and stroke prevention</li>
+                                    <li>The health of the next generation</li>
+                                    <li>Strong bones and teeth</li>
+                                    <li>Better mood</li>
+                                </ul>
+                                <p class="tab-description__introduce">
+                                    Vestibulum aliquet, sem eget laoreet ultrices, eros justo feugiat sem, quis fermentum turpis
+                                    eros needs
+                                    and wants are. And a long time ago. Fusce ultricies mass level. Fusce aliquam, purus eget
+                                    sagittis sit
+                                    amet, sapien libero hendrerit est, but it is not the only, nor commodo augue.
+                                </p>
+                            </div>
+
+                            <!-- ====== Information ====== -->
+
+                            <div id="tab-information" class="tabs-pill">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Weight</th>
+                                            <td>
+                                                <p>1kg,2kg,3kg</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>It's Healthy</th>
+                                            <td>
+                                                <p>Yes</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Dimensions</th>
+                                            <td>
+                                                <p>5 x 5 x 10 cm</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- ====== Reviews ====== -->
+
+                            <div id="tab-reviews" class="tabs-pill">
+                                <h4 class="quantity-reviews">
+                                    2 reviews for Bread Breakfast
+                                </h4>
+                                <ul class="list-user-comment">
+                                    <li class="user-comment">
+                                        <div class="user-thumb">
+                                            <img src="/assets/images/detail-product/avatar.png" alt=""
+                                                 class="user-avatar img-responsive"></img>
+                                        </div>
+                                        <div class="info-comment">
+                                            <p class="user-name-comment">Bùi Ngọc Tuấn</p>
+                                            <p class="date-comment">JULY 5, 2021</p>
+                                            <P class="content-comment">
+                                                On behalf of us all – thank you for making our evening
+                                                such
+                                                an enjoyable one!
+                                                Your hard work and consideration were very much appreciated
+                                            </P>
+                                        </div>
+                                        <div class="user-rated">
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                        </div>
+                                    </li>
+                                    <li class="user-comment">
+                                        <div class="user-thumb">
+                                            <img src="/assets/images/detail-product/avatar1.png" alt=""
+                                                 class="user-avatar img-responsive"></img>
+                                        </div>
+                                        <div class="info-comment">
+                                            <p class="user-name-comment">Đặng Thùy Dương</p>
+                                            <p class="date-comment">JULY 25, 2021</p>
+                                            <P class="content-comment">
+                                                On behalf of us all – thank you for making our evening
+                                                such
+                                                an enjoyable one!
+                                            </P>
+                                        </div>
+                                        <div class="user-rated">
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                            <i class='detail-info__rate-item bx bxs-star'></i>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div class="add-reviews">
+                                    <h4 class="add-reviews__title">
+                                        Add a review
+                                    </h4>
+                                    <p>Your email address will not be published. Required fields are marked * </p>
+                                    <form action="" method="POST" class="form" id="form-review">
+                                        <div class="add-reviews__rating">
+                                            <label for="" class="add-reviews__heading">Your rating *</label>
+                                            <div class="rate">
+                                                <input type="radio" id="star5" name="rate" value="5" />
+                                                <label for="star5" title="text"></label>
+                                                <input type="radio" id="star4" name="rate" value="4" />
+                                                <label for="star4" title="text"></label>
+                                                <input type="radio" id="star3" name="rate" value="3" />
+                                                <label for="star3" title="text"></label>
+                                                <input type="radio" id="star2" name="rate" value="2" />
+                                                <label for="star2" title="text"></label>
+                                                <input type="radio" id="star1" name="rate" value="1" />
+                                                <label for="star1" title="text"></label>
+                                            </div>
+                                        </div>
+                                        <div class="add-reviews-content">
+                                            <div class="form-group">
+                                                <label for="content-review" class="form-label">Your review *</label>
+                                                <textarea id="content-review" name="content-review" placeholder=""
+                                                          class="form-control" cols="30" rows="10"></textarea>
+                                                <span class="form-message"></span>
+                                                </textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="add-reviews-info">
+                                            <div class="form-group add-reviews-input">
+                                                <label for="name" class="form-label">Name *</label>
+                                                <input id="name" name="name" type="text" placeholder="" class="form-control">
+                                                <span class="form-message"></span>
+                                            </div>
+                                            <div class="form-group add-reviews-input">
+                                                <label for="email" class="form-label">Email *</label>
+                                                <input id="email" name="email" type="text" placeholder="" class="form-control">
+                                                <span class="form-message"></span>
+                                            </div>
+                                        </div>
+                                        <button class="add-reviews__btn-submit btn-second">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--========== RELATED PRODUCT ==========-->
+
+                <section class="related-products section">
+                    <div class="container">
+                        <span class="section-subtitle section-subtitle--bigger">Produced</span>
+                        <h2 class="section-title section-title--bigger">Related products</h2>
+                        <div class="section-title-divider"></div>
+                        <ul class="related-products-list row">
+                            <div class="owl-carousel owl-theme related-product__list">
+                                @for (int index = 0; index < @Model.RelatedProducts.Count; index++)
+                                {
+                                    var item = Model.RelatedProducts[index];
+                                    //var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
+
+                                    <div class="product-item organically__conent-item">
+                                        <a href="product/@item.Id" class="product-thumb">
+                                            <img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt=""
+                                                 class="product-img img-responsive">
+                                        </a>
+                                        <p class="product-category">@item.Categorie</p>
+                                        <a href="product/@item.Id" class="product-name">@item.Name (@item.QuantityOrder)</a>
+                                        <div class="product-box">
+                                            <div class="product-prices">
+                                                <strong class="product-price-old">@item.OriginalPrice</strong>
+                                                <strong class="product-price-new">@item.Price</strong>
+                                            </div>
+                                            <div class="product__reviews">
+
+                                                <div class="product-rating">
+                                                    <i class='product-rating-icon bx bxs-star'></i>
+                                                    <i class='product-rating-icon bx bxs-star'></i>
+                                                    <i class='product-rating-icon bx bxs-star'></i>
+                                                    <i class='product-rating-icon bx bxs-star'></i>
+                                                    <i class='product-rating-icon bx bxs-star-half'></i>
+                                                </div>
+                                                <span class="product__comment">
+                                                    (0)
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="product-box">
+                                            <a class="product__to-cart btn-primary" onclick="addToCart(event)">
+                                                ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                                            </a>
+                                            <div class="product__right">
+                                                <a class="product__to-wishlist" onclick="addToWishList(event)">
+                                                    <i class='bx bx-heart'></i>
+                                                </a>
+                                                <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
+                                            </div>
+                                        </div>
+                                        <span class="product__label-sale">Sale</span>
+                                    </div>
+
+                                }
+                            </div>
+                        </ul>
+                    </div>
+                </section>
+            </main>
+            <script src="/assets/js/detail.js"></script>
+            <script src="/assets/js/validation.js"></script>

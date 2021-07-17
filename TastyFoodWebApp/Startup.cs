@@ -37,7 +37,7 @@ namespace TastyFoodWebApp
             services.AddControllersWithViews();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(3600);
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -78,6 +78,13 @@ namespace TastyFoodWebApp
             app.UseSession();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "Product Detail",
+                    pattern: "product/{id}", new
+                    {
+                        controller = "Product",
+                        action = "Detail"
+                    });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

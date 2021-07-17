@@ -182,12 +182,63 @@
                             //var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
                             <div class="col col-xs-12 col-md-6 col-l-3">
                                 <div class="product-item organically__conent-item">
-                                    <a href="#" class="product-thumb">
+                                    <a href="product/@item.Id" class="product-thumb">
                                         <img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt=""
                                              class="product-img img-responsive">
                                     </a>
                                     <p class="product-category">@item.Categorie</p>
-                                    <a href="#" class="product-name">@item.Name</a>
+                                    <a href="product/@item.Id" class="product-name">@item.Name (@item.QuantityOrder)</a>
+                                    <div class="product-box">
+                                        <div class="product-prices">
+                                            <strong class="product-price-old">@item.OriginalPrice</strong>
+                                            <strong class="product-price-new">@item.Price</strong>
+                                        </div>
+                                        <div class="product__reviews">
+
+                                            <div class="product-rating">
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star-half'></i>
+                                            </div>
+                                            <span class="product__comment">
+                                                (0)
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="product-box">
+                                        <a class="product__to-cart btn-primary" onclick="addToCart(event)">
+                                            ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                                        </a>
+                                        <div class="product__right">
+                                            <a class="product__to-wishlist" onclick="addToWishList(event)">
+                                                <i class='bx bx-heart'></i>
+                                            </a>
+                                            <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
+                                        </div>
+                                    </div>
+                                    <span class="product__label-sale">Sale</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="organically__pills" id="latest-product">
+                    <div class="row">
+                        @for (int index = 0; index < Model.LatestProducts.Count; index++)
+                        {
+                            var item = Model.LatestProducts[index];
+                            //var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
+                            <div class="col col-xs-12 col-md-6 col-l-3">
+                                <div class="product-item organically__conent-item">
+                                    <a href="product/@item.Id" class="product-thumb">
+                                        <img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt=""
+                                             class="product-img img-responsive">
+                                    </a>
+                                    <p class="product-category">@item.Categorie</p>
+                                    <a href="product/@item.Id" class="product-name">@item.Name (@item.QuantityOrder)</a>
                                     <div class="product-box">
                                         <div class="product-prices">
                                             <strong class="product-price-old">@item.OriginalPrice</strong>
@@ -227,93 +278,52 @@
 
                 <div class="organically__pills" id="best-sale">
                     <div class="row">
-                        <div class="col col-xs-12 col-md-6 col-l-3">
-                            <div class="product-item organically__conent-item">
-                                <a href="#" class="product-thumb">
-                                    <img src="./assets/images/product/product2.jpg" alt=""
-                                         class="product-img img-responsive">
-                                </a>
-                                <p class="product-category">Bakery, Snacks</p>
-                                <a href="#" class="product-name">Green Machine</a>
-                                <div class="product-box">
-                                    <div class="product-prices">
-                                        <strong class="product-price-old">$4.50</strong>
-                                        <strong class="product-price-new">$4.00</strong>
-                                    </div>
-                                    <div class="product__reviews">
-
-                                        <div class="product-rating">
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star-half'></i>
-                                        </div>
-                                        <span class="product__comment">
-                                            (0)
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="product-box">
-                                    <a class="product__to-cart btn-primary" onclick="addToCart(event)">
-                                        ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                        @for (int index = 0; index < Model.BestSellerProducts.Count; index++)
+                        {
+                            var item = Model.BestSellerProducts[index];
+                            //var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
+                            <div class="col col-xs-12 col-md-6 col-l-3">
+                                <div class="product-item organically__conent-item">
+                                    <a href="product/@item.Id" class="product-thumb">
+                                        <img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt=""
+                                             class="product-img img-responsive">
                                     </a>
-                                    <div class="product__right">
-                                        <a class="product__to-wishlist" onclick="addToWishList(event)">
-                                            <i class='bx bx-heart'></i>
-                                        </a>
-                                        <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
-                                    </div>
-                                </div>
-                                <span class="product__label-sale">Sale</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="organically__pills" id="latest-product">
-                    <div class="row">
-                        <div class="col col-xs-12 col-md-6 col-l-3">
-                            <div class="product-item organically__conent-item">
-                                <a href="#" class="product-thumb">
-                                    <img src="./assets/images/product/product3.jpg" alt=""
-                                         class="product-img img-responsive">
-                                </a>
-                                <p class="product-category">Bakery, Snacks</p>
-                                <a href="#" class="product-name">Green Machine</a>
-                                <div class="product-box">
-                                    <div class="product-prices">
-                                        <strong class="product-price-old">$4.50</strong>
-                                        <strong class="product-price-new">$4.00</strong>
-                                    </div>
-                                    <div class="product__reviews">
-
-                                        <div class="product-rating">
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star'></i>
-                                            <i class='product-rating-icon bx bxs-star-half'></i>
+                                    <p class="product-category">@item.Categorie</p>
+                                    <a href="product/@item.Id" class="product-name">@item.Name (@item.QuantityOrder)</a>
+                                    <div class="product-box">
+                                        <div class="product-prices">
+                                            <strong class="product-price-old">@item.OriginalPrice</strong>
+                                            <strong class="product-price-new">@item.Price</strong>
                                         </div>
-                                        <span class="product__comment">
-                                            (0)
-                                        </span>
+                                        <div class="product__reviews">
+
+                                            <div class="product-rating">
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star-half'></i>
+                                            </div>
+                                            <span class="product__comment">
+                                                (0)
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="product-box">
-                                    <a class="product__to-cart btn-primary" onclick="addToCart(event)">
-                                        ADD TO CART<i class="bx bx-right-arrow-alt"></i>
-                                    </a>
-                                    <div class="product__right">
-                                        <a class="product__to-wishlist" onclick="addToWishList(event)">
-                                            <i class='bx bx-heart'></i>
+                                    <div class="product-box">
+                                        <a class="product__to-cart btn-primary" onclick="addToCart(event)">
+                                            ADD TO CART<i class="bx bx-right-arrow-alt"></i>
                                         </a>
-                                        <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
+                                        <div class="product__right">
+                                            <a class="product__to-wishlist" onclick="addToWishList(event)">
+                                                <i class='bx bx-heart'></i>
+                                            </a>
+                                            <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
+                                        </div>
                                     </div>
+                                    <span class="product__label-sale">Sale</span>
                                 </div>
-                                <span class="product__label-sale">Sale</span>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -1167,3 +1177,5 @@
         </div>
     </div>
 }
+
+<script src="/assets/js/main.js"></script>

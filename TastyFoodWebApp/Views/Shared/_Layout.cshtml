@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="./assets/icon/meal.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/icon/meal.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--========== BOX ICONS ==========-->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -62,8 +62,8 @@
             <div class="row">
                 <div class="col col-l-12 col-md-12 col-xs-12">
                     <nav class="nav">
-                        <a href="#" class="logo">
-                            <img src="./assets/images/common/vegetarian.png" alt=""
+                        <a href="/" class="logo">
+                            <img src="/assets/images/common/vegetarian.png" alt=""
                                  class="img-responsive"> &nbsp; <span class="color-green">Tasty </span> &nbsp; <span class="color-gold">Food</span>
                         </a>
                         <div class="nav__menu row" id="nav-menu">
@@ -267,7 +267,7 @@
                 <div class="col col-l-3 col-md-6 col-xs-12">
                     <div class="footer__content">
                         <a href="#" class="logo">
-                            <img src="./assets/images/common/vegetarian.png" alt=""
+                            <img src="/assets/images/common/vegetarian.png" alt=""
                                  class="img-responsive"> &nbsp; <span class="color-green">Tasty </span> &nbsp; <span class="color-gold">Food</span>
                         </a>
                         <span class="footer__description">
@@ -344,7 +344,6 @@
     <script src="/assets/owlcarousel/owl.carousel.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/assets/js/common.js"></script>
-    <script src="/assets/js/main.js"></script>
     <script>
         $('.owl-carousel.testimonial__list').owlCarousel({
             margin: 10,
@@ -380,6 +379,30 @@
                 },
                 1024: {
                     items: 3,
+                    nav: false,
+                    dots: false
+                }
+            }
+        })
+        $('.owl-carousel.related-product__list').owlCarousel({
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false
+                },
+                740: {
+                    items: 2,
+                    nav: false
+                },
+                1024: {
+                    items: 3,
+                    nav: false,
+                    dots: false
+                },
+                1120: {
+                    items: 4,
                     nav: false,
                     dots: false
                 }

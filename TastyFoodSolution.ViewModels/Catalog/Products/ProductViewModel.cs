@@ -20,7 +20,7 @@ namespace TastyFoodSolution.ViewModels.Catolog.Products
         public bool? IsFeatured { get; set; }
         public string ThumbnailImage { get; set; }
         public string Categorie { get; set; }
-        public string comment { get; set; }
-        public int rate { get; set; }
+        public int CategoryId { set; get; }
+        public int QuantityOrder { set; get; }
     }
 }

@@ -45,5 +45,9 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
         //product feature
         Task<List<ProductViewModel>> GetFeaturedProducts(int take);
+
+        Task<List<ProductViewModel>> GetLatestProducts(int take);
+
+        Task<List<ProductViewModel>> GetBestSellerProducts(int take);
     }
 }
