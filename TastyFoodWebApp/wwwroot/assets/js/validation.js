@@ -1,6 +1,5 @@
 // Đối tượng validator
 function Validator(options) {
-
     function getParent(element, selector) {
         while (element.parentElement) {
             if (element.parentElement.matches(selector))
@@ -52,7 +51,6 @@ function Validator(options) {
                 }
             })
 
-
             if (isFormValid) {
                 // Submit with javascript
                 if (typeof (options.onSubmit) === 'function') {
@@ -62,6 +60,7 @@ function Validator(options) {
                         return values
                     }, {})
                     options.onSubmit(formValues)
+                    formElement.submit()
                 }
             }
             // Submit with default
@@ -116,7 +115,7 @@ Validator.isEmail = function (selector, message) {
         selector,
         test: function (value) {
             let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-            return regex.test(value.trim()) ? undefined : message 
+            return regex.test(value.trim()) ? undefined : message
         }
     };
 }
@@ -125,7 +124,7 @@ Validator.minLength = function (selector, minLength, message) {
     return {
         selector,
         test: function (value) {
-            return value.length >= minLength ? undefined : message 
+            return value.length >= minLength ? undefined : message
         }
     }
 }
@@ -136,6 +135,5 @@ Validator.isConfirmed = function (selector, getConfirmValue, message) {
         test: function (value) {
             return value === getConfirmValue() ? undefined : message
         }
-
     }
 }

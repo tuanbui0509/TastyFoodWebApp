@@ -31,7 +31,7 @@ namespace TastyFoodWebApp
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
-                options.LoginPath = "/Login";
+                options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Forbidden/";
             });
             services.AddControllersWithViews()
@@ -74,7 +74,7 @@ namespace TastyFoodWebApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -88,37 +88,6 @@ namespace TastyFoodWebApp
                         controller = "Product",
                         action = "Detail"
                     });
-                endpoints.MapControllerRoute(
-                    name: "Product Detail",
-                    pattern: "categories/product/{id}", new
-                    {
-                        controller = "Product",
-                        action = "Detail"
-                    });
-                endpoints.MapControllerRoute(
-                    name: "Product Detail",
-                    pattern: "product/product/{id}", new
-                    {
-                        controller = "Product",
-                        action = "Detail"
-                    });
-
-                //endpoints.MapControllerRoute(
-                //  name: "Product Category",
-                //  pattern: "categories/product/{id}", new
-                //  {
-                //      controller = "Product",
-                //      action = "Category"
-                //  });
-
-                //endpoints.MapControllerRoute(
-                //    name: "Product Detail En",
-                //    pattern: "{culture}/products/{id}", new
-                //    {
-                //        controller = "Product",
-                //        action = "Detail"
-                //    });
-
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -10,7 +10,6 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 2rem;
-
 }
 
 .account-item {
@@ -24,7 +23,17 @@
     cursor: pointer;
     color: var(--title-color-primary);
 }
-.account-item--active,.account-item:hover{
+
+.account-btn {
+    color: inherit;
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+}
+
+.account-item--active, .account-item:hover {
     background-color: var(--first-color);
     color: var(--white-color);
     transition: all 0.4s ease-in-out;
@@ -34,36 +43,36 @@
     text-align: center;
 }
 
-.account-content-title{
+.account-content-title {
     font-size: var(--h1-font-size);
     color: var(--first-color);
 }
 
-.account-content-desc{
+.account-content-desc {
     color: var(--title-color-primary);
 }
 
-.account-content-desc a{
-    color: var(--first-color);
-}
+    .account-content-desc a {
+        color: var(--first-color);
+    }
 
-.address-content__note{
+.address-content__note {
     margin: 1rem 0;
     color: var(--first-color);
 }
 
-.address-content__note i{
-    margin-right: 0.5rem;
-}
+    .address-content__note i {
+        margin-right: 0.5rem;
+    }
 
-.billing-address{
+.billing-address {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 1rem;
     margin-top: 3rem;
     background-color: var(--light-green-color);
 }
 
-@media screen and (max-width:1024px){
+@media screen and (max-width:1024px) {
     .account-menu {
         overflow-x: scroll;
         justify-content: flex-start;
