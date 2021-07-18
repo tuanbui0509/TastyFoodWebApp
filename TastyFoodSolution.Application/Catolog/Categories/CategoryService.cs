@@ -26,19 +26,20 @@ namespace TastyFoodSolution.Application.Catalog.Categories
             return await query.Select(x => new CategoryViewModel()
             {
                 Id = x.c.Id,
-                Name = x.c.Name
+                Name = x.c.Name,
+                Thumb = x.c.Thumb
             }).ToListAsync();
         }
 
-        public async Task<List<ProductViewModel>> GetAllProductById(int Id)
+        public async Task<List<ProductViewModel>> GetAllProductById(int categoryId)
         {
             //1. Select join
             var query = from p in _context.Products
-                        join c in _context.Categories on p.CategoryId equals c.Id into pc
-                        from c in pc.DefaultIfEmpty()
                         join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
                         from pi in ppi.DefaultIfEmpty()
-                        where (pi.IsDefault == true || pi == null)
+                        join c in _context.Categories on p.CategoryId equals c.Id into pc
+                        from c in pc.DefaultIfEmpty()
+                        where c.Id == categoryId && (pi.IsDefault == true)
                         select new { p, c, pi };
 
             var data = await query.Select(x => new ProductViewModel()
@@ -52,7 +53,7 @@ namespace TastyFoodSolution.Application.Catalog.Categories
                 Stock = x.p.Stock,
                 ViewCount = x.p.ViewCount,
                 ThumbnailImage = x.pi.ImagePath,
-                Categorie = x.c.Name,
+                CategoryName = x.c.Name,
                 QuantityOrder = x.p.QuantityOrder,
                 CategoryId = x.p.CategoryId,
             }).ToListAsync();
@@ -69,7 +70,8 @@ namespace TastyFoodSolution.Application.Catalog.Categories
             {
                 Id = x.c.Id,
                 Name = x.c.Name,
-                ParentId = x.c.ParentId
+                ParentId = x.c.ParentId,
+                Thumb = x.c.Thumb
             }).FirstOrDefaultAsync();
         }
     }

@@ -1,0 +1,140 @@
+﻿@model CategoryListViewModel
+@{
+    ViewData["Title"] = "Product Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+<link rel="stylesheet" href="/assets/css/product-category/product-category.css">
+<!--========== BREADCRUMB ==========-->
+<section class="breadcrumb">
+    <div class="container breadcrumb__container">
+        <h2 class="breadcrumb__title">Category : @Model.CategoryItem.Name</h2>
+        <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+                <a href="/" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+            </li>
+            <li class="breadcrumb__item">Product</li>
+        </ul>
+    </div>
+</section>
+<!--========== MAIN ==========-->
+<main class="product-category">
+    <!--========== LIST CATEGORY ==========-->
+    <div class="container">
+        <div class="row">
+            <div class="col col-l-3 col-md-4 col-xs-12">
+                <div class="sidebar">
+                    <div class="sidebar-search">
+                        <h5 class="text-sidebar">Filter Product</h5>
+                        <form action="" class="sidebar-form">
+                            <input type="text" class="sidebar-input">
+                            <button class="sidebar-btn">
+                                <i class=' sidebar-icon bx bx-search'></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="sidebar-filter">
+                        <h5 class="text-sidebar">Product visibility</h5>
+                        <ul class="sidebar-filter-list">
+                            <li class="sidebar-filter-item">Rated-5 <span>(2)</span> </li>
+                            <li class="sidebar-filter-item">Rated-4 <span>(1)</span> </li>
+                            <li class="sidebar-filter-item">Rated-3 <span>(3)</span> </li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-popular">
+                        <h5 class="text-sidebar">Popular Products</h5>
+                        <ul class="sidebar-popular-list">
+                            @for (int index = 0; index < @Model.ListProductPopular.Count; index++)
+                            {
+                                var item = Model.ListProductPopular[index];
+
+                                <li class="sidebar-popular-item">
+                                    <a href="@(Configuration["LocalAddress"] +"/product/"+ @item.Id)">
+                                        <img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt=""
+                                             class="sidebar-popular-img img-responsive">
+                                    </a>
+                                    <div class="sidebar-popular-content">
+                                        <a class="sidebar-popular-name" href="@(Configuration["LocalAddress"] +"/product/"+ @item.Id)">@item.Name</a>
+                                            <span class="sidebar-popular-price">@item.Price</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-l-9 col-md-8 col-xs-12">
+                <div class="content">
+                    <div class="row">
+                        <div class="col col-l-12 col-md-12 col-xs-12">
+                            <div class="content-show">
+                                <p class="content-result">Showing all @Model.ListProductByCategoryId.Count results</p>
+                                <div class="content-sorting">
+                                    <div class="select">
+                                        <select>
+                                            <option selected>Default Sorting</option>
+                                            <option value="1">Sort By Sale</option>
+                                            <option value="1">Sort By Rating</option>
+                                            <option value="1">Sort By Price: Low to High</option>
+                                            <option value="1">Sort By Price: High to Low</option>
+                                        </select>
+                                        <i class='bx bx-caret-down'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row content-list">
+                        @for (int index = 0; index < @Model.ListProductByCategoryId.Count; index++)
+                        {
+                            var item = Model.ListProductByCategoryId[index];
+
+                            <div class="col col-l-4 col-md-6 col-xs-12">
+                                <div class="product-item organically__conent-item">
+                                    <a href="@(Configuration["LocalAddress"] +"/product/"+ @item.Id)" class="product-thumb">
+                                        <img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt=""
+                                             class="product-img img-responsive">
+                                    </a>
+                                    <p class="product-category">@item.CategoryName</p>
+                                    <a href="product/@item.Id" class="product-name">@item.Name (@item.QuantityOrder)</a>
+                                    <div class="product-box">
+                                        <div class="product-prices">
+                                            <strong class="product-price-old">@item.OriginalPrice</strong>
+                                            <strong class="product-price-new">@item.Price</strong>
+                                        </div>
+                                        <div class="product__reviews">
+
+                                            <div class="product-rating">
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star'></i>
+                                                <i class='product-rating-icon bx bxs-star-half'></i>
+                                            </div>
+                                            <span class="product__comment">
+                                                (0)
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="product-box">
+                                        <a class="product__to-cart btn-primary" onclick="addToCart(event)">
+                                            ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                                        </a>
+                                        <div class="product__right">
+                                            <a class="product__to-wishlist" onclick="addToWishList(event)">
+                                                <i class='bx bx-heart'></i>
+                                            </a>
+                                            <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
+                                        </div>
+                                    </div>
+                                    <span class="product__label-sale">Sale</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+</main>

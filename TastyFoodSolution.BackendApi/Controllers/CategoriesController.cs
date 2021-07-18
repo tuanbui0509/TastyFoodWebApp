@@ -35,9 +35,9 @@ namespace TastyFoodSolution.BackendApi.Controllers
         }
 
         [HttpGet("{categoryId}/products")]
-        public async Task<IActionResult> GetBestSellerProducts(int id)
+        public async Task<IActionResult> GetBestSellerProducts(int categoryId)
         {
-            var products = await _categoryService.GetAllProductById(id);
+            var products = await _categoryService.GetAllProductById(categoryId);
             return Ok(products);
         }
     }

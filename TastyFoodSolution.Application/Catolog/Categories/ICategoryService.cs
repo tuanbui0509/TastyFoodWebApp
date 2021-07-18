@@ -11,7 +11,7 @@ namespace TastyFoodSolution.Application.Catalog.Categories
     {
         Task<List<CategoryViewModel>> GetAll();
 
-        Task<List<ProductViewModel>> GetAllProductById(int id);
+        Task<List<ProductViewModel>> GetAllProductById(int categoryId);
 
         Task<CategoryViewModel> GetById(int id);
     }

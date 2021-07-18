@@ -776,8 +776,9 @@ img {
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--first-color-light);
+    border-bottom: 1px solid var(--border-color);
     cursor: pointer;
+    padding: 0.5rem;
 }
 
 .sidebar-popular-img, .sidebar-recent__img {
@@ -790,11 +791,18 @@ img {
 
 .sidebar-popular-name, .sidebar-recent__name {
     color: var(--title-color-primary);
+    font-size: 1rem;
+    display: block;
+    font-weight: 600;
+}
+.sidebar-popular-name:hover, .sidebar-recent__name:hover{
+    color:var(--first-color);
 }
 
-.sidebar-popular-price {
-    color: var(--title-color-primary);
-}
+
+    .sidebar-popular-price {
+        color: var(--title-color-primary);
+    }
 
 .sidebar-recent__date {
     color: var(--first-color);
