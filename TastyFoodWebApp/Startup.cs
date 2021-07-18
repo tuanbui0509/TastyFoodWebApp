@@ -34,7 +34,10 @@ namespace TastyFoodWebApp
                 options.LoginPath = "/Login";
                 options.AccessDeniedPath = "/Forbidden/";
             });
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(3600);
@@ -85,6 +88,37 @@ namespace TastyFoodWebApp
                         controller = "Product",
                         action = "Detail"
                     });
+                endpoints.MapControllerRoute(
+                    name: "Product Detail",
+                    pattern: "categories/product/{id}", new
+                    {
+                        controller = "Product",
+                        action = "Detail"
+                    });
+                endpoints.MapControllerRoute(
+                    name: "Product Detail",
+                    pattern: "product/product/{id}", new
+                    {
+                        controller = "Product",
+                        action = "Detail"
+                    });
+
+                //endpoints.MapControllerRoute(
+                //  name: "Product Category",
+                //  pattern: "categories/product/{id}", new
+                //  {
+                //      controller = "Product",
+                //      action = "Category"
+                //  });
+
+                //endpoints.MapControllerRoute(
+                //    name: "Product Detail En",
+                //    pattern: "{culture}/products/{id}", new
+                //    {
+                //        controller = "Product",
+                //        action = "Detail"
+                //    });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

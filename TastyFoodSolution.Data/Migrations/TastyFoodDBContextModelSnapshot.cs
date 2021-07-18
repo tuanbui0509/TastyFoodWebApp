@@ -180,7 +180,7 @@ namespace TastyFoodSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "86cee7e5-752c-4d62-8343-1d8d97c63a44",
+                            ConcurrencyStamp = "8fab5c94-0d70-46e7-a3dc-a65a783ce2d0",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -257,7 +257,7 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9dfa8fa2-bb90-42a2-b30e-7665fade8524",
+                            ConcurrencyStamp = "1140ceaa-5287-43b2-84b7-14d5f8d94888",
                             Dob = new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "tuanbui0509@gmail.com",
                             EmailConfirmed = true,
@@ -266,7 +266,7 @@ namespace TastyFoodSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "tuanbui0509@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEQiC/mY0exysNcU/Y/WUroHsIuneQUu1UPHZiFFCc7NOOVPyPM58p1D/jNCr2UuWA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELY94xis+m8v87IBQCz0UCFUdDxGvDqAS+Rs07BGgrPXzv5AG9PQcBW3pLDYArorAw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -333,6 +333,9 @@ namespace TastyFoodSolution.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(1);
+
+                    b.Property<string>("Thumb")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -514,7 +517,7 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            DateCreated = new DateTime(2021, 7, 17, 16, 43, 54, 810, DateTimeKind.Local).AddTicks(5147),
+                            DateCreated = new DateTime(2021, 7, 17, 22, 45, 52, 950, DateTimeKind.Local).AddTicks(8619),
                             Description = "Bánh mì ăn sáng Việt Nam",
                             Name = "Bánh mì ăn sáng",
                             OriginalPrice = 100000m,
@@ -527,7 +530,7 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
-                            DateCreated = new DateTime(2021, 7, 17, 16, 43, 54, 811, DateTimeKind.Local).AddTicks(2887),
+                            DateCreated = new DateTime(2021, 7, 17, 22, 45, 52, 951, DateTimeKind.Local).AddTicks(6924),
                             Description = "Gà rán Việt Nam",
                             Name = "Gà rán",
                             OriginalPrice = 150000m,

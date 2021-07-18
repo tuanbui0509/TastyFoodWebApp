@@ -1,6 +1,6 @@
 ﻿@model ProductDetailViewModel
 @{
-    ViewData["Title"] = "Detail";
+    ViewData["Title"] = "Detail Product";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
@@ -16,7 +16,7 @@
                     <a href="/" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
                 </li>
                 <li class="breadcrumb__item">
-                    <a href="/" class="breadcrumb__link">Product</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+                    <a href="@(Configuration["LocalAddress"] +"/categories/"+ @Model.Product.CategoryId)" class="breadcrumb__link">@Model.Product.CategoryName</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
                 </li>
                 <li class="breadcrumb__item">@Model.Product.Name</li>
             </ul>
@@ -28,25 +28,24 @@
             <div class="row">
                 <div class="col col-l-6 col-xs-12">
                     <div class="detail__image">
-                        <img src="/assets/images/detail-product/thumb1.jpg" alt=""
+                        <img src="@(Configuration["BaseAddress"] + @Model.Product.ListImage[0].ImagePath)" alt=""
                              class="detail__image-main img-responsive">
                     </div>
                     <div class="detail__other-thumb">
                         <ul class="detail__other-thumb-list">
-                            <li class="detail__other-thumb-item" onclick="changePicture(event)">
-                                <img src="/assets/images/detail-product/thumb1.jpg" alt=""
-                                     class="detail__other-thumb-img img-responsive">
-                            </li>
-                            <li class="detail__other-thumb-item detail__other-thumb-item--overlay"
-                                onclick="changePicture(event)">
-                                <img src="/assets/images/detail-product/thumb2.jpg"
-                                     alt="" class="detail__other-thumb-img img-responsive">
-                            </li>
-                            <li class="detail__other-thumb-item detail__other-thumb-item--overlay"
-                                onclick="changePicture(event)">
-                                <img src="/assets/images/detail-product/thumb3.jpg"
-                                     alt="" class="detail__other-thumb-img img-responsive">
-                            </li>
+                            @for (int index = 0; index < @Model.Product.ListImage.Count; index++)
+                            {
+                                if (@Model.Product.ListImage.Count ==1)
+                                {
+                                    break;
+                                }
+                                var item = Model.Product.ListImage[index];
+
+                                <li class="detail__other-thumb-item" onclick="changePicture(event)">
+                                    <img src="@(Configuration["BaseAddress"] + item.ImagePath)" alt=""
+                                         class="detail__other-thumb-img img-responsive">
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -58,7 +57,7 @@
                         </p>
                         <span class="detail-info__category">
                             Category: <a href=""
-                                         class="detail-info__category-link">@Model.Product.Categorie</a>
+                                         class="detail-info__category-link">@Model.Product.CategoryName</a>
                                     </span>
                                     <div class="detail-info__rate">
                                         <div class="detail-info__rate-list">
@@ -349,15 +348,14 @@
                                 @for (int index = 0; index < @Model.RelatedProducts.Count; index++)
                                 {
                                     var item = Model.RelatedProducts[index];
-                                    //var url = $"/{culture}/{_loc["productUrl"]}/{item.Id}";
-
+                                    
                                     <div class="product-item organically__conent-item">
-                                        <a href="product/@item.Id" class="product-thumb">
+                                        <a href="@(Configuration["LocalAddress"] +"/product/"+ @item.Id)" class="product-thumb">
                                             <img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt=""
                                                  class="product-img img-responsive">
                                         </a>
-                                        <p class="product-category">@item.Categorie</p>
-                                        <a href="product/@item.Id" class="product-name">@item.Name (@item.QuantityOrder)</a>
+                                        <p class="product-category">@item.CategoryName</p>
+                                        <a href="@(Configuration["LocalAddress"] +"/product/"+ @item.Id)" class="product-name">@item.Name (@item.QuantityOrder)</a>
                                         <div class="product-box">
                                             <div class="product-prices">
                                                 <strong class="product-price-old">@item.OriginalPrice</strong>

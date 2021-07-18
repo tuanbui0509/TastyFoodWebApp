@@ -14,8 +14,6 @@ namespace TastyFoodSolution.ViewModels.Catalog.ProductImage
 
         public string ImagePath { get; set; }
 
-        public string Caption { get; set; }
-
         public bool IsDefault { get; set; }
 
         public DateTime DateCreated { get; set; }

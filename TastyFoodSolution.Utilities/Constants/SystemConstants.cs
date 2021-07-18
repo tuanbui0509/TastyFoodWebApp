@@ -14,6 +14,7 @@ namespace TastyFoodSolution.Utilities.Constants
         {
             public const string Token = "Token";
             public const string BaseAddress = "BaseAddress";
+            public const string LocalAddress = "LocalAddress";
         }
 
         public class ProductSettings

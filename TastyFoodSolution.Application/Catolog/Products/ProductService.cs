@@ -161,11 +161,12 @@ namespace TastyFoodSolution.Application.Catolog.Products
         public async Task<ProductViewModel> GetById(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
+            var category = await _context.Categories.FindAsync(product.CategoryId);
             if (product == null)
             {
                 return null;
             }
-            var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.IsDefault == true).FirstOrDefaultAsync();
+            List<ProductImage> images = await _context.ProductImages.Where(x => x.ProductId == productId).ToListAsync();
             var productViewModel = new ProductViewModel()
             {
                 Id = product.Id,
@@ -177,6 +178,8 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
                 CategoryId = product.CategoryId,
+                CategoryName = category.Name,
+                ListImage = images
             };
             return productViewModel;
         }
@@ -326,7 +329,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 Stock = x.p.Stock,
                 ViewCount = x.p.ViewCount,
                 CategoryId = x.p.CategoryId,
-                Categorie = x.c.Name
+                CategoryName = x.c.Name
             }).ToListAsync();
 
             //4. Select and projection
@@ -359,9 +362,9 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     Price = x.p.Price,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
-                    ThumbnailImage = x.pi.ImagePath,
-                    Categorie = x.c.Name,
+                    CategoryName = x.c.Name,
                     CategoryId = x.p.CategoryId,
+                    ThumbnailImage = x.pi.ImagePath,
                 }).ToListAsync();
 
             return data;
@@ -390,7 +393,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     ThumbnailImage = x.pi.ImagePath,
-                    Categorie = x.c.Name,
+                    CategoryName = x.c.Name,
                     CategoryId = x.p.CategoryId,
                 }).ToListAsync();
 
@@ -420,7 +423,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     ThumbnailImage = x.pi.ImagePath,
-                    Categorie = x.c.Name,
+                    CategoryName = x.c.Name,
                     QuantityOrder = x.p.QuantityOrder,
                     CategoryId = x.p.CategoryId,
                 }).ToListAsync();

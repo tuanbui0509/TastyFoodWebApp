@@ -136,7 +136,6 @@ namespace TastyFoodSolution.BackendApi.Controllers
         }
 
         [HttpGet("{productId}/images/{imageId}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetImageById(int productId, int imageId)
         {
             var image = await _productService.GetImageById(imageId);

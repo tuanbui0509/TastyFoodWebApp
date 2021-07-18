@@ -34,7 +34,6 @@ namespace TastyFoodSolution.ApiIntegration
         public async Task<ProductViewModel> GetById(int id)
         {
             var data = await GetAsync<ProductViewModel>($"/api/products/{id}");
-
             return data;
         }
 
