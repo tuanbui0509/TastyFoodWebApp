@@ -167,6 +167,15 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 return null;
             }
             List<ProductImage> images = await _context.ProductImages.Where(x => x.ProductId == productId).ToListAsync();
+            string image = null;
+            foreach (var item in images)
+            {
+                if (item.IsDefault)
+                {
+                    image = item.ImagePath;
+                    break;
+                }
+            }
             var productViewModel = new ProductViewModel()
             {
                 Id = product.Id,
@@ -179,6 +188,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 ViewCount = product.ViewCount,
                 CategoryId = product.CategoryId,
                 CategoryName = category.Name,
+                ThumbnailImage = image,
                 ListImage = images
             };
             return productViewModel;

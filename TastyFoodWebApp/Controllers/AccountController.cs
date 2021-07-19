@@ -37,6 +37,12 @@ namespace TastyFoodWebApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult MyAccount()
         {
             return View();

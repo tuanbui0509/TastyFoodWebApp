@@ -9,6 +9,7 @@ namespace TastyFoodSolution.Utilities.Constants
     public class SystemConstants
     {
         public const string MainConectionString = "TastyFoodDb";
+        public const string CartSession = "CartSession";
 
         public class AppSettings
         {

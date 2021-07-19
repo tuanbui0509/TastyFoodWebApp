@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<link rel="stylesheet" href="/assets/css/login/login.css">
+<!--========== BREADCRUMB ==========-->
+<section class="breadcrumb">
+    <div class="container breadcrumb__container">
+        <h2 class="breadcrumb__title">Register</h2>
+        <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+                <a href="./index.html" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+            </li>
+            <li class="breadcrumb__item">Register</li>
+        </ul>
+    </div>
+</section>
+<!--========== MAIN ==========-->
+<main class="register-wrapper ">
+
+    <!-- ========= FORM ============= -->
+    <div class="container">
+        <div class="row register">
+            <div class="col col-l-6 col-md-0">
+                <div class="register-bg">
+                    <img src="/assets/images/login/login-page.png" class="img-responsive" alt="">
+                </div>
+            </div>
+            <div class="col col-l-6 col-md-12 col-xs-12">
+                <form action="" method="POST" class="form" id="form-register">
+                    <h3 class="heading">Register</h3>
+                    <p class="desc">Welcome to Tasty Food ❤️</p>
+
+                    <div class="spacer"></div>
+
+                    <div class="form-group valid">
+                        <label for="firstname" class="form-label"> First name *</label>
+                        <input id="firstname" name="firstname" type="text" placeholder="" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+
+                    <div class="form-group valid">
+                        <label for="lastname" class="form-label"> Last name *</label>
+                        <input id="lastname" name="lastname" type="text" placeholder="" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group valid">
+                        <label for="username" class="form-label"> Username *</label>
+                        <input id="username" name="username" type="text" placeholder="" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input id="phone" name="phone" type="text" placeholder="" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" name="email" type="text" placeholder="" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob" class="form-label">Date of birth</label>
+                        <input id="dob" name="dob" type="date" placeholder="" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password *</label>
+                        <input id="password" name="password" type="password" placeholder="" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation" class="form-label">Password Repeat *</label>
+                        <input id="password_confirmation" name="password_confirmation" placeholder=""
+                               type="password" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <button class="btn-second form-submit">Register <i class='bx bx-right-arrow-alt'></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="./assets/js/validation.js"></script>
+<!-- My expect -->
+<script>
+    Validator({
+        form: '#form-register',
+        formGroupSelector: '.form-group',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('#firstname', 'This field is required!'),
+            Validator.isRequired('#lastname', 'This field is required!'),
+            Validator.isRequired('#username', 'This field is required!'),
+            Validator.isRequired('#phone', 'This field is required!'),
+            Validator.minLength('#phone', 10, `Password at least 10 characters!`),
+            Validator.isRequired('#email', 'This field is required!'),
+            Validator.isEmail('#email', 'Email is required!'),
+            Validator.isRequired('#password', 'This field is required!'),
+            Validator.minLength('#password', 8, `Password at least 8 characters!`),
+
+            Validator.isRequired('#password_confirmation', 'This field is required!'),
+            Validator.isConfirmed('#password_confirmation', function () {
+                return document.querySelector('#form-register #password').value
+            },
+                'Password repeat is incorrect'
+            )
+        ],
+        onSubmit: function (data) {
+            // Call API
+            console.log(data);
+        }
+    })
+</script>
