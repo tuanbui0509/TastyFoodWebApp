@@ -208,11 +208,11 @@
                                         </div>
                                     </div>
                                     <div class="product-box">
-                                        <a class="product__to-cart btn-primary" onclick="addToCart(event)">
+                                        <a class="product__to-cart btn-primary" data-id="@item.Id" onclick="addToCart(event,@item.Id)">
                                             ADD TO CART<i class="bx bx-right-arrow-alt"></i>
                                         </a>
                                         <div class="product__right">
-                                            <a class="product__to-wishlist" onclick="addToWishList(event)">
+                                            <a class="product__to-wishlist" onclick="addToWishList(event,@item.Id)">
                                                 <i class='bx bx-heart'></i>
                                             </a>
                                             <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
@@ -259,11 +259,11 @@
                                         </div>
                                     </div>
                                     <div class="product-box">
-                                        <a class="product__to-cart btn-primary" onclick="addToCart(event)">
+                                        <a class="product__to-cart btn-primary" data-id="@item.Id" onclick="addToCart(event,@item.Id)">
                                             ADD TO CART<i class="bx bx-right-arrow-alt"></i>
                                         </a>
                                         <div class="product__right">
-                                            <a class="product__to-wishlist" onclick="addToWishList(event)">
+                                            <a class="product__to-wishlist" onclick="addToWishList(event,@item.Id)">
                                                 <i class='bx bx-heart'></i>
                                             </a>
                                             <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
@@ -310,11 +310,11 @@
                                         </div>
                                     </div>
                                     <div class="product-box">
-                                        <a class="product__to-cart btn-primary" onclick="addToCart(event)">
+                                        <a href="" class="product__to-cart btn-primary" onclick="addToCart(event,@item.Id)">
                                             ADD TO CART<i class="bx bx-right-arrow-alt"></i>
                                         </a>
                                         <div class="product__right">
-                                            <a class="product__to-wishlist" onclick="addToWishList(event)">
+                                            <a class="product__to-wishlist" onclick="addToWishList(event,@item.Id)">
                                                 <i class='bx bx-heart'></i>
                                             </a>
                                             <a href="" class="product__to-review"><i class='bx bx-show'></i></a>
@@ -1157,7 +1157,7 @@
         <div class="modal-content">
             <div class="modal-icon"><img src="./assets/images/icon/groceries.png" alt="" class="img-responsive"></div>
             <h5 class="section-title">Added to cart!</h5>
-            <p class="text-modal text-center m-b-1">Name product</p>
+            @*<p class="text-modal text-center m-b-1">Name product</p>*@
             <div class="d-flex justify-center">
                 <a href="./checkout.html" class="btn-primary modal-btn">Checkout</a>
                 <span class="btn-second close-modal modal-btn">Continue shopping</span>
@@ -1169,7 +1169,7 @@
         <div class="modal-content">
             <div class="modal-icon"><img src="./assets/images/icon/folder.png" alt="" class="img-responsive"></div>
             <h5 class="section-title">Added to WishList!</h5>
-            <p class="text-modal text-center m-b-1">Name product</p>
+            @*<p class="text-modal text-center m-b-1">Name product</p>*@
             <div class="d-flex justify-center">
                 <a href="./wishlist.html" class="btn-primary modal-btn">To Wishlist</a>
                 <span class="btn-second close-modal modal-btn">Continue shopping</span>

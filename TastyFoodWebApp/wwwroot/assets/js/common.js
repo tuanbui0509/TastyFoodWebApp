@@ -12,7 +12,6 @@ const showMenu = (toggleId, navId) => {
             header.classList.add('scroll-header')
         })
     }
-
 }
 showMenu('nav-toggle', 'nav-menu')
 /*==================== REMOVE MENU MOBILE ====================*/
@@ -109,8 +108,6 @@ themeButton.addEventListener('click', () => {
 
 /*==================== SCROLL REVEAL ANIMATION ====================*/
 
-
-
 const scrolls = ScrollReveal({
     origin: 'top',
     distance: '30px',
@@ -121,7 +118,7 @@ const scrolls = ScrollReveal({
 scrolls.reveal(`
             .home__data,.home__img,
             .about__data,  .about__img,
-            .services__content, 
+            .services__content,
             .menu__content,
             .app__data, .app__img,
             .contact__data, .contact__button,
@@ -133,23 +130,38 @@ scrolls.reveal(`
     interval: 200
 })
 
-
 // ================= ADD TO CART ==================
-addToCart = (e) => {
+addToCart = (e, id) => {
+    e.preventDefault()
+    const data = { id: id };
+
+    fetch(`/cart/AddToCart/${id}`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     // Get the modal
     var ebModal = document.getElementById('addToCart');
-    // When the user clicks the button, open the modal 
+    // When the user clicks the button, open the modal
     ebModal.style.display = "block";
     document.body.classList.add('body-behavior')
     let text_name = document.querySelector('.text-modal')
-    // text_name.innerHTML = 
+    // text_name.innerHTML =
     // Get the <span> element that closes the modal
     var ebSpan = document.getElementsByClassName("close-modal")[0];
     // When the user clicks on <span> (x), close the modal
     ebSpan.addEventListener('click', () => {
         ebModal.style.display = "none";
         document.body.classList.remove('body-behavior')
-
     })
 
     // When the user clicks anywhere outside of the modal, close it
@@ -157,7 +169,6 @@ addToCart = (e) => {
         if (event.target == ebModal) {
             ebModal.style.display = "none";
             document.body.classList.remove('body-behavior')
-
         }
     }
 }
@@ -165,18 +176,17 @@ addToCart = (e) => {
 addToWishList = () => {
     // Get the modal
     var ebModal = document.getElementById('addToWishList');
-    // When the user clicks the button, open the modal 
+    // When the user clicks the button, open the modal
     ebModal.style.display = "block";
     document.body.classList.add('body-behavior')
     let text_name = document.querySelector('.text-modal')
-    // text_name.innerHTML = 
+    // text_name.innerHTML =
     // Get the <span> element that closes the modal
     var ebSpan = document.getElementsByClassName("close-modal")[0];
     // When the user clicks on <span> (x), close the modal
     ebSpan.addEventListener('click', () => {
         ebModal.style.display = "none";
         document.body.classList.remove('body-behavior')
-
     })
 
     // When the user clicks anywhere outside of the modal, close it
@@ -184,11 +194,9 @@ addToWishList = () => {
         if (event.target == ebModal) {
             ebModal.style.display = "none";
             document.body.classList.remove('body-behavior')
-
         }
     }
 }
-
 
 //======== add and minus value ==========
 onMinus = () => {

@@ -45,9 +45,19 @@
                 </a>
             </li>
             <li class="nav-mobile__item">
-                <a href="" class="nav-mobile__link">
-                    <i class='nav-mobile__icon bx bxs-cart'></i> Cart
-                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="/Cart" class="nav-mobile__link">
+                        <i class='nav-mobile__icon bx bxs-cart'></i> Cart
+                    </a>
+                }
+                else
+                {
+                    <a href="/Account/Login" class="nav-mobile__link">
+                        <i class='nav-mobile__icon bx bxs-cart'></i> Cart
+                    </a>
+                }
+
             </li>
             <li class="nav-mobile__item">
                 @if (User.Identity.IsAuthenticated)
@@ -238,13 +248,26 @@
                                         <li class="nav__item"><a href="/Account/Login" class="nav__link">Account</a></li>
 
                                     }
-                                    <li class="nav__item nav__item--icon">
-                                        <a href="./cart.html" class="nav__link">
+                                <li class="nav__item nav__item--icon">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                    <a href="/Cart" class="nav__link">
+                                        <i class='nav__icon bx bx-cart-alt'>
+                                            <span class="nav__icon-count">1</span>
+                                        </i>
+                                    </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Account/Login" class="nav__link">
                                             <i class='nav__icon bx bx-cart-alt'>
                                                 <span class="nav__icon-count">1</span>
                                             </i>
                                         </a>
-                                    </li>
+                                    }
+
+                                    
+                                </li>
                                     <li class="nav__item nav__item--icon">
                                         <a href="./wishlist.html" class="nav__link">
                                             <i class='nav__icon bx bxs-heart'>

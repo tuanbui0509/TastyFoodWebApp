@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="/assets/css/cart/cart.css">
+<!--========== BREADCRUMB ==========-->
+<section class="breadcrumb">
+    <div class="container breadcrumb__container">
+        <h2 class="breadcrumb__title">Cart</h2>
+        <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+                <a href="/" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+            </li>
+            <li class="breadcrumb__item">Cart</li>
+        </ul>
+    </div>
+</section>
+
+<!--========== MAIN ==========-->
+<main class="cart-wrapper">
+    <!-- ========= FORM ============= -->
+    <div class="container">
+        <div class="cart">
+            <div class="row">
+                <div class="col col-l-12 col-md-12 col-xs-12">
+                    <div class="cart__product">
+                        <table class="table">
+                            <thead class="table__head">
+                                <tr class="table__title">
+                                    <th class="table__heading">Product</th>
+                                    <th class="table__heading">Price</th>
+                                    <th class="table__heading">Quantity</th>
+                                    <th class="table__heading">Subtotal</th>
+                                    <th class="table__heading"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table__body">
+                                <tr>
+                                    <td>
+                                        <div class="table__content">
+                                            <div class="table__content-thumb">
+                                                <img src="./assets/images/product/product1.jpg" alt=""
+                                                     class="table__content-img img-responsive">
+                                            </div>
+                                            <a href="detail-product.html" class="table__content-name">
+                                                Bread Breakfast
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table__content">
+                                            <p class="table__content-price"> $1,200.00</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table__content">
+                                            <div class="section__quantity">
+                                                <button class="section__quantity-btn section__minus">
+                                                    <i class="bx bx-minus"></i>
+                                                </button>
+                                                <input type="number" class="section__input-text" step="1" min="1"
+                                                       name="quantity" value="1" title="Qty" placeholder="">
+                                                <button class="section__quantity-btn section__plus">
+                                                    <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="table__content">
+                                            <p class="table__content-total"> $1,200.00</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table__content">
+                                            <i class='table__content-icon bx bxs-trash'></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="table__content">
+                                            <div class="table__content-thumb">
+                                                <img src="./assets/images/product/product2.jpg" alt=""
+                                                     class="table__content-img img-responsive">
+                                            </div>
+                                            <a href="detail-product.html" class="table__content-name">
+                                                Fresh Juice
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table__content">
+                                            <p class="table__content-price"> $1,200.00</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table__content">
+                                            <div class="section__quantity">
+                                                <button class="section__quantity-btn section__minus">
+                                                    <i class="bx bx-minus"></i>
+                                                </button>
+                                                <input type="number" class="section__input-text" step="1" min="1"
+                                                       name="quantity" value="1" title="Qty" placeholder="">
+                                                <button class="section__quantity-btn section__plus">
+                                                    <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="table__content">
+                                            <p class="table__content-total"> $1,200.00</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table__content">
+                                            <i class='table__content-icon bx bxs-trash'></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6" class="cart__action">
+                                        <div class="cart__coupon">
+                                            <input type="text" class="cart__coupon-input">
+                                            <button class="btn-second cart__coupon-btn">
+                                                Apply coupon<i class='bx bx-right-arrow-alt'></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col col-l-12 col-md-12 col-xs-12 ">
+                    <div class="cart__total">
+                        <div>
+                            <h3 class="cart__total-title">Cart totals</h3>
+                            <table class="cart__table">
+                                <thead>
+                                    <tr>
+                                        <th class="cart__title">Subtotal</th>
+                                        <td class="cart__heading">$1,200.00</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th class="cart__title">Total</th>
+                                        <td class="cart__heading heading--primary">$1,200.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn-second cart__total-btn">
+                                PROCEED TO CHECKOUT<i class='bx bx-right-arrow-alt'></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
