@@ -59,10 +59,13 @@ body .cart {
     text-align: left;
 }
 
+.cart__total .cart__table {
+    margin-bottom: 1rem;
+}
+
 .cart__total-title {
     font-size: var(--h1-font-size);
     color: var(--first-color);
-    margin-bottom: 1rem;
 }
 
 .cart__total-btn ,.cart__coupon-btn{

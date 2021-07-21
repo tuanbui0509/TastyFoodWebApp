@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TastyFoodSolution.ApiIntegration;
+using TastyFoodSolution.ApiIntergration;
 using TastyFoodSolution.Utilities.Constants;
 using TastyFoodSolution.ViewModels.Carts;
 using TastyFoodWebApp.Models;
@@ -15,10 +16,12 @@ namespace TastyFoodWebApp.Controllers
     public class CartController : Controller
     {
         private readonly IProductApiClient _productApiClient;
+        private readonly IOrderApiClient _orderApiClient;
 
-        public CartController(IProductApiClient productApiClient)
+        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient)
         {
             _productApiClient = productApiClient;
+            _orderApiClient = orderApiClient;
         }
 
         public IActionResult Index()
@@ -53,7 +56,15 @@ namespace TastyFoodWebApp.Controllers
                 OrderDetails = orderDetails
             };
             //TODO: Add to API
-            TempData["SuccessMsg"] = "Order puschased successful";
+            var create = _orderApiClient.CreateOrder(checkoutRequest);
+            if (create.Result != null && create.Result.IsSuccessed)
+            {
+                TempData["SuccessMsg"] = "Order puschased successful";
+            }
+            else
+            {
+                TempData["SuccessMsg"] = "Order puschased failseful";
+            }
             return View(model);
         }
 
@@ -67,7 +78,7 @@ namespace TastyFoodWebApp.Controllers
             return Ok(currentCart);
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<IActionResult> AddToCart(int id)
         {
             var product = await _productApiClient.GetById(id);
@@ -99,7 +110,8 @@ namespace TastyFoodWebApp.Controllers
             return Ok(currentCart);
         }
 
-        public IActionResult UpdateCart(int id, int quantity)
+        [HttpPost]
+        public IActionResult UpdateCart([FromBody] CartItemViewModel model)
         {
             var session = HttpContext.Session.GetString(SystemConstants.CartSession);
             List<CartItemViewModel> currentCart = new List<CartItemViewModel>();
@@ -108,14 +120,14 @@ namespace TastyFoodWebApp.Controllers
 
             foreach (var item in currentCart)
             {
-                if (item.ProductId == id)
+                if (item.ProductId == model.ProductId)
                 {
-                    if (quantity == 0)
+                    if (model.Quantity == 0)
                     {
                         currentCart.Remove(item);
                         break;
                     }
-                    item.Quantity = quantity;
+                    item.Quantity = model.Quantity;
                 }
             }
 

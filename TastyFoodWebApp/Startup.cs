@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TastyFoodSolution.ApiIntegration;
+using TastyFoodSolution.ApiIntergration;
 
 namespace TastyFoodWebApp
 {
@@ -48,6 +49,7 @@ namespace TastyFoodWebApp
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
