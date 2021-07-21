@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "MyAccount";
+}
+
+<link rel="stylesheet" href="/assets/css/my-account/my-account.css">
+<!--========== BREADCRUMB ==========-->
+<section class="breadcrumb">
+    <div class="container breadcrumb__container">
+        <h2 class="breadcrumb__title">My Account</h2>
+        <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+                <a href="./index.html" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+            </li>
+            <li class="breadcrumb__item">My Account</li>
+        </ul>
+    </div>
+</section>
+<!--========== MAIN ==========-->
+<main>
+
+    <!-- ========= FORM ============= -->
+    <div class="container">
+        <div class="account-wrapper">
+            <ul class="account-menu">
+                <li class="account-item account-item--active">
+                    <a href="/" class="account-btn">Dashboard</a>
+                </li>
+                <li class="account-item">
+                    <a href="" class="account-btn">Orders</a>
+                </li>
+                <li class="account-item">
+
+                    <a href="" class="account-btn">Addresses</a>
+                </li>
+                <li class="account-item">
+                    <a href="" class="account-btn"> Account detail</a>
+                </li>
+                <li class="account-item">
+                    <form action="/Account/Logout" method="post">
+                        <button class="account-btn">Logout</button>
+                    </form>
+                </li>
+            </ul>
+            <div class="account-content">
+                <h3 class="account-content-title">Hello Tuanbui0509 Welcome to Tasty Food ❤️</h3>
+                <p class="account-content-desc">
+                    From your account dashboard you can view your <a href="">recent orders</a> , <a href="">
+                        edit
+                        your password
+                    </a> and <a href=""> account details.</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>

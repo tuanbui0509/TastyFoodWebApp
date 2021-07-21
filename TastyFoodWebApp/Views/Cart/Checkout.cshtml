@@ -1,0 +1,121 @@
+﻿@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+<link rel="stylesheet" href="/assets/css/login/login.css">
+<!--========== BREADCRUMB ==========-->
+<section class="breadcrumb">
+    <div class="container breadcrumb__container">
+        <h2 class="breadcrumb__title">Checkout</h2>
+        <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+                <a href="./index.html" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+            </li>
+            <li class="breadcrumb__item">Checkout</li>
+        </ul>
+    </div>
+</section>
+<!-- ========= FORM ============= -->
+<!--========== MAIN ==========-->
+<main class="checkout-wrapper ">
+
+    <div class="container">
+        <div class="row checkout">
+            @if (TempData["SuccessMsg"] != null)
+            {
+                <span class="alert alert-success">@TempData["SuccessMsg"]</span>
+            }
+            else
+            {
+                <div class="col col-l-6 col-md-12 col-xs-12">
+
+                    <form action="/Cart/Checkout" method="POST" class="form" id="form-checkout">
+                        <h3 class="heading text-left">Billing details</h3>
+                        <div class="spacer"></div>
+                        <div class="form-group valid">
+                            <label for="name" class="form-label"> Name *</label>
+                            <input id="name"  type="text" placeholder="" class="form-control" asp-for="CheckoutModel.Name">
+                            <span class="form-message"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" class="form-label">Street address *</label>
+                            <input id="address"  type="text" placeholder="" class="form-control" asp-for="CheckoutModel.Address">
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone *</label>
+                            <input id="phone"  type="text" placeholder="" class="form-control" asp-for="CheckoutModel.PhoneNumber">
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email *</label>
+                            <input id="email" type="text" placeholder="" class="form-control" asp-for="CheckoutModel.Email">
+                            <span class="form-message"></span>
+                        </div>
+                        <h3 class="heading text-left">Additional information</h3>
+
+                        @*<div class="form-group">
+                                <label for="note" class="form-label">Order notes (optional)</label>
+                                <textarea id="note" name="note" placeholder="" class="form-control" cols="30"
+                                          rows="10"></textarea>
+                                <span class="form-message"></span>
+                            </div>*@
+                        <button class="btn-second ">Place order <i class='bx bx-right-arrow-alt'></i></button>
+                    </form>
+                </div>
+                <div class="col col-l-6 col-md-12 col-xs-12">
+                    <div class="checkout-info">
+                        <h3 class="checkout-info__total-title">Your order</h3>
+                        <table class="checkout-info__table">
+                            <thead>
+                                <tr>
+                                    <th class="checkout-info__title">Product</th>
+                                    <th class="checkout-info__title">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.CartItems)
+                                {
+                                    <tr>
+                                        <td class="checkout-info__heading">@item.Name <span class="checkout-info__count">x @item.Quantity</span></td>
+                                        <td class="checkout-info__heading heading--primary">@item.Quantity*@item.Price</td>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <th class="checkout-info__title">Total</th>
+                                    <td class="checkout-info__heading checkout-info__heading--bold color-green">@Model.CartItems.Sum(x => x.Quantity * x.Price).ToString("N0")</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</main>
+<script src="/assets/js/validation.js"></script>
+<!-- My expect -->
+<script>
+    Validator({
+        form: '#form-checkout',
+        formGroupSelector: '.form-group',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('#name', 'This field is required!'),
+            Validator.isRequired('#phone', 'This field is required!'),
+            Validator.minLength('#phone', 10, `Password at least 10 characters!`),
+            Validator.isRequired('#email', 'This field is required!'),
+            Validator.isEmail('#email', 'Email is required!'),
+            Validator.isRequired('#address', 'This field is required!'),
+
+        ],
+        onSubmit: function (data) {
+            // Call API
+            console.log(data);
+        }
+    })
+</script>

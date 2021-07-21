@@ -1,0 +1,70 @@
+body .wishlist {
+    
+    margin: 5rem 0;
+   
+}
+.wishlist__table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+td, th {
+    border: 1px solid var(--border-color);
+    text-align: left;
+    padding: 8px;
+    width: 0;
+}
+
+tr:nth-child(even) {
+    background-color: var(--light-green-color);
+}
+
+td {
+    vertical-align: middle;
+    text-align: center;
+    color: var(--title-color-primary);
+}
+
+.wishlist__title {
+    font-weight: bold;
+}
+
+.wishlist__heading {
+    text-align: center;
+    font-size: var(--h2-font-size);
+    color: var(--title-color-primary);
+}
+
+.wishlist__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wishlist__content-thumb {
+    width: 80px;
+    border-radius: 5px;
+}
+
+.wishlist__content-name {
+    margin-left: 1rem;
+    color: var(--title-color-primary);
+}
+
+.wishlist__content-name:hover {
+    color: var(--first-color);
+}
+
+.wishlist__content-icon {
+    font-size: 2rem;
+}
+
+.wishlist__content-icon:hover {
+    cursor: pointer;
+    color: var(--red-color);
+    transition: all 0.3s ease-in-out;
+}

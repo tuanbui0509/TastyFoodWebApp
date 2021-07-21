@@ -14,9 +14,4 @@
     <ProjectReference Include="..\TastyFoodSolution.ViewModels\TastyFoodSolution.ViewModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="System\Languages\" />
-    <Folder Include="System\Roles\" />
-  </ItemGroup>
-
 </Project>

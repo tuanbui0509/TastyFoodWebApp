@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+
+<link rel="stylesheet" href="/assets/css/cart/cart.css">
+
+<!--========== BREADCRUMB ==========-->
+<section class="breadcrumb">
+    <div class="container breadcrumb__container">
+        <h2 class="breadcrumb__title">Cart</h2>
+        <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+                <a href="/" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+            </li>
+            <li class="breadcrumb__item">Cart</li>
+        </ul>
+    </div>
+</section>
+
+<!--========== MAIN ==========-->
+<main class="cart-wrapper">
+    <!-- ========= FORM ============= -->
+    <div class="container">
+        <div class="cart">
+            <div class="row">
+                <div class="col col-l-12 col-md-12 col-xs-12">
+                    <div class="cart__product">
+                        <table class="table">
+                            <thead class="table__head">
+                                <tr class="table__title">
+                                    <th class="table__heading">Product</th>
+                                    <th class="table__heading">Price</th>
+                                    <th class="table__heading">Quantity</th>
+                                    <th class="table__heading">Subtotal</th>
+                                    <th class="table__heading"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table__body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col col-l-12 col-md-12 col-xs-12 ">
+                    <div class="cart__total">
+                        <div>
+                            <h3 class="cart__total-title">Cart totals</h3>
+                            <table class="cart__table">
+                            </table>
+                            <a href="/Cart/Checkout" class="btn-second cart__total-btn">
+                                PROCEED TO CHECKOUT<i class='bx bx-right-arrow-alt'></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="~/assets/js/cart.js"></script>

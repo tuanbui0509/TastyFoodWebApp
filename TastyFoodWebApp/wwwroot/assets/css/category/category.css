@@ -1,0 +1,25 @@
+.category-tem {
+    position: relative;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    overflow: hidden;
+}
+.category-item__thumb:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s ease;
+}
+.category-item__content{
+    position: absolute;
+    left: 20px;
+    top: 50px;
+}
+
+.category-item__title{
+    margin-bottom: 1rem;
+    font-size: var(--h2-font-size);
+    color: var(--first-color);
+
+}
+.category-item__btn{
+    padding: 0.8rem 1.5rem;
+}

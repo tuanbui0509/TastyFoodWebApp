@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<link rel="stylesheet" href="/assets/css/login/login.css">
+
+<!--========== BREADCRUMB ==========-->
+<section class="breadcrumb">
+    <div class="container breadcrumb__container">
+        <h2 class="breadcrumb__title">Login</h2>
+        <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+                <a href="/" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+            </li>
+            <li class="breadcrumb__item">Login</li>
+        </ul>
+    </div>
+</section>
+<!--========== MAIN ==========-->
+<main class="login-wrapper">
+
+    <!-- ========= FORM ============= -->
+    <div class="container">
+        <div class="row login">
+            <div class="col col-l-6 col-md-6 col-xs-12">
+                <div class="login-bg">
+                    <img src="/assets/images/login/login-page.png" class="img-responsive" alt="">
+                </div>
+            </div>
+            <div class="col col-l-6 col-md-6 col-xs-12">
+                <form action="/Account/login" method="POST" class="form" id="form-login">
+                    <h3 class="heading">Login</h3>
+                    <p class="desc">Welcome to Tasty Food ❤️</p>
+
+                    <div class="spacer"></div>
+
+                    <div class="form-group valid">
+                        <label for="fullname" class="form-label"> Username or email address *</label>
+                        <input id="fullname" name="Username" type="text" placeholder=""
+                               class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password *</label>
+                        <input id="password" name="Password" type="password" placeholder=""
+                               class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+
+                    <button class="btn-second form-submit">Login <i class='bx bx-right-arrow-alt'></i></button>
+                </form>
+                <a href="/Account/register" class="forgot-pass-text">Register?</a>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="/assets/js/validation.js"></script>
+<!-- My expect -->
+<script>
+    Validator({
+        form: '#form-login',
+        formGroupSelector: '.form-group',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('#fullname', 'This field is required!'),
+            Validator.isRequired('#password', 'This field is required!'),
+            Validator.minLength('#password', 8, `Password at least 8 characters!`),
+        ],
+        onSubmit: function (data) {
+            // Call API
+            console.log(data);
+        }
+    })
+</script>

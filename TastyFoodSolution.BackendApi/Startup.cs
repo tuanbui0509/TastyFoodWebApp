@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,16 +11,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TastyFoodSolution.Application.Catolog.Common;
+using TastyFoodSolution.Application.Catalog.Categories;
+using TastyFoodSolution.Application.Catolog.Orders;
 using TastyFoodSolution.Application.Catolog.Products;
+using TastyFoodSolution.Application.Common;
+using TastyFoodSolution.Application.System.Roles;
 using TastyFoodSolution.Application.System.Users;
 using TastyFoodSolution.Data.EF;
 using TastyFoodSolution.Data.Entities;
 using TastyFoodSolution.Utilities.Constants;
+using TastyFoodSolution.ViewModels.System.Users;
 
 namespace TastyFoodSolution.BackendApi
 {
@@ -41,18 +48,26 @@ namespace TastyFoodSolution.BackendApi
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
 
-            services.AddTransient<IPublicProductService, PublicProductService>();
-            services.AddTransient<IManageProductService, ManageProductService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IOrderSevice, OrderSevice>();
+
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
-            services.AddTransient<IUserService, UserService>();
 
-            services.AddControllers();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
+
+            // register all same url login to validator
+            services.AddControllers()
+                //.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+                .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger eShop Solution", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger TastyFood Solution", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -84,8 +99,8 @@ namespace TastyFoodSolution.BackendApi
                     });
             });
 
-            string issuer = Configuration.GetValue<string>("Tokens:Issuer");
-            string signingKey = Configuration.GetValue<string>("Tokens:Key");
+            string issuer = Configuration.GetValue<string>("Token:Issuer");
+            string signingKey = Configuration.GetValue<string>("Token:Key");
             byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
 
             services.AddAuthentication(opt =>
@@ -133,8 +148,7 @@ namespace TastyFoodSolution.BackendApi
             app.UseAuthorization();
 
             app.UseSwagger();
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API TastyFoodSolution");

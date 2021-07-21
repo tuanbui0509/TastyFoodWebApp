@@ -12,17 +12,18 @@ namespace TastyFoodSolution.Data.Entities
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
         public int ViewCount { set; get; }
+        public int QuantityOrder { set; get; }
         public DateTime DateCreated { set; get; }
-
         public bool? IsFeatured { get; set; }
-
-        public List<ProductInCategory> ProductInCategories { get; set; }
+        public string Name { set; get; }
+        public string Description { set; get; }
+        public int CategoryId { set; get; }
+        public Category Category { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
 
         public List<Cart> Carts { get; set; }
-
-        public List<ProductTranslation> ProductTranslations { get; set; }
+        public List<Review> Reviews { get; set; }
 
         public List<ProductImage> ProductImages { get; set; }
     }

@@ -1,0 +1,89 @@
+.register-wrapper, .login-wrapper ,.forgot-wrapper,.checkout-wrapper{
+    padding: 8rem 0;
+}
+
+.register, .login, .checkout,.forgot {
+    background: var(--body-color);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    border-radius: 5px;
+    /* max-height: 300px; */
+    border: 1px solid var(--first-color-light);
+    padding: 2rem;
+}
+
+.login {
+    max-height: 100vh;
+}
+.forgot-pass-text{
+    margin-top: 0.5rem;
+    display: block;
+}
+
+.forgot-pass-text:hover{
+    color: var(--gold-color);
+}
+/* ============= REGISTER =========== */
+.register {
+    min-height: 100vh;
+}
+
+.register-bg, .login-bg {
+    max-width: 500px;
+}
+
+
+/* ============= CHECKOUT ============= */
+
+.checkout-info__total tr {
+    border: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.checkout-info__total .checkout-info__heading {
+    text-align: left;
+    vertical-align:center;
+}
+
+.checkout-info__total-title {
+    font-size: var(--h1-font-size);
+    color: var(--first-color);
+    margin-bottom: 1rem;
+}
+
+.checkout-info__table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.checkout-info__title {
+    font-size: var(--h3-font-size);
+    color: var(--title-color-primary);
+}
+
+.checkout-info__heading--bold {
+    font-size: var(--h2-font-size);
+    font-weight: var(--font-semi-bold);
+}
+
+.checkout-info__count {
+    font-weight: var(--font-semi-bold);
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+@media screen and (max-width: 1024px) {
+    .register .register-bg {
+        display: none;
+    }
+    .checkout-info{
+        margin: 2rem 0;
+    }
+    .checkout-wrapper{
+        padding: 4rem 1rem;
+    }
+}

@@ -10,13 +10,13 @@ namespace TastyFoodSolution.Data.Entities
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-        //Date of birth 
+
+        //Date of birth
         public DateTime Dob { get; set; }
 
         public List<Cart> Carts { get; set; }
 
         public List<Order> Orders { get; set; }
-
-        public List<Transaction> Transactions { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }

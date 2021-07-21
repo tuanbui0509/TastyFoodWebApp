@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="System\Languages\" />
-    <Folder Include="System\Roles\" />
+    <ProjectReference Include="..\TastyFoodSolution.Data\TastyFoodSolution.Data.csproj" />
   </ItemGroup>
 
 </Project>

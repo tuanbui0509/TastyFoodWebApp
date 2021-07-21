@@ -1,0 +1,49 @@
+﻿@model CategoryListViewModel
+@{
+    ViewData["Title"] = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+<link rel="stylesheet" href="assets/css/category/category.css">
+<!--========== BREADCRUMB ==========-->
+<section class="breadcrumb">
+    <div class="container breadcrumb__container">
+        <h2 class="breadcrumb__title">Category List</h2>
+        <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+                <a href="./index.html" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+            </li>
+            <li class="breadcrumb__item">Category List</li>
+        </ul>
+    </div>
+</section>
+<!--========== MAIN ==========-->
+<main>
+    <!--========== LIST CATEGORY ==========-->
+    <section class="section category">
+        <div class="container">
+            <div class="row">
+                @for (int index = 0; index < @Model.ListCategory.Count; index++)
+                {
+                    var item = Model.ListCategory[index];
+
+                    <div class="col col-l-4 col-md-6 col-xs-12">
+                        <div class="category-tem">
+                            <div class="category-item__thumb">
+                                <img src="./assets/images/category/@item.Thumb" alt="" class="img-responsive">
+                            </div>
+                            <div class="category-item__content">
+                                <h3 class="category-item__title">
+                                    @item.Name
+                                </h3>
+                                <a href="categories/@item.Id" class="category-item__btn btn-primary">
+                                    View All <i class="bx bx-right-arrow-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</main>
