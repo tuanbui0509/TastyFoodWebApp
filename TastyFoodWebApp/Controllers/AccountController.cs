@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -44,6 +45,12 @@ namespace TastyFoodWebApp.Controllers
 
         [HttpGet]
         public IActionResult MyAccount()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult NotFound()
         {
             return View();
         }

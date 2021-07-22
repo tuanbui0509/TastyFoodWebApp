@@ -38,12 +38,12 @@ namespace TastyFoodSolution.Application.System.Users
         public async Task<ApiResult<string>> Authencate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
+            if (user == null) return new ApiErrorResult<string>("Account not exits");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
             {
-                return new ApiErrorResult<string>("Đăng nhập không đúng");
+                return new ApiErrorResult<string>("Login error");
             }
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
@@ -101,20 +101,12 @@ namespace TastyFoodSolution.Application.System.Users
             return new ApiSuccessResult<UserVm>(userVm);
         }
 
-        public async Task<ApiResult<PagedResult<UserVm>>> GetUsersPaging(GetUserPagingRequest request)
+        public async Task<ApiResult<PagedResult<UserVm>>> GetUsers()
         {
             var query = _userManager.Users;
-            if (!string.IsNullOrEmpty(request.Keyword))
-            {
-                query = query.Where(x => x.UserName.Contains(request.Keyword)
-                 || x.PhoneNumber.Contains(request.Keyword));
-            }
-
-            //3. Paging
             int totalRow = await query.CountAsync();
 
-            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-                .Take(request.PageSize)
+            var data = await query
                 .Select(x => new UserVm()
                 {
                     Email = x.Email,
@@ -128,9 +120,6 @@ namespace TastyFoodSolution.Application.System.Users
             //4. Select and projection
             var pagedResult = new PagedResult<UserVm>()
             {
-                TotalRecords = totalRow,
-                PageIndex = request.PageIndex,
-                PageSize = request.PageSize,
                 Items = data
             };
             return new ApiSuccessResult<PagedResult<UserVm>>(pagedResult);

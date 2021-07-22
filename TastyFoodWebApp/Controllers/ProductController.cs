@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TastyFoodSolution.ApiIntegration;
+using TastyFoodSolution.Utilities.Constants;
 using TastyFoodSolution.ViewModels.Catolog.Products;
 using TastyFoodWebApp.Models;
 
@@ -22,9 +25,22 @@ namespace TastyFoodWebApp.Controllers
 
         [HttpGet()]
         public async Task<IActionResult> Detail(int id)
-
         {
             var product = await _productApiClient.GetById(id);
+
+            var session = HttpContext.Session.GetString(SystemConstants.CartSession);
+            List<CartItemViewModel> currentProduct = new List<CartItemViewModel>();
+            if (session != null)
+            {
+                currentProduct = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
+                foreach (var item in currentProduct)
+                {
+                    if (item.ProductId == id)
+                    {
+                        product.QuantityOrder = item.Quantity;
+                    }
+                }
+            }
             var RelatedProducts = await _categoryApiClient.GetAllProductById(product.CategoryId);
             return View(new ProductDetailViewModel()
             {

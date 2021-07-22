@@ -33,7 +33,7 @@ namespace TastyFoodWebApp
             .AddCookie(options =>
             {
                 options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Forbidden/";
+                options.AccessDeniedPath = "/Account/NotFound";
             });
             services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
@@ -59,6 +59,7 @@ namespace TastyFoodWebApp
                 builder.AddRazorRuntimeCompilation();
             }
 #endif
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

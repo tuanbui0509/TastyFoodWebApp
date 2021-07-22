@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TastyFoodSolution.ApiIntegration;
 using TastyFoodSolution.ApiIntergration;
@@ -13,15 +15,18 @@ using TastyFoodWebApp.Models;
 
 namespace TastyFoodWebApp.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IOrderApiClient _orderApiClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient)
+        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient, IHttpContextAccessor httpContextAccessor)
         {
             _productApiClient = productApiClient;
             _orderApiClient = orderApiClient;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult Index()
@@ -38,6 +43,8 @@ namespace TastyFoodWebApp.Controllers
         public IActionResult Checkout(CheckoutViewModel request)
         {
             var model = GetCheckoutViewModel();
+            var username = _httpContextAccessor.HttpContext.User.Identity.Name;
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var orderDetails = new List<OrderDetailViewModel>();
             foreach (var item in model.CartItems)
             {
@@ -47,13 +54,14 @@ namespace TastyFoodWebApp.Controllers
                     Quantity = item.Quantity
                 });
             }
+
             var checkoutRequest = new CheckoutRequest()
             {
                 Address = request.CheckoutModel.Address,
                 Name = request.CheckoutModel.Name,
                 Email = request.CheckoutModel.Email,
                 PhoneNumber = request.CheckoutModel.PhoneNumber,
-                OrderDetails = orderDetails
+                OrderDetails = orderDetails,
             };
             //TODO: Add to API
             var create = _orderApiClient.CreateOrder(checkoutRequest);
@@ -86,25 +94,54 @@ namespace TastyFoodWebApp.Controllers
             var session = HttpContext.Session.GetString(SystemConstants.CartSession);
             List<CartItemViewModel> currentCart = new List<CartItemViewModel>();
             if (session != null)
+            {
                 currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
-
-            int quantity = 1;
-            if (currentCart.Any(x => x.ProductId == id))
-            {
-                quantity = currentCart.First(x => x.ProductId == id).Quantity + 1;
+                foreach (var item in currentCart)
+                {
+                    if (item.ProductId == id)
+                    {
+                        item.Quantity++;
+                        break;
+                    }
+                    else
+                    {
+                        int quantity = 1;
+                        if (currentCart.Any(x => x.ProductId == id))
+                        {
+                            quantity = currentCart.First(x => x.ProductId == id).Quantity + 1;
+                        }
+                        var cartItem = new CartItemViewModel()
+                        {
+                            ProductId = id,
+                            Description = product.Description,
+                            Image = product.ThumbnailImage,
+                            Name = product.Name,
+                            Price = product.Price,
+                            Quantity = quantity
+                        };
+                        currentCart.Add(cartItem);
+                        break;
+                    }
+                }
             }
-
-            var cartItem = new CartItemViewModel()
+            else
             {
-                ProductId = id,
-                Description = product.Description,
-                Image = product.ThumbnailImage,
-                Name = product.Name,
-                Price = product.Price,
-                Quantity = quantity
-            };
-
-            currentCart.Add(cartItem);
+                int quantity = 1;
+                if (currentCart.Any(x => x.ProductId == id))
+                {
+                    quantity = currentCart.First(x => x.ProductId == id).Quantity + 1;
+                }
+                var cartItem = new CartItemViewModel()
+                {
+                    ProductId = id,
+                    Description = product.Description,
+                    Image = product.ThumbnailImage,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Quantity = quantity
+                };
+                currentCart.Add(cartItem);
+            }
 
             HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(currentCart));
             return Ok(currentCart);
