@@ -68,7 +68,7 @@ function scrollHeader() {
     else nav.classList.remove('scroll-header')
 }
 
-// scrollHeader()
+scrollHeader()
 
 // window.addEventListener('scroll', scrollActive)
 /*==================== SHOW SCROLL TOP ====================*/
@@ -196,16 +196,4 @@ addToWishList = () => {
             document.body.classList.remove('body-behavior')
         }
     }
-}
-
-//======== add and minus value ==========
-onMinus = () => {
-    let value = document.getElementById('quantity')
-    if (value.value > 1)
-        value.value = parseInt(value.value) - 1;
-}
-
-onAdd = () => {
-    let value = document.getElementById('quantity')
-    value.value = parseInt(value.value) + 1;
 }

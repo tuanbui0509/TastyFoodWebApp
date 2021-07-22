@@ -1159,7 +1159,14 @@
             <h5 class="section-title">Added to cart!</h5>
             @*<p class="text-modal text-center m-b-1">Name product</p>*@
             <div class="d-flex justify-center">
-                <a href="./checkout.html" class="btn-primary modal-btn">Checkout</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="/cart/checkout" class="btn-primary modal-btn">Checkout</a>
+                }
+                else
+                {
+                    <a href="/Account/Login" class="btn-primary modal-btn">Checkout</a>
+                }
                 <span class="btn-second close-modal modal-btn">Continue shopping</span>
             </div>
         </div>

@@ -35,7 +35,7 @@
                         <ul class="detail__other-thumb-list">
                             @for (int index = 0; index < @Model.Product.ListImage.Count; index++)
                             {
-                                if (@Model.Product.ListImage.Count ==1)
+                                if (@Model.Product.ListImage.Count == 1)
                                 {
                                     break;
                                 }
@@ -72,12 +72,12 @@
                                     <span class="detail-info__price">@Model.Product.Price</span>
                                     <div class="detail-info__form">
                                         <div class="section__quantity">
-                                            <button class="section__quantity-btn section__minus" onclick="onMinus()">
+                                            <button class="section__quantity-btn section__minus" onclick="minusQuantity(@Model.Product.Id)">
                                                 <i class='bx bx-minus'></i>
                                             </button>
                                             <input type="number" class="section__input-text" step="1" min="1" name="quantity"
-                                                   value="1" title="Qty" placeholder="" id="quantity">
-                                            <button class="section__quantity-btn section__plus" onclick="onAdd()">
+                                                   value="@Model.Product.QuantityOrder" title="Qty" placeholder="" id="quantity">
+                                            <button class="section__quantity-btn section__plus" onclick="plusQuantity(@Model.Product.Id)">
                                                 <i class='bx bx-plus'></i>
                                             </button>
                                         </div>
@@ -348,7 +348,7 @@
                                 @for (int index = 0; index < @Model.RelatedProducts.Count; index++)
                                 {
                                     var item = Model.RelatedProducts[index];
-                                    
+
                                     <div class="product-item organically__conent-item">
                                         <a href="@(Configuration["LocalAddress"] +"/product/"+ @item.Id)" class="product-thumb">
                                             <img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt=""

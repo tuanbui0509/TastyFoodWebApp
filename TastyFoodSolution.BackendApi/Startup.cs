@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TastyFoodSolution.Application.Catalog.Categories;
+using TastyFoodSolution.Application.Catolog.Orders;
 using TastyFoodSolution.Application.Catolog.Products;
 using TastyFoodSolution.Application.Common;
 using TastyFoodSolution.Application.System.Roles;
@@ -49,6 +50,7 @@ namespace TastyFoodSolution.BackendApi
 
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IOrderSevice, OrderSevice>();
 
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();

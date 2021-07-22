@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TastyFoodSolution.ViewModels.Common
 {
-    public class PagedResult<T> : PagedResultBase
+    public class PagedResult<T>
     {
         public List<T> Items { get; set; }
     }

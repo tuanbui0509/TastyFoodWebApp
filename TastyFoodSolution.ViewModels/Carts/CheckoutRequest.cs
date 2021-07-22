@@ -8,6 +8,8 @@ namespace TastyFoodSolution.ViewModels.Carts
 {
     public class CheckoutRequest
     {
+        public Guid UserId { set; get; }
+
         public string Name { get; set; }
 
         public string Address { get; set; }

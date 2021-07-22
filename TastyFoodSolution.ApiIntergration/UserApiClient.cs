@@ -44,47 +44,47 @@ namespace TastyFoodSolution.ApiIntegration
             return JsonConvert.DeserializeObject<ApiErrorResult<string>>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ApiResult<bool>> Delete(Guid id)
-        {
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.DeleteAsync($"/api/users/{id}");
-            var body = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);
+        //public async Task<ApiResult<bool>> Delete(Guid id)
+        //{
+        //    var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+        //    var client = _httpClientFactory.CreateClient();
+        //    client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+        //    var response = await client.DeleteAsync($"/api/users/{id}");
+        //    var body = await response.Content.ReadAsStringAsync();
+        //    if (response.IsSuccessStatusCode)
+        //        return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(body);
-        }
+        //    return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(body);
+        //}
 
-        public async Task<ApiResult<UserVm>> GetById(Guid id)
-        {
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/users/{id}");
-            var body = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<UserVm>>(body);
+        //public async Task<ApiResult<UserVm>> GetById(Guid id)
+        //{
+        //    var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+        //    var client = _httpClientFactory.CreateClient();
+        //    client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+        //    var response = await client.GetAsync($"/api/users/{id}");
+        //    var body = await response.Content.ReadAsStringAsync();
+        //    if (response.IsSuccessStatusCode)
+        //        return JsonConvert.DeserializeObject<ApiSuccessResult<UserVm>>(body);
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<UserVm>>(body);
-        }
+        //    return JsonConvert.DeserializeObject<ApiErrorResult<UserVm>>(body);
+        //}
 
-        public async Task<ApiResult<PagedResult<UserVm>>> GetUsersPagings(GetUserPagingRequest request)
-        {
-            var client = _httpClientFactory.CreateClient();
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+        //public async Task<ApiResult<PagedResult<UserVm>>> GetUsersPagings(GetUserPagingRequest request)
+        //{
+        //    var client = _httpClientFactory.CreateClient();
+        //    var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.GetAsync($"/api/users/paging?pageIndex=" +
-                $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
-            var body = await response.Content.ReadAsStringAsync();
-            var users = JsonConvert.DeserializeObject<ApiSuccessResult<PagedResult<UserVm>>>(body);
-            return users;
-        }
+        //    client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+        //    var response = await client.GetAsync($"/api/users/paging?pageIndex=" +
+        //        $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
+        //    var body = await response.Content.ReadAsStringAsync();
+        //    var users = JsonConvert.DeserializeObject<ApiSuccessResult<PagedResult<UserVm>>>(body);
+        //    return users;
+        //}
 
         public async Task<ApiResult<bool>> RegisterUser(RegisterRequest registerRequest)
         {
@@ -102,24 +102,24 @@ namespace TastyFoodSolution.ApiIntegration
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
         }
 
-        public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
-        {
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+        //public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
+        //{
+        //    var client = _httpClientFactory.CreateClient();
+        //    client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+        //    var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
-            var json = JsonConvert.SerializeObject(request);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+        //    var json = JsonConvert.SerializeObject(request);
+        //    var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/users/{id}/roles", httpContent);
-            var result = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+        //    var response = await client.PutAsync($"/api/users/{id}/roles", httpContent);
+        //    var result = await response.Content.ReadAsStringAsync();
+        //    if (response.IsSuccessStatusCode)
+        //        return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
-        }
+        //    return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+        //}
 
         public async Task<ApiResult<bool>> UpdateUser(Guid id, UserUpdateRequest request)
         {

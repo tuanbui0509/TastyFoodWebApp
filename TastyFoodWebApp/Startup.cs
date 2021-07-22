@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TastyFoodSolution.ApiIntegration;
+using TastyFoodSolution.ApiIntergration;
 
 namespace TastyFoodWebApp
 {
@@ -32,7 +33,7 @@ namespace TastyFoodWebApp
             .AddCookie(options =>
             {
                 options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Forbidden/";
+                options.AccessDeniedPath = "/Account/NotFound";
             });
             services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
@@ -48,6 +49,7 @@ namespace TastyFoodWebApp
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -57,6 +59,7 @@ namespace TastyFoodWebApp
                 builder.AddRazorRuntimeCompilation();
             }
 #endif
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

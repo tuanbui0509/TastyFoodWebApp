@@ -59,18 +59,20 @@ body .cart {
     text-align: left;
 }
 
-.cart__total-title {
-    font-size: var(--h1-font-size);
-    color: var(--first-color);
+.cart__total .cart__table {
     margin-bottom: 1rem;
 }
 
-.cart__total-btn ,.cart__coupon-btn{
-    display: flex;
-    align-items: center;
+.cart__total-title {
+    font-size: var(--h1-font-size);
+    color: var(--first-color);
 }
 
-tfoot{
+.cart__total-btn ,.cart__coupon-btn{
+    display: inline-flex;
+    align-items: center;
+}
+tfoot {
     margin: 1rem 0;
     display: block;
 }

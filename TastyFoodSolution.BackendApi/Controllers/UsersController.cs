@@ -89,11 +89,11 @@ namespace TastyFoodSolution.BackendApi.Controllers
         }
 
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
+        [HttpGet("users")]
+        public async Task<IActionResult> GetAllUser()
         {
-            var products = await _userService.GetUsersPaging(request);
-            return Ok(products);
+            var users = await _userService.GetUsers();
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
