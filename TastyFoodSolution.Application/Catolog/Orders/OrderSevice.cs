@@ -43,6 +43,8 @@ namespace TastyFoodSolution.Application.Catolog.Orders
 
         public async Task<int> Create(CheckoutRequest request)
         {
+            //var userId = await _userService.GetById(request.UserId);
+            var user = await _userManager.FindByIdAsync(request.UserId.ToString());
             var orderDetails = new List<OrderDetail>();
             foreach (var item in request.OrderDetails)
             {
@@ -52,7 +54,7 @@ namespace TastyFoodSolution.Application.Catolog.Orders
                     ProductId = item.ProductId
                 });
             }
-            var result = await _userService.GetById(request.UserId);
+
             var order = new Order()
             {
                 ShipAddress = request.Address,
@@ -63,6 +65,7 @@ namespace TastyFoodSolution.Application.Catolog.Orders
                 UserId = request.UserId,
                 Status = Data.Enums.OrderStatus.InProgress,
                 OrderDetails = orderDetails,
+                AppUser = user
             };
 
             _context.Orders.Add(order);

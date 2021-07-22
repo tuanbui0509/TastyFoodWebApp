@@ -22,6 +22,6 @@ namespace TastyFoodSolution.ViewModels.Catolog.Products
         public string ThumbnailImage { get; set; }
         public string CategoryName { get; set; }
         public int CategoryId { set; get; }
-        public int QuantityOrder { set; get; }
+        public int QuantityOrder { set; get; } = 1;
     }
 }

@@ -69,11 +69,10 @@ body .cart {
 }
 
 .cart__total-btn ,.cart__coupon-btn{
-    display: flex;
+    display: inline-flex;
     align-items: center;
 }
-
-tfoot{
+tfoot {
     margin: 1rem 0;
     display: block;
 }
