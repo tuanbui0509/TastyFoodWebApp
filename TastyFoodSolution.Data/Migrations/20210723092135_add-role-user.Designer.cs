@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyFoodSolution.Data.EF;
 
 namespace TastyFoodSolution.Data.Migrations
 {
     [DbContext(typeof(TastyFoodDBContext))]
-    partial class TastyFoodDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210723092135_add-role-user")]
+    partial class addroleuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,11 +96,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.ToTable("AppUserRoles");
 
                     b.HasData(
-                        new
-                        {
-                            UserId = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
-                            RoleId = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc")
-                        },
                         new
                         {
                             UserId = new Guid("aa16f18b-95b9-4e6a-837e-efb5b8e63e84"),
@@ -184,16 +181,8 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "f7ebcbd0-ff89-4fcc-bf0e-d288c50f48ab",
-                            Description = "Administrator role",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        },
-                        new
-                        {
                             Id = new Guid("ce7e4c06-84b0-4114-912f-7e27f245dc47"),
-                            ConcurrencyStamp = "20412017-4614-4fdc-aee6-b7ba873d4392",
+                            ConcurrencyStamp = "335164bb-dd78-4ae7-a9e7-eb25a729aa62",
                             Description = "User role",
                             Name = "User",
                             NormalizedName = "user"
@@ -268,28 +257,9 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "edb75054-626f-42be-b7a3-4e0079beb421",
-                            Dob = new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "tuanbui0509@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Tuan",
-                            LastName = "Ngoc",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "tuanbui0509@gmail.com",
-                            NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDRxp/rCkiOd3KDO2VrfaOUvQ/I4P2L8GEpOaedcuLXmeM1EyCQFZJHJvWiiurp0HQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        },
-                        new
-                        {
                             Id = new Guid("aa16f18b-95b9-4e6a-837e-efb5b8e63e84"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6ffec662-0923-4403-9026-918364214231",
+                            ConcurrencyStamp = "b1d98c4a-0ec3-4915-b8bd-eafc0dca869e",
                             Dob = new DateTime(2021, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
@@ -298,7 +268,7 @@ namespace TastyFoodSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "user@gmail.com",
                             NormalizedUserName = "user",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIoquAY20NMQ3QrkKKUzRFth9ktouFxz7WxJ7Dyykrbl5x8ZiErARVnAc9gEq8rvFA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA+CaNz2FviVn3XTZKa5LO2IN6D8zahEYCWubEm+INcvk+rN/CJ5o6UgX6qhLU2j/g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -549,7 +519,7 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            DateCreated = new DateTime(2021, 7, 23, 18, 18, 25, 234, DateTimeKind.Local).AddTicks(4557),
+                            DateCreated = new DateTime(2021, 7, 23, 16, 21, 34, 25, DateTimeKind.Local).AddTicks(1465),
                             Description = "Bánh mì ăn sáng Việt Nam",
                             Name = "Bánh mì ăn sáng",
                             OriginalPrice = 100000m,
@@ -562,7 +532,7 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
-                            DateCreated = new DateTime(2021, 7, 23, 18, 18, 25, 235, DateTimeKind.Local).AddTicks(2911),
+                            DateCreated = new DateTime(2021, 7, 23, 16, 21, 34, 26, DateTimeKind.Local).AddTicks(4458),
                             Description = "Gà rán Việt Nam",
                             Name = "Gà rán",
                             OriginalPrice = 150000m,

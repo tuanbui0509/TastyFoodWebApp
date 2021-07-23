@@ -32,7 +32,6 @@
                 <div class="col col-l-6 col-md-12 col-xs-12">
 
                     <form action="/Cart/Checkout" method="POST" class="form" id="form-checkout">
-                        <input type="hidden" asp-for="CheckoutModel.UserId" />
 
                         <h3 class="heading text-left">Billing details</h3>
                         <div class="spacer"></div>
@@ -83,7 +82,7 @@
                                 {
                                     <tr>
                                         <td class="checkout-info__heading">@item.Name <span class="checkout-info__count">x @item.Quantity</span></td>
-                                        <td class="checkout-info__heading heading--primary">@item.Quantity*@item.Price</td>
+                                        <td class="checkout-info__heading heading--primary">@item.Quantity &nbsp;&nbsp;&nbsp;  x&nbsp;&nbsp;&nbsp;  @item.Price</td>
                                     </tr>
                                 }
 

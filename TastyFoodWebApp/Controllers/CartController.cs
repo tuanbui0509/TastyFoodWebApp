@@ -1,11 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.ApiIntegration;
 using TastyFoodSolution.ApiIntergration;
@@ -21,12 +26,14 @@ namespace TastyFoodWebApp.Controllers
         private readonly IProductApiClient _productApiClient;
         private readonly IOrderApiClient _orderApiClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
 
-        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient, IHttpContextAccessor httpContextAccessor)
+        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
         {
             _productApiClient = productApiClient;
             _orderApiClient = orderApiClient;
             _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -43,15 +50,14 @@ namespace TastyFoodWebApp.Controllers
         public IActionResult Checkout(CheckoutViewModel request)
         {
             var model = GetCheckoutViewModel();
-            var username = _httpContextAccessor.HttpContext.User.Identity.Name;
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var orderDetails = new List<OrderDetailViewModel>();
             foreach (var item in model.CartItems)
             {
                 orderDetails.Add(new OrderDetailViewModel()
                 {
                     ProductId = item.ProductId,
-                    Quantity = item.Quantity
+                    Quantity = item.Quantity,
+                    Price = item.Price * item.Quantity
                 });
             }
 
@@ -65,9 +71,10 @@ namespace TastyFoodWebApp.Controllers
             };
             //TODO: Add to API
             var create = _orderApiClient.CreateOrder(checkoutRequest);
-            if (create.Result != null && create.Result.IsSuccessed)
+            if (create.Result.IsSuccessed)
             {
                 TempData["SuccessMsg"] = "Order puschased successful";
+                removeAllCart();
             }
             else
             {
@@ -96,32 +103,28 @@ namespace TastyFoodWebApp.Controllers
             if (session != null)
             {
                 currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
-                foreach (var item in currentCart)
+                if (currentCart.Exists(x => x.ProductId == id))
                 {
-                    if (item.ProductId == id)
+                    var item = currentCart.Find(x => x.ProductId == id);
+                    item.Quantity++;
+                }
+                else
+                {
+                    int quantity = 1;
+                    if (currentCart.Any(x => x.ProductId == id))
                     {
-                        item.Quantity++;
-                        break;
+                        quantity = currentCart.First(x => x.ProductId == id).Quantity + 1;
                     }
-                    else
+                    var cartItem = new CartItemViewModel()
                     {
-                        int quantity = 1;
-                        if (currentCart.Any(x => x.ProductId == id))
-                        {
-                            quantity = currentCart.First(x => x.ProductId == id).Quantity + 1;
-                        }
-                        var cartItem = new CartItemViewModel()
-                        {
-                            ProductId = id,
-                            Description = product.Description,
-                            Image = product.ThumbnailImage,
-                            Name = product.Name,
-                            Price = product.Price,
-                            Quantity = quantity
-                        };
-                        currentCart.Add(cartItem);
-                        break;
-                    }
+                        ProductId = id,
+                        Description = product.Description,
+                        Image = product.ThumbnailImage,
+                        Name = product.Name,
+                        Price = product.Price,
+                        Quantity = quantity
+                    };
+                    currentCart.Add(cartItem);
                 }
             }
             else
@@ -184,6 +187,16 @@ namespace TastyFoodWebApp.Controllers
                 CheckoutModel = new CheckoutRequest()
             };
             return checkoutVm;
+        }
+
+        private void removeAllCart()
+        {
+            var session = HttpContext.Session.GetString(SystemConstants.CartSession);
+            List<CartItemViewModel> currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
+            foreach (var item in currentCart)
+            {
+                currentCart.Remove(item);
+            }
         }
     }
 }
