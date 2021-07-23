@@ -68,6 +68,7 @@ namespace TastyFoodWebApp.Controllers
                 return View();
             }
             var userPrincipal = this.ValidateToken(result.ResultObj);
+
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),

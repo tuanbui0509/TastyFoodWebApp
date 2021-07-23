@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.ViewModels.Carts;
+using TastyFoodSolution.ViewModels.Catalog.Orders;
 
 namespace TastyFoodSolution.Application.Catolog.Orders
 {
@@ -11,7 +12,7 @@ namespace TastyFoodSolution.Application.Catolog.Orders
     {
         Task<int> Create(CheckoutRequest request);
 
-        Task<CheckoutRequest> GetById(int orderId);
+        Task<OrderViewModel> GetById(int orderId);
 
         //Task<CheckoutRequest> GetAllOrder(int productId);
     }

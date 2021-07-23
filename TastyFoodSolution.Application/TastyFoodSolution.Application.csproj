@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TastyFoodSolution.Data\TastyFoodSolution.Data.csproj" />
     <ProjectReference Include="..\TastyFoodSolution.Utilities\TastyFoodSolution.Utilities.csproj" />
     <ProjectReference Include="..\TastyFoodSolution.ViewModels\TastyFoodSolution.ViewModels.csproj" />
