@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.Application.Common;
@@ -23,11 +25,15 @@ namespace TastyFoodSolution.Application.Catolog.Products
         private readonly TastyFoodDBContext _context;
         private readonly IStorageService _storageService;
         private const string USER_CONTENT_FOLDER_NAME = "images";
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProductService(TastyFoodDBContext dBContext, IStorageService storageService)
+        public ProductService(TastyFoodDBContext dBContext, IStorageService storageService, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager)
         {
             _context = dBContext;
             _storageService = storageService;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
 
         public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
@@ -122,21 +128,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
             //3. Paging
             int totalRow = await query.CountAsync();
-
-            //var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-            //    .Take(request.PageSize)
-            //    .Select(x => new ProductViewModel()
-            //    {
-            //        Id = x.p.Id,
-            //        Name = x.p.Name,
-            //        DateCreated = x.p.DateCreated,
-            //        Description = x.p.Description,
-            //        Details = x.p.Details,
-            //        OriginalPrice = x.p.OriginalPrice,
-            //        Price = x.p.Price,
-            //        Stock = x.p.Stock,
-            //        ViewCount = x.p.ViewCount
-            //    }).ToListAsync();
 
             var data = await query.Select(x => new ProductViewModel()
             {
@@ -437,6 +428,68 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     QuantityOrder = x.p.QuantityOrder,
                     CategoryId = x.p.CategoryId,
                 }).ToListAsync();
+
+            return data;
+        }
+
+        public async Task<int> CreateReview(ReviewCreateRequest request)
+        {
+            var userName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await _userManager.FindByNameAsync(userName);
+            var review = new Review()
+            {
+                ProductId = request.ProductId,
+                UserId = user.Id,
+                Comment = request.Comment,
+                Rate = request.Rate,
+                ReviewDate = DateTime.Now
+            };
+
+            _context.Reviews.Add(review);
+            await _context.SaveChangesAsync();
+            return review.Id;
+        }
+
+        public async Task<ReviewViewModel> GetByIdReview(int reviewId)
+        {
+            var review = await _context.Reviews.FindAsync(reviewId);
+            if (review == null)
+            {
+                return null;
+            }
+            var reviewViewModel = new ReviewViewModel()
+            {
+                Id = review.Id,
+                UserId = review.UserId,
+                ReviewDate = review.ReviewDate,
+                Rate = review.Rate,
+                Comment = review.Comment,
+                ProductId = review.ProductId
+            };
+            return reviewViewModel;
+        }
+
+        public async Task<List<ReviewViewModel>> GetAllReviews(int productId)
+        {
+            //1. Select join
+            var query = from r in _context.Reviews
+                        join p in _context.Products on r.ProductId equals p.Id into rp
+                        from p in rp.DefaultIfEmpty()
+                        join u in _context.Users on r.UserId equals u.Id into ru
+                        from u in ru.DefaultIfEmpty()
+                        where r.ProductId == productId
+                        select new { r, u };
+            var data = await query.Select(x => new ReviewViewModel()
+            {
+                Id = x.r.Id,
+                Rate = x.r.Rate,
+                Comment = x.r.Comment,
+                ReviewDate = x.r.ReviewDate,
+                UserId = x.r.UserId,
+                ProductId = productId,
+                Avatar = x.u.Avatar,
+                FullName = x.u.FirstName + x.u.LastName
+            }).ToListAsync();
 
             return data;
         }

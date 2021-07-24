@@ -16,11 +16,15 @@ namespace TastyFoodSolution.Application.Catolog.Products
         // product
         Task<int> Create(ProductCreateRequest request);
 
+        Task<int> CreateReview(ReviewCreateRequest request);
+
         Task<int> Update(ProductUpdateRequest request);
 
         Task<int> Delete(int productId);
 
         Task<ProductViewModel> GetById(int productId);
+
+        Task<ReviewViewModel> GetByIdReview(int reviewId);
 
         Task<bool> UpdatePrice(int productId, decimal newPrice);
 
@@ -49,5 +53,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
         Task<List<ProductViewModel>> GetLatestProducts(int take);
 
         Task<List<ProductViewModel>> GetBestSellerProducts(int take);
+
+        Task<List<ReviewViewModel>> GetAllReviews(int productId);
     }
 }

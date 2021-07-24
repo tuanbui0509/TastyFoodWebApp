@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TastyFoodSolution.Application.Common;
 using TastyFoodSolution.Data.Entities;
 using TastyFoodSolution.ViewModels.Common;
 using TastyFoodSolution.ViewModels.System.Users;
@@ -20,6 +24,8 @@ namespace TastyFoodSolution.Application.System.Users
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
+        private readonly IStorageService _storageService;
+        private const string USER_CONTENT_FOLDER_NAME = "images";
 
         // Tokens
         private readonly IConfiguration _config;
@@ -27,12 +33,15 @@ namespace TastyFoodSolution.Application.System.Users
         public UserService(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             RoleManager<AppRole> roleManager,
-            IConfiguration config)
+            IConfiguration config,
+             IStorageService storageService
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
+            _storageService = storageService;
         }
 
         public async Task<ApiResult<string>> Authencate(LoginRequest request)
@@ -196,13 +205,28 @@ namespace TastyFoodSolution.Application.System.Users
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.PhoneNumber = request.PhoneNumber;
-
+            if (request.Avatar != null)
+            {
+                user.Avatar = await this.SaveFile(request.Avatar);
+            }
+            else
+            {
+                user.Avatar = null;
+            }
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
+
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
         }
     }
 }

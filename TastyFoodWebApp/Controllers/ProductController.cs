@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TastyFoodSolution.ApiIntegration;
 using TastyFoodSolution.Utilities.Constants;
+using TastyFoodSolution.ViewModels.Catalog.Products;
 using TastyFoodSolution.ViewModels.Catolog.Products;
 using TastyFoodWebApp.Models;
 
@@ -42,11 +43,13 @@ namespace TastyFoodWebApp.Controllers
                 }
             }
             var RelatedProducts = await _categoryApiClient.GetAllProductById(product.CategoryId);
+            var Reviews = await _productApiClient.GetAllReviews(id);
             return View(new ProductDetailViewModel()
             {
                 Product = product,
-                RelatedProducts = RelatedProducts
-            }); ;
+                RelatedProducts = RelatedProducts,
+                Reviews = Reviews
+            });
         }
 
         [HttpGet("categories")]
@@ -68,6 +71,15 @@ namespace TastyFoodWebApp.Controllers
                 ListProductPopular = await _productApiClient.GetBestSellerProducts(3),
                 CategoryItem = await _categoryApiClient.GetById(categoryId)
             });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateReview([FromBody] ReviewCreateRequest request)
+        {
+            var id = request.ProductId;
+            var create = await _productApiClient.CreateReview(request);
+            var Reviews = await _productApiClient.GetAllReviews(request.ProductId);
+            return Ok(Reviews);
         }
     }
 }

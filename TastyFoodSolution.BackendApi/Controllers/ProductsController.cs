@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TastyFoodSolution.Application.Catolog.Products;
 using TastyFoodSolution.ViewModels.Catalog.ProductImage;
+using TastyFoodSolution.ViewModels.Catalog.Products;
 using TastyFoodSolution.ViewModels.Catolog.Products;
 
 namespace TastyFoodSolution.BackendApi.Controllers
@@ -166,6 +167,24 @@ namespace TastyFoodSolution.BackendApi.Controllers
         {
             var products = await _productService.GetBestSellerProducts(take);
             return Ok(products);
+        }
+
+        [HttpPost("CreateReview")]
+        public async Task<ActionResult> CreateReview([FromBody] ReviewCreateRequest request)
+        {
+            var reviewId = await _productService.CreateReview(request);
+            if (reviewId == 0)
+                return BadRequest();
+            var product = await _productService.GetByIdReview(reviewId);
+            return CreatedAtAction(nameof(GetById), new { id = reviewId }, product);
+        }
+
+        [HttpGet("GetAllReviews/{productId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllReviews(int productId)
+        {
+            var reviews = await _productService.GetAllReviews(productId);
+            return Ok(reviews);
         }
     }
 }
