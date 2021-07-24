@@ -19,10 +19,10 @@ namespace TastyFoodSolution.Application.Catolog.Orders
     public class OrderSevice : IOrderSevice
     {
         private readonly TastyFoodDBContext _context;
-        private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IUserService _userService;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         // Tokens

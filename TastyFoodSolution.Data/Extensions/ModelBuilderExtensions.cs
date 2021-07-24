@@ -14,12 +14,6 @@ namespace TastyFoodSolution.Data.Extensions
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AppConfig>().HasData(
-                  new AppConfig() { Key = "HomeTitle", Value = "This is home page" },
-                  new AppConfig() { Key = "HomeSearch", Value = "This is Search page" },
-                  new AppConfig() { Key = "HomeDesc", Value = "This is Desc page" }
-                  );
-
             modelBuilder.Entity<Category>().HasData(
                 new Category()
                 {

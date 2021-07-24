@@ -10,6 +10,7 @@ namespace TastyFoodSolution.Data.Entities
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+        public string Avatar { get; set; }
 
         //Date of birth
         public DateTime Dob { get; set; }

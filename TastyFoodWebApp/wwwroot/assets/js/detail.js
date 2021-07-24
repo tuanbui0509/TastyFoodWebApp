@@ -1,4 +1,4 @@
-openTab = (event, tab) => {
+﻿openTab = (event, tab) => {
     let i, tabContent, tabLinks
     tabContent = document.getElementsByClassName('tabs-pill')
     for (i = 0; i < tabContent.length; i++) {
@@ -32,7 +32,6 @@ minusQuantity = (id) => {
         const quantity = parseInt(value) - 1;
         updateCart(id, quantity);
         document.querySelector(`.section__input-text`).value = quantity;
-
     }
 };
 
@@ -55,7 +54,35 @@ function updateCart(id, quantity) {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+// ================= ADD REVIEW ==================
+
+addReview = (e, id) => {
+    e.preventDefault()
+    let comment = document.getElementById('content-review')
+    let rate = document.querySelector('input[name="rate"]:checked').value
+    let data = {
+        UserId: '00000000-0000-0000-0000-000000000000',
+        Comment: comment.value,
+        Rate: rate,
+        ProductId: id
+    };
+    fetch(`/Product/CreateReview`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            window.onload
         })
         .catch((error) => {
             console.error('Error:', error);

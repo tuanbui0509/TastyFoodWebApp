@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.ViewModels.Catolog.Products;
+using TastyFoodSolution.ViewModels.Catalog.Products;
 
 namespace TastyFoodSolution.ApiIntegration
 {
@@ -58,6 +59,29 @@ namespace TastyFoodSolution.ApiIntegration
         public async Task<bool> DeleteProduct(int id)
         {
             return await Delete($"/api/products/" + id);
+        }
+
+        public async Task<ApiResult<bool>> CreateReview(ReviewCreateRequest request)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync($"/api/products/CreateReview", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+        }
+
+        public async Task<List<ReviewViewModel>> GetAllReviews(int productId)
+        {
+            var data = await GetListAsync<ReviewViewModel>($"/api/products/GetAllReviews/{productId}");
+            return data;
         }
     }
 }
