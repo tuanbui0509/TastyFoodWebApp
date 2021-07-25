@@ -127,6 +127,12 @@ namespace TastyFoodSolution.Application.System.Users
                     LastName = x.LastName
                 }).ToListAsync();
 
+            foreach (var item in data)
+            {
+                var user = await _userManager.FindByIdAsync(item.Id.ToString());
+                var roles = await _userManager.GetRolesAsync(user);
+                item.Roles = roles;
+            }
             //4. Select and projection
             var pagedResult = new PagedResult<UserVm>()
             {
