@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using TastyFoodSolution.Application.System.Users;
 using TastyFoodSolution.Data.EF;
 using TastyFoodSolution.Data.Entities;
+using TastyFoodSolution.Utilities.Exceptions;
 using TastyFoodSolution.ViewModels.Carts;
 using TastyFoodSolution.ViewModels.Catalog.Orders;
 
@@ -40,6 +41,14 @@ namespace TastyFoodSolution.Application.Catolog.Orders
             _config = config;
             _userService = userService;
             _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<bool> ChangeStatus(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null) throw new TastyFoodException($"Cannot find a Order with id: {orderId}");
+            order.Status = Data.Enums.OrderStatus.Confirmed;
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<int> Create(CheckoutRequest request)
@@ -79,6 +88,27 @@ namespace TastyFoodSolution.Application.Catolog.Orders
 
             await _context.SaveChangesAsync();
             return order.Id;
+        }
+
+        public async Task<List<OrderViewModel>> GetAllOrder()
+        {
+            //1. Select join
+            var query = from o in _context.Orders
+                        select new { o };
+
+            var data = await query.OrderByDescending(x => x.o.OrderDate)
+                .Select(x => new OrderViewModel()
+                {
+                    ShipAddress = x.o.ShipAddress,
+                    OrderDate = x.o.OrderDate,
+                    ShipEmail = x.o.ShipEmail,
+                    ShipPhoneNumber = x.o.ShipPhoneNumber,
+                    ShipName = x.o.ShipName,
+                    UserId = x.o.UserId,
+                    Status = x.o.Status,
+                }).ToListAsync();
+
+            return data;
         }
 
         public async Task<OrderViewModel> GetById(int orderId)

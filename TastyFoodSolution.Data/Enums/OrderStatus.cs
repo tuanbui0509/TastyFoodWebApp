@@ -10,8 +10,10 @@ namespace TastyFoodSolution.Data.Enums
     {
         InProgress,
         Confirmed,
-        Shipping,
+
+        //Shipping,
         Success,
+
         Canceled
     }
 }

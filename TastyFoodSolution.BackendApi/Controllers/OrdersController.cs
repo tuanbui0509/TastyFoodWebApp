@@ -32,6 +32,20 @@ namespace TastyFoodSolution.BackendApi.Controllers
             return Ok(order);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetAllOrder()
+        {
+            var orders = await _orderService.GetAllOrder();
+            return Ok(orders);
+        }
+
+        [HttpPost("ChangeStatus")]
+        public async Task<ActionResult> ChangeStatus(int orderId)
+        {
+            var result = await _orderService.ChangeStatus(orderId);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateOrder([FromBody] CheckoutRequest request)
         {
