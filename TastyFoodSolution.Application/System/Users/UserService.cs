@@ -111,7 +111,7 @@ namespace TastyFoodSolution.Application.System.Users
             return new ApiSuccessResult<UserVm>(userVm);
         }
 
-        public async Task<ApiResult<PagedResult<UserVm>>> GetUsers()
+        public async Task<List<UserVm>> GetUsers()
         {
             var query = _userManager.Users;
             int totalRow = await query.CountAsync();
@@ -124,7 +124,9 @@ namespace TastyFoodSolution.Application.System.Users
                     UserName = x.UserName,
                     FirstName = x.FirstName,
                     Id = x.Id,
-                    LastName = x.LastName
+                    LastName = x.LastName,
+                    Avatar = x.Avatar,
+                    Dob = x.Dob
                 }).ToListAsync();
 
             foreach (var item in data)
@@ -133,12 +135,8 @@ namespace TastyFoodSolution.Application.System.Users
                 var roles = await _userManager.GetRolesAsync(user);
                 item.Roles = roles;
             }
-            //4. Select and projection
-            var pagedResult = new PagedResult<UserVm>()
-            {
-                Items = data
-            };
-            return new ApiSuccessResult<PagedResult<UserVm>>(pagedResult);
+
+            return data;
         }
 
         public async Task<ApiResult<bool>> Register(RegisterRequest request)

@@ -10,7 +10,6 @@ namespace TastyFoodSolution.ViewModels.Catalog.Categories
 
         public string Name { get; set; }
         public string Thumb { get; set; }
-
-        public int? ParentId { get; set; }
+        public string Desciption { get; set; }
     }
 }

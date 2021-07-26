@@ -493,5 +493,31 @@ namespace TastyFoodSolution.Application.Catolog.Products
 
             return data;
         }
+
+        public async Task<List<ProductViewModel>> GetAllProduct()
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        where (pi.IsDefault == true || pi == null)
+                        select new { p, pi };
+            //3. Paging
+            int totalRow = await query.CountAsync();
+            var data = await query.Select(x => new ProductViewModel()
+            {
+                Id = x.p.Id,
+                Name = x.p.Name,
+                DateCreated = x.p.DateCreated,
+                Description = x.p.Description,
+                OriginalPrice = x.p.OriginalPrice,
+                Price = x.p.Price,
+                Stock = x.p.Stock,
+                ViewCount = x.p.ViewCount,
+                CategoryId = x.p.CategoryId,
+                ThumbnailImage = x.pi.ImagePath,
+            }).ToListAsync();
+            return data;
+        }
     }
 }
