@@ -99,6 +99,7 @@ namespace TastyFoodSolution.Application.Catolog.Orders
             var data = await query.OrderByDescending(x => x.o.OrderDate)
                 .Select(x => new OrderViewModel()
                 {
+                    Id = x.o.Id,
                     ShipAddress = x.o.ShipAddress,
                     OrderDate = x.o.OrderDate,
                     ShipEmail = x.o.ShipEmail,

@@ -14,54 +14,6 @@ namespace TastyFoodSolution.Data.Extensions
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>().HasData(
-                new Category()
-                {
-                    Id = 1,
-                    IsShowOnHome = true,
-                    ParentId = null,
-                    SortOrder = 1,
-                    Name = "Bánh mì",
-                    Status = Status.Active,
-                },
-                new Category()
-                {
-                    Id = 2,
-                    IsShowOnHome = true,
-                    ParentId = null,
-                    SortOrder = 1,
-                    Name = "Đồ ăn nhanh",
-                    Status = Status.Active,
-                }
-                );
-
-            modelBuilder.Entity<Product>().HasData(
-               new Product()
-               {
-                   Id = 1,
-                   DateCreated = DateTime.Now,
-                   OriginalPrice = 100000,
-                   Price = 200000,
-                   Stock = 0,
-                   ViewCount = 0,
-                   Name = "Bánh mì ăn sáng",
-                   Description = "Bánh mì ăn sáng Việt Nam",
-                   CategoryId = 1
-               },
-                new Product()
-                {
-                    Id = 2,
-                    DateCreated = DateTime.Now,
-                    OriginalPrice = 150000,
-                    Price = 500000,
-                    Stock = 0,
-                    ViewCount = 0,
-                    Name = "Gà rán",
-                    Description = "Gà rán Việt Nam",
-                    CategoryId = 2
-                }
-               );
-
             // any guid
             var roleId = new Guid("8D04DCE2-969A-435D-BBA4-DF3F325983DC");
             var adminId = new Guid("69BD714F-9576-45BA-B5B7-F00649BE00DE");

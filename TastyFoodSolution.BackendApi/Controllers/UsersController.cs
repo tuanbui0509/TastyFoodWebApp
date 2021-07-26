@@ -89,7 +89,8 @@ namespace TastyFoodSolution.BackendApi.Controllers
         }
 
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
-        [HttpGet("users")]
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllUser()
         {
             var users = await _userService.GetUsers();

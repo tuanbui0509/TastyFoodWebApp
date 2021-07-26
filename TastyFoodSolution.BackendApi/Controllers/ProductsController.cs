@@ -33,6 +33,14 @@ namespace TastyFoodSolution.BackendApi.Controllers
             return Ok(products);
         }
 
+        [HttpGet("products")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllProduct()
+        {
+            var products = await _productService.GetAllProduct();
+            return Ok(products);
+        }
+
         //http://localhost:port/product/1
         [HttpGet("{productId}")]
         [AllowAnonymous]

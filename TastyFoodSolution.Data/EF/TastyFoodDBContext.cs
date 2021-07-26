@@ -29,7 +29,6 @@ namespace TastyFoodSolution.Data.EF
             modelBuilder.ApplyConfiguration(new ReviewConfiguration());
 
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
-            modelBuilder.ApplyConfiguration(new ContactConfiguration());
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
 
             //Data Seeding
@@ -48,8 +47,6 @@ namespace TastyFoodSolution.Data.EF
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Cart> Carts { get; set; }
-
-        public DbSet<Contact> Contacts { get; set; }
 
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Order> Orders { get; set; }

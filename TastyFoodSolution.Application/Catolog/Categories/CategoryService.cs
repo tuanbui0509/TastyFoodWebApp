@@ -27,7 +27,8 @@ namespace TastyFoodSolution.Application.Catalog.Categories
             {
                 Id = x.c.Id,
                 Name = x.c.Name,
-                Thumb = x.c.Thumb
+                Thumb = x.c.Thumb,
+                Desciption = x.c.Desciption
             }).ToListAsync();
         }
 
@@ -70,7 +71,6 @@ namespace TastyFoodSolution.Application.Catalog.Categories
             {
                 Id = x.c.Id,
                 Name = x.c.Name,
-                ParentId = x.c.ParentId,
                 Thumb = x.c.Thumb
             }).FirstOrDefaultAsync();
         }
