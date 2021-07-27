@@ -195,7 +195,6 @@ namespace TastyFoodWebApp.Controllers
             List<CartItemViewModel> currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
             currentCart.Clear();
             HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(currentCart));
-
         }
     }
 }
