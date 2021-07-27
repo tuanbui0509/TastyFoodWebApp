@@ -33,7 +33,7 @@ namespace TastyFoodSolution.BackendApi.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<ActionResult> GetAllOrder()
         {
             var orders = await _orderService.GetAllOrder();

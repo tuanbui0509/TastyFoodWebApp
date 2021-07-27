@@ -84,10 +84,19 @@ namespace TastyFoodSolution.Application.Catolog.Orders
             foreach (var item in orderDetails)
             {
                 _context.OrderDetails.Add(item);
+                UpdateOrderQuantity(item.ProductId, item.Quantity);
             }
 
             await _context.SaveChangesAsync();
             return order.Id;
+        }
+
+        public async void UpdateOrderQuantity(int productId, int addedQuantity)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) throw new TastyFoodException($"Cannot find a product with id: {productId}");
+            product.Stock -= addedQuantity;
+            product.QuantityOrder += addedQuantity;
         }
 
         public async Task<List<OrderViewModel>> GetAllOrder()
@@ -116,10 +125,6 @@ namespace TastyFoodSolution.Application.Catolog.Orders
         {
             var order = await _context.Orders.FindAsync(orderId);
             List<OrderDetail> orderDetails = await _context.OrderDetails.Where(x => x.OrderId == orderId).ToListAsync();
-            //foreach (var item in orderDetails)
-            //{
-            //    _context.OrderDetails.Add(item);
-            //}
             var orderViewModel = new OrderViewModel()
             {
                 Id = order.Id,
