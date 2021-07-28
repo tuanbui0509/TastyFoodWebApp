@@ -56,9 +56,18 @@ namespace TastyFoodSolution.ApiIntegration
             return data;
         }
 
-        public async Task<bool> DeleteProduct(int id)
+        public async Task AddViewcount(int productId)
         {
-            return await Delete($"/api/products/" + id);
+            var request = $"productId: {productId}";
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PatchAsync($"/api/products/AddViewcount", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
         }
 
         public async Task<ApiResult<bool>> CreateReview(ReviewCreateRequest request)

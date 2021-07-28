@@ -104,7 +104,8 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 OriginalPrice = x.p.OriginalPrice,
                 Price = x.p.Price,
                 Stock = x.p.Stock,
-                ViewCount = x.p.ViewCount
+                ViewCount = x.p.ViewCount,
+                QuantityOrder = x.p.QuantityOrder
             }).ToListAsync();
 
             //4. Select and projection
@@ -368,6 +369,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     Price = x.p.Price,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
+                    QuantityOrder = x.p.QuantityOrder,
                     CategoryName = x.c.Name,
                     CategoryId = x.p.CategoryId,
                     ThumbnailImage = x.pi.ImagePath,
@@ -398,6 +400,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     Price = x.p.Price,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
+                    QuantityOrder = x.p.QuantityOrder,
                     ThumbnailImage = x.pi.ImagePath,
                     CategoryName = x.c.Name,
                     CategoryId = x.p.CategoryId,

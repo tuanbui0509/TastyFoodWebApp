@@ -59,15 +59,29 @@
                             Category: <a href=""
                                          class="detail-info__category-link">@Model.Product.CategoryName</a>
                                     </span>
+                                   
+
                                     <div class="detail-info__rate">
                                         <div class="detail-info__rate-list">
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star-half'></i>
+                                            @{
+                                                var rate = 0;
+                                                @foreach (var re in Model.Reviews)
+                                                {
+                                                    rate += re.Rate;
+                                                }
+                                                rate /= Model.Reviews.Count;
+                                                for (int i = 0; i < rate; i++)
+                                                {
+                                                    <i class='detail-info__rate-item bx bxs-star'></i>
+                                                }
+                                                for (int i = 0; i < 5 - rate; i++)
+                                                {
+                                                    <i class='detail-info__rate-item bx bx-star'></i>
+
+                                                }
+                                            }
                                         </div>
-                                        <a href="" class="detail-info__rate-reviews">(2 customer reviews)</a>
+                                        <a href="" class="detail-info__rate-reviews">(@Model.Reviews.Count customer reviews)</a>
                                     </div>
                                     <span class="detail-info__price">@Model.Product.Price</span>
                                     <div class="detail-info__form">
@@ -81,11 +95,9 @@
                                                 <i class='bx bx-plus'></i>
                                             </button>
                                         </div>
-                                        <form action="">
-                                            <button class="detail-info__submit btn-animation btn-primary">
-                                                ADD TO CART <i class='bx bx-right-arrow-alt'></i>
-                                            </button>
-                                        </form>
+                                        <button class="detail-info__submit btn-animation btn-primary" data-id="@Model.Product.Id" onclick="addToCart(event,@Model.Product.Id)">
+                                            ADD TO CART <i class='bx bx-right-arrow-alt'></i>
+                                        </button>
                                     </div>
                                     <div class="detail-info__social">
                                         <ul class="detail-info__social-list">
@@ -235,11 +247,11 @@
                             <!-- ====== Reviews ====== -->
 
                             <div id="tab-reviews" class="tabs-pill">
-                                
+
                                 <ul class="list-user-comment">
                                     <h4 class="quantity-reviews">
-    @Model.Reviews.Count reviews for @Model.Product.Name
-</h4>
+                                        @Model.Reviews.Count reviews for @Model.Product.Name
+                                    </h4>
                                     @foreach (var review in Model.Reviews)
                                     {
                                         <li class="user-comment">
@@ -259,7 +271,7 @@
                                                 {
                                                     <i class='detail-info__rate-item bx bxs-star'></i>
                                                 }
-                                                @for (int i = 0; i < 5-review.Rate; i++)
+                                                @for (int i = 0; i < 5 - review.Rate; i++)
                                                 {
                                                     <i class='detail-info__rate-item bx bx-star'></i>
                                                 }
@@ -334,17 +346,17 @@
                                             </div>
                                             @*<div class="product__reviews">
 
-                                                <div class="product-rating">
-                                                    <i class='product-rating-icon bx bxs-star'></i>
-                                                    <i class='product-rating-icon bx bxs-star'></i>
-                                                    <i class='product-rating-icon bx bxs-star'></i>
-                                                    <i class='product-rating-icon bx bxs-star'></i>
-                                                    <i class='product-rating-icon bx bxs-star-half'></i>
-                                                </div>
-                                                <span class="product__comment">
-                                                    (0)
-                                                </span>
-                                            </div>*@
+                                                    <div class="product-rating">
+                                                        <i class='product-rating-icon bx bxs-star'></i>
+                                                        <i class='product-rating-icon bx bxs-star'></i>
+                                                        <i class='product-rating-icon bx bxs-star'></i>
+                                                        <i class='product-rating-icon bx bxs-star'></i>
+                                                        <i class='product-rating-icon bx bxs-star-half'></i>
+                                                    </div>
+                                                    <span class="product__comment">
+                                                        (0)
+                                                    </span>
+                                                </div>*@
                                         </div>
                                         <div class="product-box">
                                             <a class="product__to-cart btn-primary" onclick="addToCart(event)">

@@ -85,7 +85,13 @@ namespace TastyFoodSolution.Application.Catolog.Orders
             {
                 _context.OrderDetails.Add(item);
                 UpdateOrderQuantity(item.ProductId, item.Quantity);
+                await _context.SaveChangesAsync();
             }
+
+            //foreach (var item in orderDetails)
+            //{
+            //    UpdateOrderQuantity(item.ProductId, item.Quantity);
+            //}
 
             await _context.SaveChangesAsync();
             return order.Id;

@@ -28,6 +28,7 @@ namespace TastyFoodWebApp.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var product = await _productApiClient.GetById(id);
+            _productApiClient.AddViewcount(id);
             var session = HttpContext.Session.GetString(SystemConstants.CartSession);
             List<CartItemViewModel> currentProduct = new List<CartItemViewModel>();
             if (session != null)

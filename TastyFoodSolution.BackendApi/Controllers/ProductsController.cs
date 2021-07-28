@@ -103,11 +103,11 @@ namespace TastyFoodSolution.BackendApi.Controllers
             return Ok(reviews);
         }
 
-        //[HttpPatch("{productId}")]
-        //public async void ViewCount(int productId)
-        //{
-        //    await _productService.AddViewcount(productId);
-        //}
+        [HttpPatch("{productId}")]
+        public async void AddViewcount(int productId)
+        {
+            await _productService.AddViewcount(productId);
+        }
 
         #region Api other
 

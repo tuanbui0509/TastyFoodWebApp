@@ -23,6 +23,6 @@ namespace TastyFoodSolution.ApiIntegration
 
         Task<List<ProductViewModel>> GetBestSellerProducts(int take);
 
-        Task<bool> DeleteProduct(int id);
+        Task AddViewcount(int productId);
     }
 }

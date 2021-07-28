@@ -62,7 +62,7 @@ namespace TastyFoodSolution.Application.System.Users
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
                 new Claim(ClaimTypes.Name, request.UserName),
                 new Claim(ClaimTypes.NameIdentifier,user.UserName)
-        };
+            };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -72,7 +72,7 @@ namespace TastyFoodSolution.Application.System.Users
                 expires: DateTime.Now.AddHours(3),
                 signingCredentials: creds);
 
-            return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
+            return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token), roles);
         }
 
         public async Task<ApiResult<bool>> Delete(Guid id)
@@ -108,7 +108,7 @@ namespace TastyFoodSolution.Application.System.Users
                 UserName = user.UserName,
                 Roles = roles
             };
-            return new ApiSuccessResult<UserVm>(userVm);
+            return new ApiSuccessResult<UserVm>(userVm, (string[])roles);
         }
 
         public async Task<List<UserVm>> GetUsers()
