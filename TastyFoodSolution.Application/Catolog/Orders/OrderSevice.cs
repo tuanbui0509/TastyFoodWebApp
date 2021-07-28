@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using TastyFoodSolution.Application.System.Users;
 using TastyFoodSolution.Data.EF;
 using TastyFoodSolution.Data.Entities;
+using TastyFoodSolution.Utilities.Exceptions;
 using TastyFoodSolution.ViewModels.Carts;
 using TastyFoodSolution.ViewModels.Catalog.Orders;
 
@@ -19,10 +20,10 @@ namespace TastyFoodSolution.Application.Catolog.Orders
     public class OrderSevice : IOrderSevice
     {
         private readonly TastyFoodDBContext _context;
-        private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IUserService _userService;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         // Tokens
@@ -40,6 +41,14 @@ namespace TastyFoodSolution.Application.Catolog.Orders
             _config = config;
             _userService = userService;
             _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<bool> ChangeStatus(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null) throw new TastyFoodException($"Cannot find a Order with id: {orderId}");
+            order.Status = Data.Enums.OrderStatus.Confirmed;
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<int> Create(CheckoutRequest request)
@@ -75,20 +84,53 @@ namespace TastyFoodSolution.Application.Catolog.Orders
             foreach (var item in orderDetails)
             {
                 _context.OrderDetails.Add(item);
+                UpdateOrderQuantity(item.ProductId, item.Quantity);
+                await _context.SaveChangesAsync();
             }
+
+            //foreach (var item in orderDetails)
+            //{
+            //    UpdateOrderQuantity(item.ProductId, item.Quantity);
+            //}
 
             await _context.SaveChangesAsync();
             return order.Id;
+        }
+
+        public async void UpdateOrderQuantity(int productId, int addedQuantity)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) throw new TastyFoodException($"Cannot find a product with id: {productId}");
+            product.Stock -= addedQuantity;
+            product.QuantityOrder += addedQuantity;
+        }
+
+        public async Task<List<OrderViewModel>> GetAllOrder()
+        {
+            //1. Select join
+            var query = from o in _context.Orders
+                        select new { o };
+
+            var data = await query.OrderByDescending(x => x.o.OrderDate)
+                .Select(x => new OrderViewModel()
+                {
+                    Id = x.o.Id,
+                    ShipAddress = x.o.ShipAddress,
+                    OrderDate = x.o.OrderDate,
+                    ShipEmail = x.o.ShipEmail,
+                    ShipPhoneNumber = x.o.ShipPhoneNumber,
+                    ShipName = x.o.ShipName,
+                    UserId = x.o.UserId,
+                    Status = x.o.Status,
+                }).ToListAsync();
+
+            return data;
         }
 
         public async Task<OrderViewModel> GetById(int orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
             List<OrderDetail> orderDetails = await _context.OrderDetails.Where(x => x.OrderId == orderId).ToListAsync();
-            //foreach (var item in orderDetails)
-            //{
-            //    _context.OrderDetails.Add(item);
-            //}
             var orderViewModel = new OrderViewModel()
             {
                 Id = order.Id,

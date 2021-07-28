@@ -59,7 +59,6 @@ namespace TastyFoodSolution.BackendApi.Controllers
             return Ok(result);
         }
 
-        //PUT: http://localhost/api/users/id
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromForm] UserUpdateRequest request)
         {
@@ -74,22 +73,7 @@ namespace TastyFoodSolution.BackendApi.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id}/roles")]
-        public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var result = await _userService.RoleAssign(id, request);
-            if (!result.IsSuccessed)
-            {
-                return BadRequest(result);
-            }
-            return Ok(result);
-        }
-
-        //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
-        [HttpGet("users")]
+        [HttpGet]
         public async Task<IActionResult> GetAllUser()
         {
             var users = await _userService.GetUsers();
@@ -103,11 +87,29 @@ namespace TastyFoodSolution.BackendApi.Controllers
             return Ok(user);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var result = await _userService.Delete(id);
-            return Ok(result);
-        }
+        #region Api other
+
+        //[HttpPut("{id}/roles")]
+        //public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+
+        //    var result = await _userService.RoleAssign(id, request);
+        //    if (!result.IsSuccessed)
+        //    {
+        //        return BadRequest(result);
+        //    }
+        //    return Ok(result);
+        //}
+
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(Guid id)
+        //{
+        //    var result = await _userService.Delete(id);
+        //    return Ok(result);
+        //}
+
+        #endregion Api other
     }
 }

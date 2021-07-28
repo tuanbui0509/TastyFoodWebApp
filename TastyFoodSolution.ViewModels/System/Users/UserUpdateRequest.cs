@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -9,20 +10,16 @@ namespace TastyFoodSolution.ViewModels.System.Users
     {
         public Guid Id { get; set; }
 
-        [Display(Name = "Tên")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Họ")]
         public string LastName { get; set; }
 
-        [Display(Name = "Ngày sinh")]
         [DataType(DataType.Date)]
         public DateTime Dob { get; set; }
 
-        [Display(Name = "Hòm thư")]
         public string Email { get; set; }
 
-        [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
+        public IFormFile Avatar { get; set; }
     }
 }

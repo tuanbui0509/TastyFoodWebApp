@@ -59,15 +59,29 @@
                             Category: <a href=""
                                          class="detail-info__category-link">@Model.Product.CategoryName</a>
                                     </span>
+                                   
+
                                     <div class="detail-info__rate">
                                         <div class="detail-info__rate-list">
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star-half'></i>
+                                            @{
+                                                var rate = 0;
+                                                @foreach (var re in Model.Reviews)
+                                                {
+                                                    rate += re.Rate;
+                                                }
+                                                rate /= Model.Reviews.Count;
+                                                for (int i = 0; i < rate; i++)
+                                                {
+                                                    <i class='detail-info__rate-item bx bxs-star'></i>
+                                                }
+                                                for (int i = 0; i < 5 - rate; i++)
+                                                {
+                                                    <i class='detail-info__rate-item bx bx-star'></i>
+
+                                                }
+                                            }
                                         </div>
-                                        <a href="" class="detail-info__rate-reviews">(2 customer reviews)</a>
+                                        <a href="" class="detail-info__rate-reviews">(@Model.Reviews.Count customer reviews)</a>
                                     </div>
                                     <span class="detail-info__price">@Model.Product.Price</span>
                                     <div class="detail-info__form">
@@ -81,11 +95,9 @@
                                                 <i class='bx bx-plus'></i>
                                             </button>
                                         </div>
-                                        <form action="">
-                                            <button class="detail-info__submit btn-animation btn-primary">
-                                                ADD TO CART <i class='bx bx-right-arrow-alt'></i>
-                                            </button>
-                                        </form>
+                                        <button class="detail-info__submit btn-animation btn-primary" data-id="@Model.Product.Id" onclick="addToCart(event,@Model.Product.Id)">
+                                            ADD TO CART <i class='bx bx-right-arrow-alt'></i>
+                                        </button>
                                     </div>
                                     <div class="detail-info__social">
                                         <ul class="detail-info__social-list">
@@ -151,7 +163,7 @@
                                 </a>
                             </li>
                             <li class="tabs-item" onclick="openTab(event,'tab-reviews')">
-                                <a class="tabs-link">Reviews (2)</a>
+                                <a class="tabs-link">Reviews (@Model.Reviews.Count)</a>
                             </li>
                         </ul>
                         <div class="tabs-list-info">
@@ -235,55 +247,37 @@
                             <!-- ====== Reviews ====== -->
 
                             <div id="tab-reviews" class="tabs-pill">
-                                <h4 class="quantity-reviews">
-                                    2 reviews for Bread Breakfast
-                                </h4>
+
                                 <ul class="list-user-comment">
-                                    <li class="user-comment">
-                                        <div class="user-thumb">
-                                            <img src="/assets/images/detail-product/avatar.png" alt=""
-                                                 class="user-avatar img-responsive"></img>
-                                        </div>
-                                        <div class="info-comment">
-                                            <p class="user-name-comment">Bùi Ngọc Tuấn</p>
-                                            <p class="date-comment">JULY 5, 2021</p>
-                                            <P class="content-comment">
-                                                On behalf of us all – thank you for making our evening
-                                                such
-                                                an enjoyable one!
-                                                Your hard work and consideration were very much appreciated
-                                            </P>
-                                        </div>
-                                        <div class="user-rated">
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                        </div>
-                                    </li>
-                                    <li class="user-comment">
-                                        <div class="user-thumb">
-                                            <img src="/assets/images/detail-product/avatar1.png" alt=""
-                                                 class="user-avatar img-responsive"></img>
-                                        </div>
-                                        <div class="info-comment">
-                                            <p class="user-name-comment">Đặng Thùy Dương</p>
-                                            <p class="date-comment">JULY 25, 2021</p>
-                                            <P class="content-comment">
-                                                On behalf of us all – thank you for making our evening
-                                                such
-                                                an enjoyable one!
-                                            </P>
-                                        </div>
-                                        <div class="user-rated">
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                            <i class='detail-info__rate-item bx bxs-star'></i>
-                                        </div>
-                                    </li>
+                                    <h4 class="quantity-reviews">
+                                        @Model.Reviews.Count reviews for @Model.Product.Name
+                                    </h4>
+                                    @foreach (var review in Model.Reviews)
+                                    {
+                                        <li class="user-comment">
+                                            <div class="user-thumb">
+                                                <img src="@(Configuration["BaseAddress"] + review.Avatar)" alt=""
+                                                     class="user-avatar img-responsive"></img>
+                                            </div>
+                                            <div class="info-comment">
+                                                <p class="user-name-comment">@review.FullName</p>
+                                                <p class="date-comment">@review.ReviewDate</p>
+                                                <P class="content-comment">
+                                                    @review.Comment
+                                                </P>
+                                            </div>
+                                            <div class="user-rated">
+                                                @for (int i = 0; i < review.Rate; i++)
+                                                {
+                                                    <i class='detail-info__rate-item bx bxs-star'></i>
+                                                }
+                                                @for (int i = 0; i < 5 - review.Rate; i++)
+                                                {
+                                                    <i class='detail-info__rate-item bx bx-star'></i>
+                                                }
+                                            </div>
+                                        </li>
+                                    }
                                 </ul>
 
                                 <div class="add-reviews">
@@ -291,45 +285,34 @@
                                         Add a review
                                     </h4>
                                     <p>Your email address will not be published. Required fields are marked * </p>
-                                    <form action="" method="POST" class="form" id="form-review">
+                                    <form action="/product/@Model.Product.Id" method="POST" class="form" id="form-review">
                                         <div class="add-reviews__rating">
                                             <label for="" class="add-reviews__heading">Your rating *</label>
                                             <div class="rate">
-                                                <input type="radio" id="star5" name="rate" value="5" />
-                                                <label for="star5" title="text"></label>
-                                                <input type="radio" id="star4" name="rate" value="4" />
-                                                <label for="star4" title="text"></label>
-                                                <input type="radio" id="star3" name="rate" value="3" />
-                                                <label for="star3" title="text"></label>
-                                                <input type="radio" id="star2" name="rate" value="2" />
-                                                <label for="star2" title="text"></label>
-                                                <input type="radio" id="star1" name="rate" value="1" />
-                                                <label for="star1" title="text"></label>
+                                                @for (int i = 5; i > 0; i--)
+                                                {
+                                                    <input type="radio" id="@i" value="@i" name="rate" />
+                                                    <label for="@i" title="text"></label>
+                                                }
                                             </div>
                                         </div>
                                         <div class="add-reviews-content">
                                             <div class="form-group">
                                                 <label for="content-review" class="form-label">Your review *</label>
-                                                <textarea id="content-review" name="content-review" placeholder=""
+                                                <textarea id="content-review" placeholder=""
                                                           class="form-control" cols="30" rows="10"></textarea>
                                                 <span class="form-message"></span>
-                                                </textarea>
                                             </div>
                                         </div>
-
-                                        <div class="add-reviews-info">
-                                            <div class="form-group add-reviews-input">
-                                                <label for="name" class="form-label">Name *</label>
-                                                <input id="name" name="name" type="text" placeholder="" class="form-control">
-                                                <span class="form-message"></span>
-                                            </div>
-                                            <div class="form-group add-reviews-input">
-                                                <label for="email" class="form-label">Email *</label>
-                                                <input id="email" name="email" type="text" placeholder="" class="form-control">
-                                                <span class="form-message"></span>
-                                            </div>
-                                        </div>
-                                        <button class="add-reviews__btn-submit btn-second">Submit</button>
+                                        <input type="text" value="@Model.Product.Id" hidden />
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <button class="add-reviews__btn-submit btn-second" onclick="addReview(event,@Model.Product.Id)">Submit</button>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Account/Login" class="add-reviews__btn-submit btn-second">Submit</a>
+                                        }
                                     </form>
                                 </div>
                             </div>
@@ -361,19 +344,19 @@
                                                 <strong class="product-price-old">@item.OriginalPrice</strong>
                                                 <strong class="product-price-new">@item.Price</strong>
                                             </div>
-                                            <div class="product__reviews">
+                                            @*<div class="product__reviews">
 
-                                                <div class="product-rating">
-                                                    <i class='product-rating-icon bx bxs-star'></i>
-                                                    <i class='product-rating-icon bx bxs-star'></i>
-                                                    <i class='product-rating-icon bx bxs-star'></i>
-                                                    <i class='product-rating-icon bx bxs-star'></i>
-                                                    <i class='product-rating-icon bx bxs-star-half'></i>
-                                                </div>
-                                                <span class="product__comment">
-                                                    (0)
-                                                </span>
-                                            </div>
+                                                    <div class="product-rating">
+                                                        <i class='product-rating-icon bx bxs-star'></i>
+                                                        <i class='product-rating-icon bx bxs-star'></i>
+                                                        <i class='product-rating-icon bx bxs-star'></i>
+                                                        <i class='product-rating-icon bx bxs-star'></i>
+                                                        <i class='product-rating-icon bx bxs-star-half'></i>
+                                                    </div>
+                                                    <span class="product__comment">
+                                                        (0)
+                                                    </span>
+                                                </div>*@
                                         </div>
                                         <div class="product-box">
                                             <a class="product__to-cart btn-primary" onclick="addToCart(event)">

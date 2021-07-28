@@ -10,8 +10,8 @@ using TastyFoodSolution.Data.EF;
 namespace TastyFoodSolution.Data.Migrations
 {
     [DbContext(typeof(TastyFoodDBContext))]
-    [Migration("20210716161914_Initial")]
-    partial class Initial
+    [Migration("20210724084822_updata-user-table")]
+    partial class updatausertable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,6 +100,11 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             UserId = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             RoleId = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc")
+                        },
+                        new
+                        {
+                            UserId = new Guid("aa16f18b-95b9-4e6a-837e-efb5b8e63e84"),
+                            RoleId = new Guid("ce7e4c06-84b0-4114-912f-7e27f245dc47")
                         });
                 });
 
@@ -121,37 +126,6 @@ namespace TastyFoodSolution.Data.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("AppUserTokens");
-                });
-
-            modelBuilder.Entity("TastyFoodSolution.Data.Entities.AppConfig", b =>
-                {
-                    b.Property<string>("Key")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Key");
-
-                    b.ToTable("AppConfigs");
-
-                    b.HasData(
-                        new
-                        {
-                            Key = "HomeTitle",
-                            Value = "This is home page"
-                        },
-                        new
-                        {
-                            Key = "HomeSearch",
-                            Value = "This is Search page"
-                        },
-                        new
-                        {
-                            Key = "HomeDesc",
-                            Value = "This is Desc page"
-                        });
                 });
 
             modelBuilder.Entity("TastyFoodSolution.Data.Entities.AppRole", b =>
@@ -182,10 +156,18 @@ namespace TastyFoodSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "b7ab091e-0019-4b43-a1f9-e6badecfef43",
+                            ConcurrencyStamp = "90f095b4-d9ba-4c29-9ae8-cd4740e6318a",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("ce7e4c06-84b0-4114-912f-7e27f245dc47"),
+                            ConcurrencyStamp = "51aebb09-1dfa-4eba-8130-6cd01effe8d7",
+                            Description = "User role",
+                            Name = "User",
+                            NormalizedName = "user"
                         });
                 });
 
@@ -197,6 +179,9 @@ namespace TastyFoodSolution.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
@@ -259,7 +244,7 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7ee34c07-e5d6-44e1-b646-e134d5b2c0d5",
+                            ConcurrencyStamp = "6307d589-c593-406a-b76c-1c95de885b68",
                             Dob = new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "tuanbui0509@gmail.com",
                             EmailConfirmed = true,
@@ -268,11 +253,30 @@ namespace TastyFoodSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "tuanbui0509@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJKpI7vp2wxh/UgkEcDftjCt53DT79QiiSPEm6LPDsFHUP6/z8d7OrQ8AOsaj75IXw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJtn54iTKS/8fXZfyYtvtP9M2LXh6Z5TeDgF3eKVcpXxSexkXg5XZUMDezo4Xv/d+Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("aa16f18b-95b9-4e6a-837e-efb5b8e63e84"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7be6c17a-6506-45a8-9467-0470b6b448ee",
+                            Dob = new DateTime(2021, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "user@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "User",
+                            LastName = "My",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "user@gmail.com",
+                            NormalizedUserName = "user",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIVXx5sZjMew6vYQ1HgqBUEPUCVD3+OREJ/vFJzSFwkNcMj4uDW9WOquphIJiLn8bg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "user"
                         });
                 });
 
@@ -335,6 +339,9 @@ namespace TastyFoodSolution.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(1);
+
+                    b.Property<string>("Thumb")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -490,6 +497,11 @@ namespace TastyFoodSolution.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("QuantityOrder")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<int>("Stock")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -511,11 +523,12 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            DateCreated = new DateTime(2021, 7, 16, 23, 19, 13, 229, DateTimeKind.Local).AddTicks(2419),
+                            DateCreated = new DateTime(2021, 7, 24, 15, 48, 21, 408, DateTimeKind.Local).AddTicks(6292),
                             Description = "Bánh mì ăn sáng Việt Nam",
                             Name = "Bánh mì ăn sáng",
                             OriginalPrice = 100000m,
                             Price = 200000m,
+                            QuantityOrder = 0,
                             Stock = 0,
                             ViewCount = 0
                         },
@@ -523,11 +536,12 @@ namespace TastyFoodSolution.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
-                            DateCreated = new DateTime(2021, 7, 16, 23, 19, 13, 230, DateTimeKind.Local).AddTicks(980),
+                            DateCreated = new DateTime(2021, 7, 24, 15, 48, 21, 409, DateTimeKind.Local).AddTicks(7753),
                             Description = "Gà rán Việt Nam",
                             Name = "Gà rán",
                             OriginalPrice = 150000m,
                             Price = 500000m,
+                            QuantityOrder = 0,
                             Stock = 0,
                             ViewCount = 0
                         });

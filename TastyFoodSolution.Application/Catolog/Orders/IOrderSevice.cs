@@ -12,8 +12,10 @@ namespace TastyFoodSolution.Application.Catolog.Orders
     {
         Task<int> Create(CheckoutRequest request);
 
+        Task<bool> ChangeStatus(int orderId);
+
         Task<OrderViewModel> GetById(int orderId);
 
-        //Task<CheckoutRequest> GetAllOrder(int productId);
+        Task<List<OrderViewModel>> GetAllOrder();
     }
 }

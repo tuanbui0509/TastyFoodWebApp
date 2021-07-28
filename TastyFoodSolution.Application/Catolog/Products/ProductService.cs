@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.Application.Common;
@@ -23,30 +26,15 @@ namespace TastyFoodSolution.Application.Catolog.Products
         private readonly TastyFoodDBContext _context;
         private readonly IStorageService _storageService;
         private const string USER_CONTENT_FOLDER_NAME = "images";
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProductService(TastyFoodDBContext dBContext, IStorageService storageService)
+        public ProductService(TastyFoodDBContext dBContext, IStorageService storageService, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager)
         {
             _context = dBContext;
             _storageService = storageService;
-        }
-
-        public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
-        {
-            var productImage = new ProductImage()
-            {
-                DateCreated = DateTime.Now,
-                IsDefault = request.IsDefault,
-                ProductId = productId,
-            };
-
-            if (request.ImageFile != null)
-            {
-                productImage.ImagePath = await this.SaveFile(request.ImageFile);
-                productImage.FileSize = request.ImageFile.Length;
-            }
-            _context.ProductImages.Add(productImage);
-            await _context.SaveChangesAsync();
-            return productImage.Id;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
 
         public async Task AddViewcount(int productId)
@@ -88,22 +76,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
             return product.Id;
         }
 
-        public async Task<int> Delete(int productId)
-        {
-            var product = await _context.Products.FindAsync(productId);
-            if (product == null) throw new TastyFoodException($"Cannot find a product: {productId}");
-
-            var images = _context.ProductImages.Where(i => i.ProductId == productId);
-            foreach (var image in images)
-            {
-                await _storageService.DeleteFileAsync(image.ImagePath);
-            }
-
-            _context.Products.Remove(product);
-
-            return await _context.SaveChangesAsync();
-        }
-
         public async Task<PagedResult<ProductViewModel>> GetAllProduct(GetManageProductPagingRequest request)
         {
             //1. Select join
@@ -123,21 +95,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
             //3. Paging
             int totalRow = await query.CountAsync();
 
-            //var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-            //    .Take(request.PageSize)
-            //    .Select(x => new ProductViewModel()
-            //    {
-            //        Id = x.p.Id,
-            //        Name = x.p.Name,
-            //        DateCreated = x.p.DateCreated,
-            //        Description = x.p.Description,
-            //        Details = x.p.Details,
-            //        OriginalPrice = x.p.OriginalPrice,
-            //        Price = x.p.Price,
-            //        Stock = x.p.Stock,
-            //        ViewCount = x.p.ViewCount
-            //    }).ToListAsync();
-
             var data = await query.Select(x => new ProductViewModel()
             {
                 Id = x.p.Id,
@@ -147,7 +104,8 @@ namespace TastyFoodSolution.Application.Catolog.Products
                 OriginalPrice = x.p.OriginalPrice,
                 Price = x.p.Price,
                 Stock = x.p.Stock,
-                ViewCount = x.p.ViewCount
+                ViewCount = x.p.ViewCount,
+                QuantityOrder = x.p.QuantityOrder
             }).ToListAsync();
 
             //4. Select and projection
@@ -194,94 +152,133 @@ namespace TastyFoodSolution.Application.Catolog.Products
             return productViewModel;
         }
 
-        public async Task<ProductImageViewModel> GetImageById(int imageId)
-        {
-            var image = await _context.ProductImages.FindAsync(imageId);
-            if (image == null)
-                throw new TastyFoodException($"Cannot find an image with id {imageId}");
+        #region Api other
 
-            var viewModel = new ProductImageViewModel()
-            {
-                DateCreated = image.DateCreated,
-                FileSize = image.FileSize,
-                Id = image.Id,
-                ImagePath = image.ImagePath,
-                IsDefault = image.IsDefault,
-                ProductId = image.ProductId,
-            };
-            return viewModel;
-        }
+        //        public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
+        //        {
+        //            var productImage = new ProductImage()
+        //            {
+        //                DateCreated = DateTime.Now,
+        //                IsDefault = request.IsDefault,
+        //                ProductId = productId,
+        //            };
 
-        public async Task<List<ProductImageViewModel>> GetListImages(int productId)
-        {
-            return await _context.ProductImages.Where(x => x.ProductId == productId)
-                .Select(i => new ProductImageViewModel()
-                {
-                    DateCreated = i.DateCreated,
-                    FileSize = i.FileSize,
-                    Id = i.Id,
-                    ImagePath = i.ImagePath,
-                    IsDefault = i.IsDefault,
-                    ProductId = i.ProductId,
-                }).ToListAsync();
-        }
+        //            if (request.ImageFile != null)
+        //            {
+        //                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+        //                productImage.FileSize = request.ImageFile.Length;
+        //            }
+        //            _context.ProductImages.Add(productImage);
+        //            await _context.SaveChangesAsync();
+        //            return productImage.Id;
+        //        }
 
-        public async Task<int> RemoveImage(int imageId)
-        {
-            var productImage = await _context.ProductImages.FindAsync(imageId);
-            if (productImage == null)
-                throw new TastyFoodException($"Cannot find an image with id {imageId}");
-            _context.ProductImages.Remove(productImage);
-            return await _context.SaveChangesAsync();
-        }
+        //        public async Task<ProductImageViewModel> GetImageById(int imageId)
+        //        {
+        //            var image = await _context.ProductImages.FindAsync(imageId);
+        //            if (image == null)
+        //                throw new TastyFoodException($"Cannot find an image with id {imageId}");
 
-        public async Task<int> Update(ProductUpdateRequest request)
-        {
-            var product = await _context.Products.FindAsync(request.Id);
+        //            var viewModel = new ProductImageViewModel()
+        //            {
+        //                DateCreated = image.DateCreated,
+        //                FileSize = image.FileSize,
+        //                Id = image.Id,
+        //                ImagePath = image.ImagePath,
+        //                IsDefault = image.IsDefault,
+        //                ProductId = image.ProductId,
+        //            };
+        //            return viewModel;
+        //        }
 
-            if (product == null) throw new TastyFoodException($"Cannot find a product with id: {request.Id}");
+        //        public async Task<List<ProductImageViewModel>> GetListImages(int productId)
+        //        {
+        //            return await _context.ProductImages.Where(x => x.ProductId == productId)
+        //                .Select(i => new ProductImageViewModel()
+        //                {
+        //                    DateCreated = i.DateCreated,
+        //                    FileSize = i.FileSize,
+        //                    Id = i.Id,
+        //                    ImagePath = i.ImagePath,
+        //                    IsDefault = i.IsDefault,
+        //                    ProductId = i.ProductId,
+        //                }).ToListAsync();
+        //        }
 
-            product.Name = request.Name;
-            product.Description = request.Description;
-            product.IsFeatured = request.IsFeatured;
-            product.CategoryId = request.CategoryId;
-            //Save image
-            if (request.ThumbnailImage != null)
-            {
-                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.ProductId == request.Id);
-                if (thumbnailImage != null)
-                {
-                    thumbnailImage.FileSize = request.ThumbnailImage.Length;
-                    thumbnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
-                    _context.ProductImages.Update(thumbnailImage);
-                }
-            }
+        //        public async Task<int> RemoveImage(int imageId)
+        //        {
+        //            var productImage = await _context.ProductImages.FindAsync(imageId);
+        //            if (productImage == null)
+        //                throw new TastyFoodException($"Cannot find an image with id {imageId}");
+        //            _context.ProductImages.Remove(productImage);
+        //            return await _context.SaveChangesAsync();
+        //        }
 
-            return await _context.SaveChangesAsync();
-        }
+        //        public async Task<int> Update(ProductUpdateRequest request)
+        //        {
+        //            var product = await _context.Products.FindAsync(request.Id);
 
-        public async Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request)
-        {
-            var productImage = await _context.ProductImages.FindAsync(imageId);
-            if (productImage == null)
-                throw new TastyFoodException($"Cannot find an image with id {imageId}");
+        //            if (product == null) throw new TastyFoodException($"Cannot find a product with id: {request.Id}");
 
-            if (request.ImageFile != null)
-            {
-                productImage.ImagePath = await this.SaveFile(request.ImageFile);
-                productImage.FileSize = request.ImageFile.Length;
-            }
-            _context.ProductImages.Update(productImage);
-            return await _context.SaveChangesAsync();
-        }
+        //            product.Name = request.Name;
+        //            product.Description = request.Description;
+        //            product.IsFeatured = request.IsFeatured;
+        //            product.CategoryId = request.CategoryId;
+        //            //Save image
+        //            if (request.ThumbnailImage != null)
+        //            {
+        //                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.ProductId == request.Id);
+        //                if (thumbnailImage != null)
+        //                {
+        //                    thumbnailImage.FileSize = request.ThumbnailImage.Length;
+        //                    thumbnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
+        //                    _context.ProductImages.Update(thumbnailImage);
+        //                }
+        //            }
 
-        public async Task<bool> UpdatePrice(int productId, decimal newPrice)
-        {
-            var product = await _context.Products.FindAsync(productId);
-            if (product == null) throw new TastyFoodException($"Cannot find a product with id: {productId}");
-            product.Price = newPrice;
-            return await _context.SaveChangesAsync() > 0;
-        }
+        //            return await _context.SaveChangesAsync();
+        //        }
+
+        //        public async Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request)
+        //        {
+        //            var productImage = await _context.ProductImages.FindAsync(imageId);
+        //            if (productImage == null)
+        //                throw new TastyFoodException($"Cannot find an image with id {imageId}");
+
+        //            if (request.ImageFile != null)
+        //            {
+        //                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+        //                productImage.FileSize = request.ImageFile.Length;
+        //            }
+        //            _context.ProductImages.Update(productImage);
+        //            return await _context.SaveChangesAsync();
+        //        }
+
+        //        public async Task<int> Delete(int productId)
+        //        {
+        //            var product = await _context.Products.FindAsync(productId);
+        //            if (product == null) throw new TastyFoodException($"Cannot find a product: {productId}");
+
+        //            var images = _context.ProductImages.Where(i => i.ProductId == productId);
+        //            foreach (var image in images)
+        //            {
+        //                await _storageService.DeleteFileAsync(image.ImagePath);
+        //            }
+
+        //            _context.Products.Remove(product);
+
+        //            return await _context.SaveChangesAsync();
+        //        }
+
+        //        public async Task<bool> UpdatePrice(int productId, decimal newPrice)
+        //        {
+        //            var product = await _context.Products.FindAsync(productId);
+        //            if (product == null) throw new TastyFoodException($"Cannot find a product with id: {productId}");
+        //            product.Price = newPrice;
+        //            return await _context.SaveChangesAsync() > 0;
+        //        }
+
+        #endregion Api other
 
         public async Task<bool> UpdateStock(int productId, int addedQuantity)
         {
@@ -361,7 +358,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                         where (pi.IsDefault == true || pi == null) && p.IsFeatured == true
                         select new { p, c, pi };
 
-            var data = await query.Take(take)
+            var data = await query.OrderByDescending(x => x.p.ViewCount).Take(take)
                 .Select(x => new ProductViewModel()
                 {
                     Id = x.p.Id,
@@ -372,6 +369,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     Price = x.p.Price,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
+                    QuantityOrder = x.p.QuantityOrder,
                     CategoryName = x.c.Name,
                     CategoryId = x.p.CategoryId,
                     ThumbnailImage = x.pi.ImagePath,
@@ -402,6 +400,7 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     Price = x.p.Price,
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
+                    QuantityOrder = x.p.QuantityOrder,
                     ThumbnailImage = x.pi.ImagePath,
                     CategoryName = x.c.Name,
                     CategoryId = x.p.CategoryId,
@@ -438,6 +437,94 @@ namespace TastyFoodSolution.Application.Catolog.Products
                     CategoryId = x.p.CategoryId,
                 }).ToListAsync();
 
+            return data;
+        }
+
+        public async Task<int> CreateReview(ReviewCreateRequest request)
+        {
+            var userName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await _userManager.FindByNameAsync(userName);
+            var review = new Review()
+            {
+                ProductId = request.ProductId,
+                UserId = user.Id,
+                Comment = request.Comment,
+                Rate = request.Rate,
+                ReviewDate = DateTime.Now
+            };
+
+            _context.Reviews.Add(review);
+            await _context.SaveChangesAsync();
+            return review.Id;
+        }
+
+        public async Task<ReviewViewModel> GetByIdReview(int reviewId)
+        {
+            var review = await _context.Reviews.FindAsync(reviewId);
+            if (review == null)
+            {
+                return null;
+            }
+            var reviewViewModel = new ReviewViewModel()
+            {
+                Id = review.Id,
+                UserId = review.UserId,
+                ReviewDate = review.ReviewDate,
+                Rate = review.Rate,
+                Comment = review.Comment,
+                ProductId = review.ProductId
+            };
+            return reviewViewModel;
+        }
+
+        public async Task<List<ReviewViewModel>> GetAllReviews(int productId)
+        {
+            //1. Select join
+            var query = from r in _context.Reviews
+                        join p in _context.Products on r.ProductId equals p.Id into rp
+                        from p in rp.DefaultIfEmpty()
+                        join u in _context.Users on r.UserId equals u.Id into ru
+                        from u in ru.DefaultIfEmpty()
+                        where r.ProductId == productId
+                        select new { r, u };
+            var data = await query.Select(x => new ReviewViewModel()
+            {
+                Id = x.r.Id,
+                Rate = x.r.Rate,
+                Comment = x.r.Comment,
+                ReviewDate = x.r.ReviewDate,
+                UserId = x.r.UserId,
+                ProductId = productId,
+                Avatar = x.u.Avatar,
+                FullName = x.u.FirstName + x.u.LastName
+            }).ToListAsync();
+
+            return data;
+        }
+
+        public async Task<List<ProductViewModel>> GetAllProduct()
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        where (pi.IsDefault == true || pi == null)
+                        select new { p, pi };
+            //3. Paging
+            int totalRow = await query.CountAsync();
+            var data = await query.Select(x => new ProductViewModel()
+            {
+                Id = x.p.Id,
+                Name = x.p.Name,
+                DateCreated = x.p.DateCreated,
+                Description = x.p.Description,
+                OriginalPrice = x.p.OriginalPrice,
+                Price = x.p.Price,
+                Stock = x.p.Stock,
+                ViewCount = x.p.ViewCount,
+                CategoryId = x.p.CategoryId,
+                ThumbnailImage = x.pi.ImagePath,
+            }).ToListAsync();
             return data;
         }
     }

@@ -16,12 +16,10 @@ namespace TastyFoodSolution.Application.System.Users
 
         Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request);
 
-        Task<ApiResult<PagedResult<UserVm>>> GetUsers();
+        Task<List<UserVm>> GetUsers();
 
         Task<ApiResult<UserVm>> GetById(Guid id);
 
-        Task<ApiResult<bool>> Delete(Guid id);
-
-        Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
+        //Task<ApiResult<bool>> Delete(Guid id);
     }
 }

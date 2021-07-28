@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TastyFoodSolution.Application.Common;
 using TastyFoodSolution.Data.Entities;
 using TastyFoodSolution.ViewModels.Common;
 using TastyFoodSolution.ViewModels.System.Users;
@@ -20,6 +24,8 @@ namespace TastyFoodSolution.Application.System.Users
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
+        private readonly IStorageService _storageService;
+        private const string USER_CONTENT_FOLDER_NAME = "images";
 
         // Tokens
         private readonly IConfiguration _config;
@@ -27,12 +33,15 @@ namespace TastyFoodSolution.Application.System.Users
         public UserService(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             RoleManager<AppRole> roleManager,
-            IConfiguration config)
+            IConfiguration config,
+             IStorageService storageService
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
+            _storageService = storageService;
         }
 
         public async Task<ApiResult<string>> Authencate(LoginRequest request)
@@ -53,7 +62,7 @@ namespace TastyFoodSolution.Application.System.Users
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
                 new Claim(ClaimTypes.Name, request.UserName),
                 new Claim(ClaimTypes.NameIdentifier,user.UserName)
-        };
+            };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -63,7 +72,7 @@ namespace TastyFoodSolution.Application.System.Users
                 expires: DateTime.Now.AddHours(3),
                 signingCredentials: creds);
 
-            return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
+            return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token), roles);
         }
 
         public async Task<ApiResult<bool>> Delete(Guid id)
@@ -99,10 +108,10 @@ namespace TastyFoodSolution.Application.System.Users
                 UserName = user.UserName,
                 Roles = roles
             };
-            return new ApiSuccessResult<UserVm>(userVm);
+            return new ApiSuccessResult<UserVm>(userVm, (string[])roles);
         }
 
-        public async Task<ApiResult<PagedResult<UserVm>>> GetUsers()
+        public async Task<List<UserVm>> GetUsers()
         {
             var query = _userManager.Users;
             int totalRow = await query.CountAsync();
@@ -115,15 +124,19 @@ namespace TastyFoodSolution.Application.System.Users
                     UserName = x.UserName,
                     FirstName = x.FirstName,
                     Id = x.Id,
-                    LastName = x.LastName
+                    LastName = x.LastName,
+                    Avatar = x.Avatar,
+                    Dob = x.Dob
                 }).ToListAsync();
 
-            //4. Select and projection
-            var pagedResult = new PagedResult<UserVm>()
+            foreach (var item in data)
             {
-                Items = data
-            };
-            return new ApiSuccessResult<PagedResult<UserVm>>(pagedResult);
+                var user = await _userManager.FindByIdAsync(item.Id.ToString());
+                var roles = await _userManager.GetRolesAsync(user);
+                item.Roles = roles;
+            }
+
+            return data;
         }
 
         public async Task<ApiResult<bool>> Register(RegisterRequest request)
@@ -196,13 +209,28 @@ namespace TastyFoodSolution.Application.System.Users
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.PhoneNumber = request.PhoneNumber;
-
+            if (request.Avatar != null)
+            {
+                user.Avatar = await this.SaveFile(request.Avatar);
+            }
+            else
+            {
+                user.Avatar = null;
+            }
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
+
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
         }
     }
 }
