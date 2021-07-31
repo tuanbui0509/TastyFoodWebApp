@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.ViewModels.Carts;
+using TastyFoodSolution.ViewModels.Catalog.Orders;
 using TastyFoodSolution.ViewModels.Common;
 
 namespace TastyFoodSolution.ApiIntergration
@@ -13,5 +14,7 @@ namespace TastyFoodSolution.ApiIntergration
         Task<ApiResult<bool>> CreateOrder(CheckoutRequest request);
 
         Task<CheckoutRequest> GetById(int orderId);
+
+        Task<List<OrderViewModel>> GetOrdersByUser(Guid userId);
     }
 }

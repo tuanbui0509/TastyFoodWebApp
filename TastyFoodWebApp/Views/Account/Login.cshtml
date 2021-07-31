@@ -51,6 +51,7 @@
                     <button class="btn-second form-submit">Login <i class='bx bx-right-arrow-alt'></i></button>
                 </form>
                 <a href="/Account/register" class="forgot-pass-text">Register?</a>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>

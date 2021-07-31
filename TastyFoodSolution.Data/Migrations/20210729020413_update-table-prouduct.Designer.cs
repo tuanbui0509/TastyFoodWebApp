@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TastyFoodSolution.Data.EF;
 
 namespace TastyFoodSolution.Data.Migrations
 {
     [DbContext(typeof(TastyFoodDBContext))]
-    partial class TastyFoodDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210729020413_update-table-prouduct")]
+    partial class updatetableprouduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

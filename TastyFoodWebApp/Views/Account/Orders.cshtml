@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Orders";
+}
+
+<link rel="stylesheet" href="/assets/css/my-account/my-account.css">
+<!--========== BREADCRUMB ==========-->
+<section class="breadcrumb">
+    <div class="container breadcrumb__container">
+        <h2 class="breadcrumb__title">My Account</h2>
+        <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+                <a href="./index.html" class="breadcrumb__link">Home</a><i class='bx bx-chevron-right breadcrumb__icon'></i>
+            </li>
+            <li class="breadcrumb__item">My Account</li>
+        </ul>
+    </div>
+</section>
+<!--========== MAIN ==========-->
+<main>
+
+    <!-- ========= FORM ============= -->
+    <div class="container">
+        <div class="account-wrapper">
+            <ul class="account-menu">
+                <li class="account-item ">
+                    <a href="/" class="account-btn">Dashboard</a>
+                </li>
+                <li class="account-item account-item--active">
+                    <a href="/Account/Orders" class="account-btn">Orders</a>
+                </li>
+                <li class="account-item">
+
+                    <a href="" class="account-btn">Addresses</a>
+                </li>
+                <li class="account-item">
+                    <a href="" class="account-btn"> Account detail</a>
+                </li>
+                <li class="account-item">
+                    <form action="/Account/Logout" method="post">
+                        <button class="account-btn">Logout</button>
+                    </form>
+                </li>
+            </ul>
+            <div class="account-content">
+                <table class="table">
+                    <thead class="table__head">
+                        <tr class="table__title">
+                            <th class="table__heading tex color-green">Order</th>
+                            <th class="table__heading tex color-green">Date</th>
+                            <th class="table__heading tex color-green">Status</th>
+                            <th class="table__heading tex color-green">Total</th>
+                            <th class="table__heading tex color-green">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table__body">
+                        <tr>
+                            <td>
+                                <a href="detail-product.html" class="table__content-name">
+                                    #1234
+                                </a>
+                            </td>
+                            <td>
+                                <div class="table__content">
+                                    <p class="table__content-date"> July 5, 2021</p>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="table__content-status"> JProcessing</p>
+                            </td>
+
+                            <td>
+                                <div class="table__content">
+                                    <p class="table__content-total"> $1,200.00</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="table__content">
+                                    <button class="btn-second">View</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

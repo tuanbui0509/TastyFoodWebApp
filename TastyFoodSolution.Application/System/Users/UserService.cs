@@ -13,7 +13,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.Application.Common;
+using TastyFoodSolution.Data.EF;
 using TastyFoodSolution.Data.Entities;
+using TastyFoodSolution.ViewModels.Catalog.Orders;
 using TastyFoodSolution.ViewModels.Common;
 using TastyFoodSolution.ViewModels.System.Users;
 
@@ -26,6 +28,7 @@ namespace TastyFoodSolution.Application.System.Users
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IStorageService _storageService;
         private const string USER_CONTENT_FOLDER_NAME = "images";
+        private readonly TastyFoodDBContext _context;
 
         // Tokens
         private readonly IConfiguration _config;
@@ -34,7 +37,7 @@ namespace TastyFoodSolution.Application.System.Users
             SignInManager<AppUser> signInManager,
             RoleManager<AppRole> roleManager,
             IConfiguration config,
-             IStorageService storageService
+            IStorageService storageService, TastyFoodDBContext dBContext
             )
         {
             _userManager = userManager;
@@ -42,6 +45,7 @@ namespace TastyFoodSolution.Application.System.Users
             _roleManager = roleManager;
             _config = config;
             _storageService = storageService;
+            _context = dBContext;
         }
 
         public async Task<ApiResult<string>> Authencate(LoginRequest request)
@@ -231,6 +235,35 @@ namespace TastyFoodSolution.Application.System.Users
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
             return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
+        }
+
+        public async Task<List<OrderViewModel>> GetOrdersByUser(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                return null;
+            }
+
+            //1. Select join
+            var query = from o in _context.Orders
+                        where o.UserId == userId
+                        select new { o };
+
+            var data = await query.OrderByDescending(x => x.o.OrderDate)
+                .Select(x => new OrderViewModel()
+                {
+                    Id = x.o.Id,
+                    ShipAddress = x.o.ShipAddress,
+                    OrderDate = x.o.OrderDate,
+                    ShipEmail = x.o.ShipEmail,
+                    ShipPhoneNumber = x.o.ShipPhoneNumber,
+                    ShipName = x.o.ShipName,
+                    UserId = x.o.UserId,
+                    Status = x.o.Status,
+                }).ToListAsync();
+
+            return data;
         }
     }
 }

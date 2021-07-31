@@ -18,10 +18,11 @@ namespace TastyFoodSolution.ViewModels.Catolog.Products
         public DateTime DateCreated { set; get; }
         public string Description { set; get; }
         public bool? IsFeatured { get; set; }
+        public bool? IsActive { get; set; }
         public List<ProductImage> ListImage { get; set; }
         public string ThumbnailImage { get; set; }
         public string CategoryName { get; set; }
         public int CategoryId { set; get; }
-        public int QuantityOrder { set; get; } = 1;
+        public int QuantityOrder { set; get; }
     }
 }

@@ -59,21 +59,24 @@
                             Category: <a href=""
                                          class="detail-info__category-link">@Model.Product.CategoryName</a>
                                     </span>
-                                   
 
                                     <div class="detail-info__rate">
                                         <div class="detail-info__rate-list">
                                             @{
                                                 var rate = 0;
-                                                @foreach (var re in Model.Reviews)
+                                                if (Model.Reviews.Count > 0)
                                                 {
-                                                    rate += re.Rate;
+                                                    @foreach (var re in Model.Reviews)
+                                                    {
+                                                        rate += re.Rate;
+                                                    }
+                                                    rate /= Model.Reviews.Count;
+                                                    for (int i = 0; i < rate; i++)
+                                                    {
+                                                        <i class='detail-info__rate-item bx bxs-star'></i>
+                                                    }
                                                 }
-                                                rate /= Model.Reviews.Count;
-                                                for (int i = 0; i < rate; i++)
-                                                {
-                                                    <i class='detail-info__rate-item bx bxs-star'></i>
-                                                }
+
                                                 for (int i = 0; i < 5 - rate; i++)
                                                 {
                                                     <i class='detail-info__rate-item bx bx-star'></i>
