@@ -194,7 +194,6 @@
                                             <strong class="product-price-new">@item.Price</strong>
                                         </div>
                                         @*<div class="product__reviews">
-
                                             <div class="product-rating">
                                                 <i class='product-rating-icon bx bxs-star'></i>
                                                 <i class='product-rating-icon bx bxs-star'></i>
@@ -208,9 +207,18 @@
                                         </div>*@
                                     </div>
                                     <div class="product-box">
-                                        <a class="product__to-cart btn-primary" data-id="@item.Id" onclick="addToCart(event,@item.Id)">
-                                            ADD TO CART<i class="bx bx-right-arrow-alt"></i>
-                                        </a>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="product__to-cart btn-primary" data-id="@item.Id" onclick="addToCart(event,@item.Id)">
+                                                ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Account/login" class="product__to-cart btn-primary">
+                                                ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                                            </a>
+                                        }
                                         <div class="product__right">
                                             <a class="product__to-wishlist" onclick="addToWishList(event,@item.Id)">
                                                 <i class='bx bx-heart'></i>
@@ -259,9 +267,19 @@
                                         </div>*@
                                     </div>
                                     <div class="product-box">
-                                        <a class="product__to-cart btn-primary" data-id="@item.Id" onclick="addToCart(event,@item.Id)">
-                                            ADD TO CART<i class="bx bx-right-arrow-alt"></i>
-                                        </a>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="product__to-cart btn-primary" data-id="@item.Id" onclick="addToCart(event,@item.Id)">
+                                                ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                                            </a>
+                }
+                else
+                {
+                                    <a href="/Account/login" class="product__to-cart btn-primary" >
+                                        ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                                    </a>
+                }
+
                                         <div class="product__right">
                                             <a class="product__to-wishlist" onclick="addToWishList(event,@item.Id)">
                                                 <i class='bx bx-heart'></i>
@@ -310,9 +328,18 @@
                                         </div>*@
                                     </div>
                                     <div class="product-box">
-                                        <a href="" class="product__to-cart btn-primary" onclick="addToCart(event,@item.Id)">
-                                            ADD TO CART<i class="bx bx-right-arrow-alt"></i>
-                                        </a>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="product__to-cart btn-primary" data-id="@item.Id" onclick="addToCart(event,@item.Id)">
+                                                ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Account/login" class="product__to-cart btn-primary">
+                                                ADD TO CART<i class="bx bx-right-arrow-alt"></i>
+                                            </a>
+                                        }
                                         <div class="product__right">
                                             <a class="product__to-wishlist" onclick="addToWishList(event,@item.Id)">
                                                 <i class='bx bx-heart'></i>

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TastyFoodSolution.ApiIntegration;
 using TastyFoodSolution.ViewModels.Carts;
+using TastyFoodSolution.ViewModels.Catalog.Orders;
 using TastyFoodSolution.ViewModels.Catolog.Products;
 using TastyFoodSolution.ViewModels.Common;
 
@@ -51,6 +52,12 @@ namespace TastyFoodSolution.ApiIntergration
         public async Task<CheckoutRequest> GetById(int orderId)
         {
             var data = await GetAsync<CheckoutRequest>($"/api/orders/{orderId}");
+            return data;
+        }
+
+        public async Task<List<OrderViewModel>> GetOrdersByUser(Guid userId)
+        {
+            var data = await GetListAsync<OrderViewModel>($"/api/users/GetOrdersByUser/{userId}");
             return data;
         }
     }

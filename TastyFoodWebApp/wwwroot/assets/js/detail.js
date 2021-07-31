@@ -82,7 +82,7 @@ addReview = (e, id) => {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            window.onload
+            window.location.reload(true);
         })
         .catch((error) => {
             console.error('Error:', error);

@@ -16,17 +16,21 @@ namespace TastyFoodSolution.Application.Catolog.Products
         // product
         Task<int> Create(ProductCreateRequest request);
 
+        Task<bool> UpdatePrice(int productId, decimal newPrice);
+
+        Task<int> Update(ProductUpdateRequest request);
+
         Task<ProductViewModel> GetById(int productId);
 
         Task<ReviewViewModel> GetByIdReview(int reviewId);
 
         Task<bool> UpdateStock(int productId, int addedQuantity);
 
+        Task<bool> ChangeActive(int productId);
+
         Task AddViewcount(int productId);
 
-        Task<PagedResult<ProductViewModel>> GetAllProduct(GetManageProductPagingRequest request);
-
-        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(int categoryId);
 
         Task<List<ProductViewModel>> GetAllProduct();
 
@@ -54,9 +58,6 @@ namespace TastyFoodSolution.Application.Catolog.Products
         //Task<ProductImageViewModel> GetImageById(int imageId);
 
         //Task<List<ProductImageViewModel>> GetListImages(int productId);
-
-        //Task<bool> UpdatePrice(int productId, decimal newPrice);
-        //Task<int> Update(ProductUpdateRequest request);
 
         //Task<int> Delete(int productId);
 

@@ -26,9 +26,9 @@ namespace TastyFoodSolution.BackendApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAllByCategoryId([FromQuery] GetPublicProductPagingRequest request)
+        public async Task<IActionResult> GetAllByCategoryId([FromQuery] int categoryId)
         {
-            var products = await _productService.GetAllByCategoryId(request);
+            var products = await _productService.GetAllByCategoryId(categoryId);
             return Ok(products);
         }
 
@@ -50,7 +50,8 @@ namespace TastyFoodSolution.BackendApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromForm] ProductCreateRequest request)
+        //[Route("Upload")]
+        public async Task<ActionResult> Create([FromBody] ProductCreateRequest request)
         {
             var productId = await _productService.Create(request);
             if (productId == 0)
@@ -103,26 +104,36 @@ namespace TastyFoodSolution.BackendApi.Controllers
             return Ok(reviews);
         }
 
-        [HttpPatch("{productId}")]
-        public async void AddViewcount(int productId)
+        //[HttpPatch("{productId}")]
+        //public async void AddViewcount(int productId)
+        //{
+        //    await _productService.AddViewcount(productId);
+        //}
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
         {
-            await _productService.AddViewcount(productId);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var affectedResult = await _productService.Update(request);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpPatch("{productId}")]
+        public async Task<IActionResult> ChangeActive(int productId)
+        {
+            var isSuccessful = await _productService.ChangeActive(productId);
+            if (isSuccessful)
+                return Ok();
+
+            return BadRequest();
         }
 
         #region Api other
-
-        //[HttpPut]
-        //public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //    var affectedResult = await _productService.Update(request);
-        //    if (affectedResult == 0)
-        //        return BadRequest();
-        //    return Ok();
-        //}
 
         //[HttpDelete("{productId}")]
         //public async Task<IActionResult> Delete(int productId)

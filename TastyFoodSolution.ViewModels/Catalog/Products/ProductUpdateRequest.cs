@@ -13,6 +13,7 @@ namespace TastyFoodSolution.ViewModels.Catolog.Products
         public string Name { set; get; }
         public string Description { set; get; }
         public bool? IsFeatured { get; set; }
+        public bool? IsActive { get; set; }
         public int CategoryId { get; set; }
 
         public IFormFile ThumbnailImage { get; set; }

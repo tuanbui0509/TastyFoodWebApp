@@ -80,6 +80,13 @@ namespace TastyFoodSolution.BackendApi.Controllers
             return Ok(users);
         }
 
+        [HttpGet("GetOrdersByUser/{userId}")]
+        public async Task<IActionResult> GetOrdersByUser(Guid userId)
+        {
+            var users = await _userService.GetOrdersByUser(userId);
+            return Ok(users);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

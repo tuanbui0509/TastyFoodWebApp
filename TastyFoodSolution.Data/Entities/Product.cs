@@ -15,6 +15,7 @@ namespace TastyFoodSolution.Data.Entities
         public int QuantityOrder { set; get; }
         public DateTime DateCreated { set; get; }
         public bool? IsFeatured { get; set; }
+        public bool? IsActive { get; set; }
         public string Name { set; get; }
         public string Description { set; get; }
         public int CategoryId { set; get; }

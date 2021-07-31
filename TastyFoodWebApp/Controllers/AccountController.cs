@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 using TastyFoodSolution.ApiIntegration;
 using TastyFoodSolution.Utilities.Constants;
 using TastyFoodSolution.ViewModels.System.Users;
+using TastyFoodWebApp.Models;
 
 namespace TastyFoodWebApp.Controllers
 {
@@ -55,6 +57,12 @@ namespace TastyFoodWebApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Orders()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
@@ -86,6 +94,13 @@ namespace TastyFoodWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
+            var session = HttpContext.Session.GetString(SystemConstants.CartSession);
+            if (session != null)
+            {
+                List<CartItemViewModel> currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
+                currentCart.Clear();
+                HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(currentCart));
+            }
             await HttpContext.SignOutAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
